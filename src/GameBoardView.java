@@ -17,7 +17,8 @@ public class GameBoardView extends JFrame {
 	}
 	
 	public void create(){
-		setSize(250,555);	
+		setSize(250,575);	
+		setTitle("MASTERMIND");
 		setLayout(new BorderLayout());
 		
 		add(gameName, BorderLayout.NORTH);
