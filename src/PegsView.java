@@ -24,15 +24,15 @@ public class PegsView {
 	}
 	
 	public void createGuessPanel(){
-		for(int i = 1; i < 7; i++){
+		for(int i = 0; i < 6; i++){
 			ImageIcon icon = new ImageIcon("icons/"+i+".png");	
 			JToggleButton peg = new JToggleButton(icon);
-			if(i < 4)
+			if(i < 3)
 				pegs1.add(peg);
 			else
 				pegs2.add(peg);
 			
-			pegs[i-1] = peg;
+			pegs[i] = peg;
 		}
 		
 		guessPanel.add(pegs1, "North");

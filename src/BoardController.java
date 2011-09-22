@@ -61,8 +61,8 @@ public class BoardController implements ActionListener{
 			}
 		}
 		
-		if(selectedPeg != pegNum+1)
-			selectedPeg = pegNum+1;
+		if(selectedPeg != pegNum)
+			selectedPeg = pegNum;
 		else
 			selectedPeg = -1;
 	}
