@@ -11,7 +11,7 @@ public class StartCommand extends LogfileCommand {
 		myLog = Logfile.getInstance();
 	}
 	
-	public void Execute( int[] moveInfo )
+	public void Execute()
 	{
 		myLog.openLog(filename);
 		myLog.writeLog(startMsg);
