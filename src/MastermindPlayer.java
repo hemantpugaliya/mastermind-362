@@ -1,4 +1,4 @@
 
-public class MastermindPlayer extends Player {
-
+public class MastermindPlayer implements Player {
+	
 }
