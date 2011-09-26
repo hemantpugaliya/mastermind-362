@@ -35,6 +35,11 @@ public class BoardController implements ActionListener{
 			guessPegs[i].setActionCommand("p"+command);
 		}
 		
+		for(int i = 0; i < 4; i++){
+			solutionSet[i].addActionListener(this);
+			String command = Integer.toString(i);
+			solutionSet[i].setActionCommand("s"+command);
+		}		
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -42,15 +47,19 @@ public class BoardController implements ActionListener{
 		char type = action.charAt(0);
 
 		if(type == 'p'){
-			pegSelection(action);
+			selectPeg(action);
 		}
 		
 		if(type == 'g' && selectedPeg != -1){
-			placeGuess(action);
+			placeGuessPeg(action);
+		}
+		
+		if(type == 's' && selectedPeg != -1){
+			placeSolutionPeg(action);
 		}
 	}
 	
-	public void pegSelection(String p){
+	public void selectPeg(String p){
 		char peg = p.charAt(1);
 		int pegNum = Character.getNumericValue(peg);
 		
@@ -67,7 +76,7 @@ public class BoardController implements ActionListener{
 			selectedPeg = -1;
 	}
 	
-	public void placeGuess(String p){
+	public void placeGuessPeg(String p){
 		char r = p.charAt(1);
 		int row = Character.getNumericValue(r);
 		
@@ -76,5 +85,10 @@ public class BoardController implements ActionListener{
 		guessRows[row][guess].setIcon(new javax.swing.ImageIcon("icons/"+selectedPeg+".png"));
 	}
 	
-
+	public void placeSolutionPeg(String p){
+		char s = p.charAt(1);
+		int spot = Character.getNumericValue(s);
+		
+		solutionSet[spot].setIcon(new javax.swing.ImageIcon("icons/"+selectedPeg+".png"));		
+	}
 }
