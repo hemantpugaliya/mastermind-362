@@ -4,6 +4,38 @@ public class MastermindGame extends Game {
 	private GuessCommand gLog = null;
 	private FeedbackCommand fLog = null;
 	private UndoCommand uLog = null;
+	private MastermindPlayer maker = null;
+	private MastermindPlayer breaker = null;
+	protected MastermindBoard board = null;
+	protected boolean logging = false;
+	private GameBoardView gameView = null;
+	private BoardController controller = null;
+	
+	public MastermindGame()
+	{
+		// Create the UI
+		GameBoardView gameView = new GameBoardView();
+		gameView.create();
+		controller = gameView.getController();
+		
+		newGame();
+	}
+	
+	public void newGame()
+	{
+		board = new MastermindBoard();
+		
+	}
+	public void startLogging( String filename )
+	{
+		logging = true;
+		StartCommand startLog = new StartCommand( filename );
+		startLog.Execute();
+		
+		gLog = new GuessCommand();
+		fLog = new FeedbackCommand();
+		uLog = new UndoCommand();
+	}
 	
 	public void makeGuess( PegColor[] guess)
 	{
@@ -47,14 +79,4 @@ public class MastermindGame extends Game {
 		}
 	}
 	
-	public void StartLogging( String filename )
-	{
-		super.startLogging(filename);
-		
-		gLog = new GuessCommand();
-		fLog = new FeedbackCommand();
-		uLog = new UndoCommand();
-			
-	}
-
 }
