@@ -12,9 +12,10 @@
  * @author ajg9132
  *
  */
-public class Peg {
+public abstract class Peg {
 	
-	private PegColor color;
+	@SuppressWarnings("unused")
+	protected PegColor color;
 	
 	/**
 	 * Create a Peg.
@@ -27,16 +28,12 @@ public class Peg {
 	/**
 	 * @param color the color to set
 	 */
-	public void setColor(PegColor color) {
-		this.color = color;
-	}
+	public abstract void setColor(PegColor color);
 
 	/**
 	 * @return the color
 	 */
-	public PegColor getColor() {
-		return color;
-	}
+	public abstract PegColor getColor();
 	
 	
 
