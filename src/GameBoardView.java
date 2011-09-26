@@ -9,6 +9,12 @@ public class GameBoardView extends JFrame {
 	public JLabel gameName;
 	public JPanel rows;
 	public JPanel pegs;
+	public JPanel buttons;
+	public JPanel pegsButtons;
+	
+	public JButton undo = new JButton("Undo");
+	public JButton done = new JButton("Done");
+	public JButton clear = new JButton("Clear");
 	
 	public BoardController controller;
 
@@ -31,10 +37,21 @@ public class GameBoardView extends JFrame {
 		
 		PegsView pegsview = new PegsView();
 		pegsview.createGuessPanel();
+		pegsview.createFeedbackPanel();
+		
+		pegsButtons = new JPanel(new BorderLayout());
+		
 		pegs = pegsview.getGuessPanel();
+		buttons = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		buttons.add(undo);
+		buttons.add(done);
+		buttons.add(clear);
+		
+		pegsButtons.add(pegs, BorderLayout.NORTH);
+		pegsButtons.add(buttons, BorderLayout.SOUTH);
 		
 		add(rows, BorderLayout.CENTER);
-		add(pegs, BorderLayout.SOUTH);
+		add(pegsButtons, BorderLayout.SOUTH);
 		
 		createMenus();
 		
