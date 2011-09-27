@@ -35,6 +35,16 @@ public class MastermindGame extends Game {
 	 */
 	protected boolean logging = false;
 	
+	/**
+	 * The current state of the game, encapsulating the turn information
+	 */
+	private GameState currState = null;
+	
+	/**
+	 * The next state of the game, encapsulating the information for the next turn
+	 */
+	private GameState nextState = null;
+	
 	private GameBoardView gameView = null;
 	private BoardController controller = null;
 	
@@ -55,6 +65,10 @@ public class MastermindGame extends Game {
 		// Query UI for player types selected...return an int?
 		// Switch statement to create codebreaker based on input
 		maker = new CodeMaker( );
+		
+		// Create the game states to use during play
+		currState = new GuessState( breaker );
+		nextState = new FeedbackState( maker );
 		
 		// Query UI for logging status
 		// if( logging )
@@ -165,4 +179,26 @@ public class MastermindGame extends Game {
 		}
 	}
 	
+	/**
+	 * Drives the game play
+	 */
+	public void play()
+	{
+		GameState temp;
+		boolean gameOver = false;
+		
+		while( !gameOver )
+		{
+			// Take the player's turn
+			currState.takeTurn();
+			
+			// Advance to the next state
+			temp = currState;
+			currState = nextState;
+			nextState = temp;
+			
+			// TODO: check for win condition
+		}
+	}
+		
 }

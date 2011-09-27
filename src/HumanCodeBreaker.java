@@ -13,9 +13,11 @@ public class HumanCodeBreaker extends CodeBreaker {
 	 * Constructs the next guess based on user input
 	 * TODO: stub!
 	 */
-	public ArrayList< PegColor > makeMove()
+	public void makeMove()
 	{
-		return null;
+		// Get the move
+		
+		// myGame.makeGuess( move );
 	}
 
 }

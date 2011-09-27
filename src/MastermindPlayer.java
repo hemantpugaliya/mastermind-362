@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 public abstract class MastermindPlayer {
 	
-	public abstract ArrayList< PegColor > makeMove();
+	protected MastermindGame myGame = null;
+	
+	public abstract void makeMove();
 	
 }

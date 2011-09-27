@@ -24,7 +24,7 @@ public class RandomCodeBreaker extends CodeBreaker {
 	 * 
 	 * @return guess   color values for each peg in the row
 	 */
-	public ArrayList< PegColor > makeMove()
+	public void makeMove()
 	{
 		ArrayList< PegColor > guess = new ArrayList < PegColor >();
 		Random rand = new Random();
@@ -38,7 +38,8 @@ public class RandomCodeBreaker extends CodeBreaker {
 			guess.add( PegColor.values()[nextRand+1]);	
 		}
 		
-		return guess;
+		myGame.makeGuess(guess);
 	}
+	
 
 }
