@@ -86,4 +86,24 @@ public class MastermindBoard {
 	{
 		
 	}
+	
+	/**
+	 * Check if the game has been won or lost based on the most recent feedback
+	 */
+	public Boolean checkWinLoss()
+	{
+		Boolean end = null;
+		
+		if( rows.get(currRow).checkWin() )
+		{
+			end = true;
+		}
+		else if( currRow == NUMROWS )
+		{
+			end = false;
+		}
+		
+		return end;
+			
+	}
 }

@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.util.ArrayList;
 
 /*
@@ -62,6 +63,27 @@ public class PegRow {
 	 */
 	public void setFeedbackPegs(ArrayList<FeedbackPeg> feedbackPegs) {
 		this.feedbackPegs = feedbackPegs;
+	}
+	
+	/**
+	 * Check if the most recent feedback indicates a win
+	 * 
+	 * @return true if all of the feedback pegs are black
+	 */
+	public boolean checkWin()
+	{
+		boolean win = true;
+		
+		for( FeedbackPeg peg : feedbackPegs)
+		{
+			if( peg.getColor() != PegColor.BLACK)
+			{
+				win = false;
+			}
+		}
+		
+		return win;
+		
 	}
 
 }

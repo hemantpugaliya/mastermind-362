@@ -128,6 +128,22 @@ public class MastermindGame extends Game {
 			fLog.Execute();
 		}
 		
+		// Check for end of game
+		Boolean end = board.checkWinLoss();
+		
+		if( end == null )
+		{
+			// Continue the game
+		}
+		else if( end == true )
+		{
+			// Codebreaker wins!
+		}
+		else
+		{
+			// Codemaker wins!
+		}
+		
 	}
 	
 	/**
