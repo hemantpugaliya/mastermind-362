@@ -4,15 +4,14 @@ import javax.swing.*;
 
 public class PegsView {
 	
-	public JPanel guessPanel;
-	public JPanel pegs1;
-	public JPanel pegs2;
-	public JPanel pegs3;
-	public JPanel pegs4;
-	public JPanel feedbackPanel;
-	public JPanel buttons;
-	
-	public JToggleButton[] pegs;
+	private JPanel guessPanel;
+	private JPanel pegs1;
+	private JPanel pegs2;
+	private JPanel pegs3;
+	private JPanel pegs4;
+	private JPanel feedbackPanel;
+
+	private JToggleButton[] pegs;
 	
 	public PegsView(){
 		guessPanel = new JPanel(new BorderLayout());
@@ -22,7 +21,6 @@ public class PegsView {
 		pegs3 = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		pegs4 = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		pegs = new JToggleButton[8];
-		buttons = new JPanel(new FlowLayout(FlowLayout.CENTER));
 	}
 	
 	public void createGuessPanel(){

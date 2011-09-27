@@ -3,14 +3,14 @@ import javax.swing.*;
 
 public class RowsView {
 	
-	public JPanel board;
-	public JPanel rows;
-	public JPanel solution;
+	private JPanel board;
+	private JPanel rows;
+	private JPanel solution;
 	
-	public JButton[][] guessRows;
-	public JButton[][] feedbackRows;
-	public JButton[] solutionSlot;
-	public JButton eye;
+	private JButton[][] guessRows;
+	private JButton[][] feedbackRows;
+	private JButton[] solutionSlot;
+	private JButton eye;
 
 	public RowsView(){
 		board = new JPanel(new BorderLayout());

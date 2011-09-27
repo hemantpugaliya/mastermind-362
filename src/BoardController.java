@@ -13,6 +13,7 @@ public class BoardController implements ActionListener{
 	
 	public BoardController(JButton[][] guess, JButton[][] feed, JToggleButton[] pegs,
 			JButton[] solution, JButton _eye){
+		
 		guessRows = guess;
 		feedbackRows = feed;
 		guessPegs = pegs;

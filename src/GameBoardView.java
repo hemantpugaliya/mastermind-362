@@ -6,17 +6,23 @@ public class GameBoardView extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public JLabel gameName;
-	public JPanel rows;
-	public JPanel pegs;
-	public JPanel buttons;
-	public JPanel pegsButtons;
+	private JLabel gameName;
+	private JPanel rows;
+	private JPanel pegs;
+	private JPanel buttons;
+	private JPanel pegsButtons;
 	
-	public JButton undo = new JButton("Undo");
-	public JButton done = new JButton("Done");
-	public JButton clear = new JButton("Clear");
+	private JButton undo = new JButton("Undo");
+	private JButton done = new JButton("Done");
+	private JButton clear = new JButton("Clear");
+	
+	private JMenuItem newGame = new JMenuItem("New Game");
+	private JMenuItem exit = new JMenuItem("Exit");
+	private JRadioButtonMenuItem[] player = new JRadioButtonMenuItem[3];
+	private JCheckBoxMenuItem log = new JCheckBoxMenuItem("Logging");
 	
 	public BoardController controller;
+	public MenuListener menuListener;
 
 	public GameBoardView(){
 		gameName = new JLabel("Mastermind");
@@ -57,6 +63,7 @@ public class GameBoardView extends JFrame {
 		
 		controller = new BoardController(rowsview.getGuessRows(), rowsview.getFeedbackRows(),
 				pegsview.getPegs(), rowsview.getSolution(), rowsview.getEye());
+		menuListener = new MenuListener(newGame, player, log);
 		
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -68,14 +75,22 @@ public class GameBoardView extends JFrame {
 		
 		JMenu file = new JMenu("File");
 		bar.add(file);
-		JMenuItem newGame = new JMenuItem("New Game");
 		file.add(newGame);
-		JMenuItem exit = new JMenuItem("Exit");
 		file.add(exit);
 		
+		JMenu codebreakerMenu = new JMenu("Codebreaker");		
 		JMenu options = new JMenu("Options");
-		JMenuItem other = new JMenuItem("Other Stuff");
-		options.add(other);
+		
+		player[0] = new JRadioButtonMenuItem("Human", true);
+		player[1] = new JRadioButtonMenuItem("Random");
+		player[2] = new JRadioButtonMenuItem("Smart");
+		
+		codebreakerMenu.add(player[0]);
+		codebreakerMenu.add(player[1]);
+		codebreakerMenu.add(player[2]);
+		options.add(codebreakerMenu);
+		options.add(log);
+		
 		bar.add(options);
 		
 		setJMenuBar(bar);
