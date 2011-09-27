@@ -1,38 +1,48 @@
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Set;
 
 
 public  class SmartCodeBreaker extends CodeBreaker {
-	
-		/**
-		 * The number of pegs in one row of guess
-		 */
-		public final int NUMPEGS = 4;
-		/**
-		 * The max number with which to seed the random generator
-		 */
-		public final int MAXPEG = 5;
 		
 		/**
-		 * Generate a random legal guess for the next move in the game
-		 * 
-		 * @return guess   color values for each peg in the row
+		 * A set containing every possible peg combination,
+		 * used for Donald Knuth's mastermind algorithm.
 		 */
-		public ArrayList<PegColor> makeMove()
-		{
-			ArrayList< PegColor > guess = new ArrayList < PegColor >();
-			Random rand = new Random();
-			int nextRand = 0;
-			
-			// Generate a random guess for each peg
-			for( int i = 0; i < NUMPEGS; i++ )
-			{
-				nextRand = rand.nextInt(MAXPEG);
-				// Add one to the generated number to avoid blank
-				guess.add( PegColor.values()[nextRand+1]);	
+		private Set<PegColor[]> possibleMoves;
+		
+		/**
+		 * A reference to the game where this
+		 * SmartCodeBreaker is playing.
+		 */
+		private MastermindGame myGame;
+		
+		/**
+		 * Create a new SmartCodeBreaker and initialize its
+		 * possible move set.
+		 */
+		public SmartCodeBreaker(MastermindGame mg) {
+			this.myGame = mg;
+			for (PegColor a: PegColor.values()) {
+				for (PegColor b: PegColor.values()) {
+					for (PegColor c: PegColor.values()) {
+						for (PegColor d: PegColor.values()) {
+							PegColor[] e = new PegColor[4];
+							e[0] = a;
+							e[1] = b;
+							e[2] = c;
+							e[3] = d;
+							possibleMoves.add(e);
+						}
+					}
+				}
 			}
+		}
+		
+		
+		public ArrayList<PegColor> makeMove() {
+			return null;
 			
-			return guess;
 		}
 	
 }

@@ -84,7 +84,9 @@ public class MastermindBoard {
 	 */
 	public void undoMove()
 	{
-		
+		// pop a memento off the stack
+		// first row without guess or without feedback (depends)
+		// gets set to blanks
 	}
 	
 	/**
@@ -105,5 +107,42 @@ public class MastermindBoard {
 		
 		return end;
 			
+	}
+	
+	/**
+	 * Return the most recent PegRow that does not have a guess.
+	 * @return
+	 */
+	public PegRow getFirstRowWithoutGuess() {
+		for (PegRow pr: this.rows) {
+			ArrayList<PuzzlePeg> pegs = pr.getPuzzlePegs();
+			if ( pegs.get(0).getColor() == PegColor.BLANK
+					&& pegs.get(1).getColor() == PegColor.BLANK
+					&& pegs.get(2).getColor() == PegColor.BLANK
+					&& pegs.get(3).getColor() == PegColor.BLANK ) {
+				return pr;
+			}
+		}
+		// If all rows are full, return null.
+		return null;	
+	}
+	
+	/**
+	 * Return the most recent PegRow that has not received feedback.
+	 * @return
+	 */
+	public PegRow getFirstRowWithoutFeedback() {
+		for (PegRow pr: this.rows) {
+			ArrayList<FeedbackPeg> pegs = pr.getFeedbackPegs();
+			if ( pegs.get(0).getColor() == PegColor.BLANK
+					&& pegs.get(1).getColor() == PegColor.BLANK
+					&& pegs.get(2).getColor() == PegColor.BLANK
+					&& pegs.get(3).getColor() == PegColor.BLANK ) {
+				return pr;
+			}
+		}
+		// If all rows are full, return null.
+		return null;
+		
 	}
 }

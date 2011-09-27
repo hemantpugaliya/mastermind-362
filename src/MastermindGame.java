@@ -190,7 +190,7 @@ public class MastermindGame extends Game {
 		break;
 		case 1: breaker = new RandomCodeBreaker();
 		break;
-		case 2: breaker = new SmartCodeBreaker();
+		case 2: breaker = new SmartCodeBreaker(this);
 		default:
 			breaker = new HumanCodeBreaker();
 		}
