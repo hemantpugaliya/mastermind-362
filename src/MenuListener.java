@@ -67,5 +67,9 @@ public class MenuListener implements ActionListener{
 		int playerNum = Character.getNumericValue(_player);
 		selectedPlayer = playerNum;		
 	}
+	
+	public void newGame(){
+		game.newGame(log.getModel().isSelected(), selectedPlayer);
+	}
 
 }

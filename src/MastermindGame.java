@@ -54,17 +54,17 @@ public class MastermindGame extends Game {
 		// Create the UI
 		GameBoardView gameView = new GameBoardView(this);
 		gameView.create();
-
-		newGame();
 	}
 	
-	public void newGame()
+	public void newGame(boolean _logging, int _playerNum)
 	{
 		board = new MastermindBoard();
 		
 		// Query UI for player types selected...return an int?
 		// Switch statement to create codebreaker based on input
 		maker = new CodeMaker( );
+		
+		breaker = setCodeBreaker(_playerNum);
 		
 		// Create the game states to use during play
 		currState = new GuessState( breaker );
@@ -78,6 +78,10 @@ public class MastermindGame extends Game {
 		// }
 		
 		// Get solution
+		
+		logging = _logging;
+		
+		play();
 		
 	}
 	
@@ -199,6 +203,25 @@ public class MastermindGame extends Game {
 			
 			// TODO: check for win condition
 		}
+	}
+	
+	public CodeBreaker setCodeBreaker( int _playerNum )
+	{
+		CodeBreaker breaker;
+		
+		switch( _playerNum )
+		{
+		case 0: breaker = new HumanCodeBreaker();
+		break;
+		case 1: breaker = new RandomCodeBreaker();
+		break;
+		case 2: breaker = new SmartCodeBreaker();
+		default:
+			breaker = new HumanCodeBreaker();
+		}
+		
+		return breaker;
+		
 	}
 		
 }
