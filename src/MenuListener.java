@@ -51,11 +51,14 @@ public class MenuListener implements ActionListener{
 					game.startLogging(file.toString());
 				}catch(Exception e1){
 					log.getModel().setSelected(false);
+					fc.setSelectedFile(null);
 				}
 			}
 			else{
 				game.stopLogging();
+				fc.setSelectedFile(null);
 			}
+				
 		}
 	}
 	
