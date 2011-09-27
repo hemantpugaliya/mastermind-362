@@ -23,9 +23,11 @@ public class GameBoardView extends JFrame {
 	
 	public BoardController controller;
 	public MenuListener menuListener;
+	public MastermindGame game;
 
-	public GameBoardView(){
+	public GameBoardView(MastermindGame _game){
 		gameName = new JLabel("Mastermind");
+		game = _game;
 	}
 	
 	public void create(){
@@ -61,9 +63,9 @@ public class GameBoardView extends JFrame {
 		
 		createMenus();
 		
-		controller = new BoardController(rowsview.getGuessRows(), rowsview.getFeedbackRows(),
+		controller = new BoardController(game, rowsview.getGuessRows(), rowsview.getFeedbackRows(),
 				pegsview.getPegs(), rowsview.getSolution(), rowsview.getEye());
-		menuListener = new MenuListener(newGame, player, log);
+		menuListener = new MenuListener(game, newGame, player, log);
 		
 		setLocationRelativeTo(null);
 		setVisible(true);

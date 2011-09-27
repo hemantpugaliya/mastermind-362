@@ -9,9 +9,11 @@ public class BoardController implements ActionListener{
 	public JButton[] solutionSet;
 	public JButton eye;
 	
+	public MastermindGame game;
+	
 	public int selectedPeg = -1;
 	
-	public BoardController(JButton[][] guess, JButton[][] feed, JToggleButton[] pegs,
+	public BoardController(MastermindGame _game, JButton[][] guess, JButton[][] feed, JToggleButton[] pegs,
 			JButton[] solution, JButton _eye){
 		
 		guessRows = guess;
@@ -19,6 +21,7 @@ public class BoardController implements ActionListener{
 		guessPegs = pegs;
 		solutionSet = solution;
 		eye = _eye;
+		game = _game;
 		
 		for(int i = 0; i < 10; i++){
 			for(int j = 0; j < 4; j++){

@@ -1,4 +1,6 @@
 import java.awt.event.*;
+import java.io.File;
+
 import javax.swing.*;
 
 
@@ -9,10 +11,14 @@ public class MenuListener implements ActionListener{
 	private JCheckBoxMenuItem log;
 	private ButtonGroup playerGroup = new ButtonGroup();
 	private int selectedPlayer = 0;
+	private JFileChooser fc = new JFileChooser();
+	private JFrame menu = new JFrame();
+	private MastermindGame game;
 	
-	public MenuListener(JMenuItem newG, JRadioButtonMenuItem[] _player, JCheckBoxMenuItem _log){
+	public MenuListener(MastermindGame _game, JMenuItem newG, JRadioButtonMenuItem[] _player, JCheckBoxMenuItem _log){
 		
 		newGame = newG;
+		game = _game;
 		
 		log = _log;
 		log.addActionListener(this);
@@ -38,7 +44,18 @@ public class MenuListener implements ActionListener{
 		}
 		
 		if(type == 'l'){
-			
+			if(log.getModel().isSelected()){
+				fc.showOpenDialog(menu);
+				try{
+					File file = fc.getSelectedFile();
+					game.startLogging(file.toString());
+				}catch(Exception e1){
+					
+				}
+			}
+			else{
+				game.stopLogging();
+			}
 		}
 	}
 	

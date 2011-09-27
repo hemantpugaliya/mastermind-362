@@ -42,10 +42,9 @@ public class MastermindGame extends Game {
 	public MastermindGame()
 	{
 		// Create the UI
-		GameBoardView gameView = new GameBoardView();
+		GameBoardView gameView = new GameBoardView(this);
 		gameView.create();
-		controller = gameView.getController();
-		
+
 		newGame();
 	}
 	
