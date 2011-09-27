@@ -76,7 +76,7 @@ public class PegRow {
 		
 		for( FeedbackPeg peg : feedbackPegs)
 		{
-			if( peg.getColor() != PegColor.BLACK)
+			if( peg.getColor() != PegColor.FBLACK)
 			{
 				win = false;
 			}

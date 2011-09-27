@@ -22,8 +22,8 @@ public class FeedbackPeg extends Peg {
 	public FeedbackPeg(PegColor color) {
 		super(color);
 		if (color == PegColor.BLANK || 
-				color == PegColor.BLACK  ||
-				color == PegColor.WHITE) {
+				color == PegColor.FBLACK  ||
+				color == PegColor.FWHITE) {
 			this.color = color;
 		} else {
 			this.color = PegColor.BLANK;
@@ -48,8 +48,8 @@ public class FeedbackPeg extends Peg {
 	@Override
 	public void setColor(PegColor color) {
 		if (color == PegColor.BLANK || 
-				color == PegColor.BLACK  ||
-				color == PegColor.WHITE) {
+				color == PegColor.FBLACK  ||
+				color == PegColor.FWHITE) {
 			this.color = color;
 		}
 	}

@@ -1,7 +1,7 @@
 
 public enum PegColor {
 	
-		BLANK("0"), BLACK("K"), WHITE("W"), RED("R"), YELLOW("Y"), GREEN("G"), BLUE("B");
+		RED("R"), BLUE("B"), GREEN("G"), YELLOW("Y"), GWHITE("W"), GBLACK("K"), FWHITE("W"), FBLACK("K"), BLANK("0");
 		
 		private String name;
 		
