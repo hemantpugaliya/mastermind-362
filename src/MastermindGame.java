@@ -131,7 +131,7 @@ public class MastermindGame extends Game {
 	/**
 	 * Undo the most recent feedback and/or guess, propagate to board and log file
 	 */
-	public void Undo()
+	public void undo()
 	{
 		int numUndo = 0;
 		
