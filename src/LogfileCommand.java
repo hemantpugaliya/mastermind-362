@@ -1,3 +1,9 @@
+/**
+ * LogfileCommand
+ * 
+ * @author Gabbie Burns
+ *
+ */
 
 public abstract class LogfileCommand {
 	

@@ -1,27 +1,57 @@
+import java.util.ArrayList;
 
+
+/**
+ * GuessCommand
+ * 
+ * @author Gabbie Burns
+ *
+ */
 public class GuessCommand extends LogfileCommand {
 	
+	/**
+	 * Logfile acts as the receiver for this command.
+	 */
 	private Logfile myLog = null;
+	/**
+	 * Message to be written out to the log.
+	 */
 	private String logMsg = null;
-	private PegColor[] guess = null;
+	/**
+	 * Most recent guess from the codebreaker.
+	 */
+	private ArrayList< PegColor > guess = null;
 	
 	private final int NUMPEGS = 4;
 	
+	/**
+	 * Constructor-gets logfile instance at creation.
+	 */
 	public GuessCommand()
 	{
 		myLog = Logfile.getInstance();
 	}
 	
-	public void setGuess( PegColor[] newGuess )
+	/**
+	 * Update the most recent guess when a move is made
+	 * 
+	 * @param newGuess: the newest guess from the codebreaker
+	 * 
+	 */
+	public void setGuess( ArrayList< PegColor > newGuess )
 	{
 		guess = newGuess;
 	}
 	
+	/**
+	 * Write the guess out to the logfile.
+	 */
 	public void Execute()
 	{
-		if( guess.length != NUMPEGS )
+		if( guess.size() != NUMPEGS )
 		{
 			// Error
+			// Should I bother checking this?
 		}
 		else
 		{
@@ -31,13 +61,21 @@ public class GuessCommand extends LogfileCommand {
 			// Append the guesses for each peg
 			for( int i = 0; i < NUMPEGS; i++ )
 			{
-				logMsg = logMsg + " " + calcColor(guess[i]);
+				logMsg = logMsg + " " + calcColor(guess.get(i));
 			}
 		}
 		
 		myLog.writeLog(logMsg);
 	}
 	
+	/**
+	 * Convert the given color information into a format for the logfile.
+	 * Colors for guess pegs can be black, white, red, yellow, green, blue.
+	 * 
+	 * @param peg  the color information for a given peg
+	 * @return colorCode   the appropriate log format to represent the peg
+	 * 
+	 */
 	private String calcColor( PegColor peg )
 	{
 		String colorCode = "";
@@ -67,7 +105,8 @@ public class GuessCommand extends LogfileCommand {
 			colorCode = PegColor.BLUE.toString();
 			
 		default:
-				// Error
+			// Use a special character for an error situation
+			colorCode = "X";
 		}
 		
 		return colorCode;

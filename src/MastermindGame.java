@@ -1,15 +1,43 @@
+import java.util.ArrayList;
 
+
+/**
+ * MastermindGame
+ * 
+ * @author Gabbie Burns
+ * @contributor Jim Kuglics
+ *
+ */
 public class MastermindGame extends Game {
 	
+	/**
+	 * A set of commands used for logging different moves
+	 */
+	private ToggleLogCommand tLog = null;
 	private GuessCommand gLog = null;
 	private FeedbackCommand fLog = null;
 	private UndoCommand uLog = null;
+	
+	/**
+	 * The two players responsible for game play
+	 */
 	private MastermindPlayer maker = null;
 	private MastermindPlayer breaker = null;
+	
+	/**
+	 * A representation of the board
+	 */
 	protected MastermindBoard board = null;
+	
+	/**
+	 * Indicates whether not logging is currently enabled
+	 * TODO: needed?
+	 */
 	protected boolean logging = false;
+	
 	private GameBoardView gameView = null;
 	private BoardController controller = null;
+	
 	
 	public MastermindGame()
 	{
@@ -25,19 +53,51 @@ public class MastermindGame extends Game {
 	{
 		board = new MastermindBoard();
 		
+		// Query UI for player types selected...return an int?
+		// Switch statement to create codebreaker based on input
+		maker = new CodeMaker( );
+		
+		// Query UI for logging status
+		// if( logging )
+		// {
+		//		prompt for file name?
+		//		startLogging( filename );
+		// }
+		
+		// Get solution
+		
 	}
+	
+	/**
+	 * Start logging the moves for the current game
+	 * 
+	 * @param filename   the file to be used for logging the current game
+	 */
 	public void startLogging( String filename )
 	{
 		logging = true;
-		StartCommand startLog = new StartCommand( filename );
-		startLog.Execute();
+		tLog = new ToggleLogCommand(filename);
+		tLog.Execute();
 		
 		gLog = new GuessCommand();
 		fLog = new FeedbackCommand();
 		uLog = new UndoCommand();
 	}
 	
-	public void makeGuess( PegColor[] guess)
+	/**
+	 * Stop logging the moves for the current game
+	 */
+	public void stopLogging()
+	{
+		tLog.Execute();
+	}
+	
+	/**
+	 * Propagate the most recent guess to the board and the logfile
+	 * 
+	 * @param guess   the most recent guess from the codebreaker
+	 */
+	public void makeGuess( ArrayList< PegColor > guess)
 	{
 		// Do stuff with the MastermindBoard
 		
@@ -50,7 +110,12 @@ public class MastermindGame extends Game {
 		
 	}
 	
-	public void giveFeedback( PegColor[] feedback )
+	/**
+	 * Propagate the most recent feedback to the board and the logfile
+	 * 
+	 * @param feedback  the most recent feedback from the codemaker
+	 */
+	public void giveFeedback( ArrayList< PegColor > feedback )
 	{
 		// Do stuff with the MastermindBoard
 		
@@ -63,6 +128,9 @@ public class MastermindGame extends Game {
 		
 	}
 	
+	/**
+	 * Undo the most recent feedback and/or guess, propagate to board and log file
+	 */
 	public void Undo()
 	{
 		int numUndo = 0;
