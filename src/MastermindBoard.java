@@ -90,17 +90,17 @@ public class MastermindBoard {
 	/**
 	 * Check if the game has been won or lost based on the most recent feedback
 	 */
-	public Boolean checkWinLoss()
+	public int checkWinLoss()
 	{
-		Boolean end = null;
+		int end = 0;
 		
 		if( rows.get(currRow).checkWin() )
 		{
-			end = true;
+			end = 2;
 		}
 		else if( currRow == NUMROWS )
 		{
-			end = false;
+			end = 1;
 		}
 		
 		return end;

@@ -139,7 +139,7 @@ public class MastermindGame extends Game {
 	 * 
 	 * @param feedback  the most recent feedback from the codemaker
 	 */
-	public void giveFeedback( ArrayList< PegColor > feedback )
+	public int giveFeedback( ArrayList< PegColor > feedback )
 	{
 		// If the guess is null, we are using a computer codemaker
 		if( feedback == null )
@@ -157,22 +157,7 @@ public class MastermindGame extends Game {
 			fLog.Execute();
 		}
 		
-		// Check for end of game
-		Boolean end = board.checkWinLoss();
-		
-		if( end == null )
-		{
-			// Continue the game
-		}
-		else if( end == true )
-		{
-			// Codebreaker wins!
-		}
-		else
-		{
-			// Codemaker wins!
-		}
-		
+		return board.checkWinLoss();
 	}
 	
 	/**
