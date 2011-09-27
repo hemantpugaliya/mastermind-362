@@ -54,6 +54,8 @@ public class MastermindGame extends Game {
 		// Create the UI
 		GameBoardView gameView = new GameBoardView(this);
 		gameView.create();
+		controller = gameView.getController();
+
 	}
 	
 	public void newGame(boolean _logging, int _playerNum)
@@ -80,9 +82,7 @@ public class MastermindGame extends Game {
 		// Get solution
 		
 		logging = _logging;
-		
-		play();
-		
+			
 	}
 	
 	/**
@@ -116,6 +116,12 @@ public class MastermindGame extends Game {
 	 */
 	public void makeGuess( ArrayList< PegColor > guess)
 	{
+		// If the guess is null, we are using a computer codebreaker
+		if( guess == null )
+		{
+			guess = breaker.makeMove();
+		}
+		
 		// Notify the board
 		board.newGuess(guess);
 		
@@ -135,6 +141,12 @@ public class MastermindGame extends Game {
 	 */
 	public void giveFeedback( ArrayList< PegColor > feedback )
 	{
+		// If the guess is null, we are using a computer codemaker
+		if( feedback == null )
+		{
+			feedback = maker.makeMove();
+		}
+		
 		// Notify the board
 		board.newFeedback(feedback);
 		
@@ -180,28 +192,6 @@ public class MastermindGame extends Game {
 		{
 			uLog.setNumUndo(numUndo);
 			uLog.Execute();
-		}
-	}
-	
-	/**
-	 * Drives the game play
-	 */
-	public void play()
-	{
-		GameState temp;
-		boolean gameOver = false;
-		
-		while( !gameOver )
-		{
-			// Take the player's turn
-			currState.takeTurn();
-			
-			// Advance to the next state
-			temp = currState;
-			currState = nextState;
-			nextState = temp;
-			
-			// TODO: check for win condition
 		}
 	}
 	

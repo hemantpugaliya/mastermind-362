@@ -8,9 +8,7 @@ import java.util.ArrayList;
  */
 
 public abstract class MastermindPlayer {
-	
-	protected MastermindGame myGame = null;
-	
-	public abstract void makeMove();
+		
+	public abstract ArrayList<PegColor> makeMove();
 	
 }

@@ -10,14 +10,11 @@ import java.util.ArrayList;
 public class CodeMaker extends MastermindPlayer {
 	
 	/**
-	 * Constructs the next set of feedback based on user input
-	 * TODO: stub!
+	 * Stub because human feedback information comes from the UI
 	 */
-	public void makeMove()
+	public ArrayList<PegColor> makeMove()
 	{
-		// Get move from UI
-		
-		// myGame.giveFeedback( move );
+		return null;
 	}
 
 }

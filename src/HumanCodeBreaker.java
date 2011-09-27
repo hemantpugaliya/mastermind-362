@@ -10,14 +10,11 @@ import java.util.ArrayList;
 public class HumanCodeBreaker extends CodeBreaker {
 	
 	/**
-	 * Constructs the next guess based on user input
-	 * TODO: stub!
+	 * Stub because human guess information comes from the UI
 	 */
-	public void makeMove()
+	public ArrayList<PegColor> makeMove()
 	{
-		// Get the move
-		
-		// myGame.makeGuess( move );
+		return null;
 	}
 
 }
