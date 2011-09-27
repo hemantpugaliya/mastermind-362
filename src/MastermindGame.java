@@ -61,11 +61,12 @@ public class MastermindGame extends Game {
 	public void newGame(boolean _logging, int _playerNum)
 	{
 		board = new MastermindBoard();
+		logging = _logging;
 		
 		// Query UI for player types selected...return an int?
 		// Switch statement to create codebreaker based on input
-		maker = new CodeMaker( );
-		
+	
+		maker = new CodeMaker( );		
 		breaker = setCodeBreaker(_playerNum);
 		
 		// Create the game states to use during play
@@ -80,8 +81,6 @@ public class MastermindGame extends Game {
 		// }
 		
 		// Get solution
-		
-		logging = _logging;
 			
 	}
 	
@@ -98,7 +97,7 @@ public class MastermindGame extends Game {
 		
 		gLog = new GuessCommand();
 		fLog = new FeedbackCommand();
-		uLog = new UndoCommand();
+		uLog = new UndoCommand();  
 	}
 	
 	/**
