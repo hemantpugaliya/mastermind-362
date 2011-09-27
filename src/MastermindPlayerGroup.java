@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
 
-public class MasterMindPlayerGroup {
+public class MastermindPlayerGroup {
 
 	private ArrayList<MastermindPlayer> playerGroup = new ArrayList<MastermindPlayer>();
-	public MasterMindPlayerGroup()
+	public MastermindPlayerGroup()
 	{
 		playerGroup = new ArrayList<MastermindPlayer>();
 		

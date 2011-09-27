@@ -2,7 +2,7 @@ import java.awt.*;
 
 import javax.swing.*;
 
-public class GameBoardView extends JFrame {
+public class BoardView extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -26,7 +26,7 @@ public class GameBoardView extends JFrame {
 	public MenuListener menuListener;
 	public MastermindGame game;
 
-	public GameBoardView(MastermindGame _game){
+	public BoardView(MastermindGame _game){
 		gameName = new JLabel("Mastermind");
 		game = _game;
 	}
@@ -72,7 +72,7 @@ public class GameBoardView extends JFrame {
 		controller = new BoardController(game, rowsview.getGuessRows(), rowsview.getFeedbackRows(),
 				pegsview.getPegs(), rowsview.getSolution(), rowsview.getEye(), undo, done, clear,
 				guessPanel, feedbackPanel, pegsButtonsPanel);
-		menuListener = new MenuListener(game, newGame, player, log);
+		menuListener = new MenuListener(game, newGame, player, log, controller);
 		
 		setLocationRelativeTo(null);
 		setVisible(true);

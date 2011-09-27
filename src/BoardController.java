@@ -42,10 +42,16 @@ public class BoardController implements ActionListener{
 		game = _game;
 		
 		undo = _undo;
-		done = _done;
+		undo.addActionListener(this);
+		undo.setActionCommand("u");
+		
+		done = _done;	
 		done.addActionListener(this);
 		done.setActionCommand("d");
+		
 		clear = _clear;
+		clear.addActionListener(this);
+		clear.setActionCommand("c");
 		
 		guessPanel = _guessPanel;
 		feedbackPanel = _feedbackPanel;
@@ -101,6 +107,10 @@ public class BoardController implements ActionListener{
 		
 		if(type == 'd'){
 			done();
+		}
+		
+		if(type == 'c'){
+			clear();
 		}
 	}
 	
@@ -191,14 +201,29 @@ public class BoardController implements ActionListener{
 			
 			feedbackPanel.setVisible(false);
 			guessPanel.setVisible(true);
-			resetCurrentFeedback();
+			currentFeedbackRow -= 1;
 			int gameState = game.giveFeedback(feedback);
+			resetCurrentFeedback();
 			
 			if(gameState == 1 || gameState == 2){
-				System.out.println(gameState);
-				System.out.println("WORKING");
+				System.out.println("WINNER");
 			}
 			guessState = true;
+		}
+	}
+	
+	public void clear(){
+		if(guessState){
+			for(int i = 0; i < 4; i++){
+				guessRows[currentGuessRow][i].setIcon(new javax.swing.ImageIcon("icons/gray.png"));
+				resetCurrentGuess();
+			}
+		}
+		else{
+			for(int i = 0; i < 4; i++){
+				feedbackRows[currentFeedbackRow][i].setIcon(new javax.swing.ImageIcon("icons/gray2.png"));
+				resetCurrentFeedback();
+			}
 		}
 	}
 	
@@ -212,5 +237,18 @@ public class BoardController implements ActionListener{
 		for(int i = 0; i < 4; i++){
 			currentFeedback[i] = 8;
 		}
+	}
+	
+	public void resetGame(){
+		for(int i = 0; i < 10; i++){
+			for(int j = 0; j < 4; j++){
+				guessRows[i][j].setIcon(new javax.swing.ImageIcon("icons/gray.png"));
+				feedbackRows[i][j].setIcon(new javax.swing.ImageIcon("icons/gray2.png"));
+			}
+		}
+		resetCurrentGuess();
+		resetCurrentFeedback();	
+		currentGuessRow = 9;
+		currentFeedbackRow = 9;
 	}
 }

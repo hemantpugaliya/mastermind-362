@@ -45,14 +45,14 @@ public class MastermindGame extends Game {
 	 */
 	private GameState nextState = null;
 	
-	private GameBoardView gameView = null;
+	private BoardView gameView = null;
 	private BoardController controller = null;
 	
 	
 	public MastermindGame()
 	{
 		// Create the UI
-		GameBoardView gameView = new GameBoardView(this);
+		BoardView gameView = new BoardView(this);
 		gameView.create();
 		controller = gameView.getController();
 		newGame(false, 0);

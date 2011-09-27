@@ -14,10 +14,17 @@ public class MenuListener implements ActionListener{
 	private JFileChooser fc = new JFileChooser();
 	private JFrame menu = new JFrame();
 	private MastermindGame game;
+	private BoardController controller;
 	
-	public MenuListener(MastermindGame _game, JMenuItem newG, JRadioButtonMenuItem[] _player, JCheckBoxMenuItem _log){
+	public MenuListener(MastermindGame _game, JMenuItem newG, JRadioButtonMenuItem[] _player,
+			JCheckBoxMenuItem _log, BoardController control){
+		
+		controller = control;
 		
 		newGame = newG;
+		newGame.addActionListener(this);
+		newGame.setActionCommand("n");
+		
 		game = _game;
 		
 		log = _log;
@@ -38,6 +45,10 @@ public class MenuListener implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
 		char type = action.charAt(0);
+		
+		if(type == 'n'){
+			newGame();
+		}
 		
 		if(type == 'p'){
 			setPlayer(action);
@@ -69,7 +80,8 @@ public class MenuListener implements ActionListener{
 	}
 	
 	public void newGame(){
-		game.newGame(log.getModel().isSelected(), selectedPlayer);
+		controller.resetGame();
+		game.newGame(log.getModel().isSelected(), selectedPlayer);		
 	}
 
 }
