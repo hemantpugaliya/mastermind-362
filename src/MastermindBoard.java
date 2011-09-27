@@ -143,6 +143,24 @@ public class MastermindBoard {
 		}
 		// If all rows are full, return null.
 		return null;
-		
+	}
+	
+	/**
+	 * Return the most recent PegRow that has a guess.
+	 * Checking for feedback is more difficult because of (0,0) feedback.
+	 * @return
+	 */
+	public PegRow getLastFullRow() {
+		for (PegRow pr: this.rows) {
+			ArrayList<PuzzlePeg> pegs = pr.getPuzzlePegs();
+			if ( pegs.get(0).getColor() != PegColor.BLANK
+					&& pegs.get(1).getColor() != PegColor.BLANK
+					&& pegs.get(2).getColor() != PegColor.BLANK
+					&& pegs.get(3).getColor() != PegColor.BLANK ) {
+				return pr;
+			}
+		}
+		// If no row is full, return null.
+		return null;
 	}
 }
