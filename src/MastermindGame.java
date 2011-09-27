@@ -99,7 +99,8 @@ public class MastermindGame extends Game {
 	 */
 	public void makeGuess( ArrayList< PegColor > guess)
 	{
-		// Do stuff with the MastermindBoard
+		// Notify the board
+		board.newGuess(guess);
 		
 		// Log the guess
 		if( logging )
@@ -117,7 +118,8 @@ public class MastermindGame extends Game {
 	 */
 	public void giveFeedback( ArrayList< PegColor > feedback )
 	{
-		// Do stuff with the MastermindBoard
+		// Notify the board
+		board.newFeedback(feedback);
 		
 		// Log the feedback
 		if( logging )
@@ -137,7 +139,8 @@ public class MastermindGame extends Game {
 		
 		// Check the game state and set numUndo
 		
-		// Do stuff with MastermindBoard
+		// Notify the board
+		board.undoMove();
 		
 		// Log the undo
 		if( logging )
