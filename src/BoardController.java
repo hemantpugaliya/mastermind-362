@@ -3,15 +3,15 @@ import javax.swing.*;
 
 public class BoardController implements ActionListener{
 	
-	public JButton[][] guessRows;
-	public JButton[][] feedbackRows;
-	public JToggleButton[] guessPegs;
-	public JButton[] solutionSet;
-	public JButton eye;
+	private JButton[][] guessRows;
+	private JButton[][] feedbackRows;
+	private JToggleButton[] guessPegs;
+	private JButton[] solutionSet;
+	private JButton eye;
 	
-	public MastermindGame game;
+	private MastermindGame game;
 	
-	public int selectedPeg = -1;
+	private int selectedPeg = -1;
 	
 	public BoardController(MastermindGame _game, JButton[][] guess, JButton[][] feed, JToggleButton[] pegs,
 			JButton[] solution, JButton _eye){

@@ -50,7 +50,7 @@ public class MenuListener implements ActionListener{
 					File file = fc.getSelectedFile();
 					game.startLogging(file.toString());
 				}catch(Exception e1){
-					
+					log.getModel().setSelected(false);
 				}
 			}
 			else{
