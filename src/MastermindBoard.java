@@ -94,7 +94,7 @@ public class MastermindBoard {
 	{
 		int end = 0;
 		
-		if( rows.get(currRow).checkWin() )
+		if( rows.get(currRow-1).checkWin() )
 		{
 			end = 2;
 		}

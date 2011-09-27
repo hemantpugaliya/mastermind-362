@@ -76,8 +76,10 @@ public class PegRow {
 		
 		for( FeedbackPeg peg : feedbackPegs)
 		{
+			System.out.println(peg.getColor());
 			if( peg.getColor() != PegColor.FBLACK)
 			{
+				System.out.println(peg.getColor());
 				win = false;
 			}
 		}

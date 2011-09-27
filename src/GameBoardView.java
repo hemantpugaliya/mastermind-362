@@ -8,9 +8,10 @@ public class GameBoardView extends JFrame {
 	
 	private JLabel gameName;
 	private JPanel rows;
-	private JPanel pegs;
+	private JPanel guessPanel;
+	private JPanel feedbackPanel;
 	private JPanel buttons;
-	private JPanel pegsButtons;
+	private JPanel pegsButtonsPanel;
 	
 	private JButton undo = new JButton("Undo");
 	private JButton done = new JButton("Done");
@@ -47,24 +48,30 @@ public class GameBoardView extends JFrame {
 		pegsview.createGuessPanel();
 		pegsview.createFeedbackPanel();
 		
-		pegsButtons = new JPanel(new BorderLayout());
+		pegsButtonsPanel = new JPanel(new BorderLayout());
 		
-		pegs = pegsview.getGuessPanel();
+		guessPanel = pegsview.getGuessPanel();
+		feedbackPanel = pegsview.getFeedbackPanel();
 		buttons = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		buttons.add(undo);
 		buttons.add(done);
 		buttons.add(clear);
 		
-		pegsButtons.add(pegs, BorderLayout.NORTH);
-		pegsButtons.add(buttons, BorderLayout.SOUTH);
+		pegsButtonsPanel.add(feedbackPanel, BorderLayout.CENTER);
+		feedbackPanel.setVisible(false);
+		
+		pegsButtonsPanel.add(guessPanel, BorderLayout.NORTH);
+		
+		pegsButtonsPanel.add(buttons, BorderLayout.SOUTH);
 		
 		add(rows, BorderLayout.CENTER);
-		add(pegsButtons, BorderLayout.SOUTH);
+		add(pegsButtonsPanel, BorderLayout.SOUTH);
 		
 		createMenus();
 		
 		controller = new BoardController(game, rowsview.getGuessRows(), rowsview.getFeedbackRows(),
-				pegsview.getPegs(), rowsview.getSolution(), rowsview.getEye());
+				pegsview.getPegs(), rowsview.getSolution(), rowsview.getEye(), undo, done, clear,
+				guessPanel, feedbackPanel, pegsButtonsPanel);
 		menuListener = new MenuListener(game, newGame, player, log);
 		
 		setLocationRelativeTo(null);

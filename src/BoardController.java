@@ -1,4 +1,6 @@
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 public class BoardController implements ActionListener{
@@ -9,12 +11,28 @@ public class BoardController implements ActionListener{
 	private JButton[] solutionSet;
 	private JButton eye;
 	
+	private JPanel guessPanel;
+	private JPanel feedbackPanel;
+	private JPanel pegsButtonsPanel;
+	
+	private int[] currentGuess = new int[4];
+	private int[] currentFeedback = new int [4];
+	private int currentGuessRow;
+	private int currentFeedbackRow;
+	
+	private JButton undo;
+	private JButton done;
+	private JButton clear;
+	
+	private boolean guessState = true;
+	
 	private MastermindGame game;
 	
-	private int selectedPeg = -1;
+	private int selectedPeg = 8;
 	
 	public BoardController(MastermindGame _game, JButton[][] guess, JButton[][] feed, JToggleButton[] pegs,
-			JButton[] solution, JButton _eye){
+			JButton[] solution, JButton _eye, JButton _undo, JButton _done, JButton _clear,
+			JPanel _guessPanel, JPanel _feedbackPanel, JPanel _pegButtons){
 		
 		guessRows = guess;
 		feedbackRows = feed;
@@ -22,6 +40,16 @@ public class BoardController implements ActionListener{
 		solutionSet = solution;
 		eye = _eye;
 		game = _game;
+		
+		undo = _undo;
+		done = _done;
+		done.addActionListener(this);
+		done.setActionCommand("d");
+		clear = _clear;
+		
+		guessPanel = _guessPanel;
+		feedbackPanel = _feedbackPanel;
+		pegsButtonsPanel = _pegButtons;
 		
 		for(int i = 0; i < 10; i++){
 			for(int j = 0; j < 4; j++){
@@ -43,7 +71,12 @@ public class BoardController implements ActionListener{
 			solutionSet[i].addActionListener(this);
 			String command = Integer.toString(i);
 			solutionSet[i].setActionCommand("s"+command);
-		}		
+		}
+		
+		resetCurrentGuess();
+		resetCurrentFeedback();
+		currentGuessRow = 9;
+		currentFeedbackRow = 9;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -54,16 +87,20 @@ public class BoardController implements ActionListener{
 			selectPeg(action);
 		}
 		
-		if(type == 'g' && selectedPeg != -1){
+		if(type == 'g' && selectedPeg != 8){
 			placeGuessPeg(action);
 		}
 		
-		if(type == 'f' && selectedPeg != -1){
+		if(type == 'f' && selectedPeg != 8){
 			placeFeedbackPeg(action);
 		}
 		
-		if(type == 's' && selectedPeg != -1){
+		if(type == 's' && selectedPeg != 8){
 			placeSolutionPeg(action);
+		}
+		
+		if(type == 'd'){
+			done();
 		}
 	}
 	
@@ -81,7 +118,7 @@ public class BoardController implements ActionListener{
 		if(selectedPeg != pegNum)
 			selectedPeg = pegNum;
 		else
-			selectedPeg = -1;
+			selectedPeg = 8;
 	}
 	
 	public void placeGuessPeg(String p){
@@ -90,7 +127,11 @@ public class BoardController implements ActionListener{
 		
 		char g = p.charAt(2);
 		int guess = Character.getNumericValue(g);
-		guessRows[row][guess].setIcon(new javax.swing.ImageIcon("icons/"+selectedPeg+".png"));
+		
+		if(row == currentGuessRow){
+			guessRows[row][guess].setIcon(new javax.swing.ImageIcon("icons/"+selectedPeg+".png"));
+			currentGuess[guess] = selectedPeg;
+		}
 	}
 	
 	public void placeFeedbackPeg(String p){
@@ -100,10 +141,12 @@ public class BoardController implements ActionListener{
 		char g = p.charAt(2);
 		int guess = Character.getNumericValue(g);
 		
-		int smallPeg = selectedPeg;
-		
-		if(smallPeg > 5){
-			feedbackRows[row][guess].setIcon(new javax.swing.ImageIcon("icons/"+smallPeg+".png"));
+		if(row == currentFeedbackRow){
+			int smallPeg = selectedPeg;
+			if(smallPeg > 5){
+				feedbackRows[row][guess].setIcon(new javax.swing.ImageIcon("icons/"+smallPeg+".png"));
+				currentFeedback[guess] = smallPeg;
+			}	
 		}
 	}
 	
@@ -112,5 +155,62 @@ public class BoardController implements ActionListener{
 		int guess = Character.getNumericValue(s);
 		
 		solutionSet[guess].setIcon(new javax.swing.ImageIcon("icons/"+selectedPeg+".png"));		
+	}
+	
+	public void done(){
+		if(guessState){	
+			ArrayList<PegColor> guess = new ArrayList<PegColor>();
+			boolean full = false;	
+			
+			for(int i = 0; i < 4; i++){
+				if(currentGuess[i] != 8){
+					guess.add(PegColor.values()[currentGuess[i]]);
+					if(i == 3)
+						full = true;
+				}
+				else{
+					break;
+				}
+			}
+			
+			if(full){
+				game.makeGuess(guess);
+				currentGuessRow -= 1;
+				resetCurrentGuess();
+				guessPanel.setVisible(false);
+				feedbackPanel.setVisible(true);
+				guessState = false;
+			}
+		}
+		else{
+			ArrayList<PegColor> feedback = new ArrayList<PegColor>();
+			
+			for(int i = 0; i < 4; i++){
+				feedback.add(PegColor.values()[currentFeedback[i]]);
+			}
+			
+			feedbackPanel.setVisible(false);
+			guessPanel.setVisible(true);
+			resetCurrentFeedback();
+			int gameState = game.giveFeedback(feedback);
+			
+			if(gameState == 1 || gameState == 2){
+				System.out.println(gameState);
+				System.out.println("WORKING");
+			}
+			guessState = true;
+		}
+	}
+	
+	public void resetCurrentGuess(){
+		for(int i = 0; i < 4; i++){
+			currentGuess[i] = 8;
+		}
+	}
+	
+	public void resetCurrentFeedback(){
+		for(int i = 0; i < 4; i++){
+			currentFeedback[i] = 8;
+		}
 	}
 }

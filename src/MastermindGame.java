@@ -55,7 +55,7 @@ public class MastermindGame extends Game {
 		GameBoardView gameView = new GameBoardView(this);
 		gameView.create();
 		controller = gameView.getController();
-
+		newGame(false, 0);
 	}
 	
 	public void newGame(boolean _logging, int _playerNum)
