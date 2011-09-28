@@ -13,7 +13,7 @@ public class GuessState extends GameState {
 	 */
 	public int undoTurn() {
 		
-		return 2;
+		return 1;
 		
 	}
 

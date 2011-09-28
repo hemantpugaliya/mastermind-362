@@ -173,7 +173,7 @@ public class MastermindGame extends Game {
 		// Check the game state and set numUndo
 		
 		// Notify the board
-		board.undoMove();
+		board.undoMove(numUndo);
 		
 		// Log the undo
 		if( logging )

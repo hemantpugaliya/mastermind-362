@@ -85,5 +85,27 @@ public class PegRow {
 		return win;
 		
 	}
+	
+	/**
+	 * Create a memento to store the current state in case of an undo
+	 */
+	public PegRowMemento createMemento()
+	{
+		PegRowMemento myMem = new PegRowMemento();
+		myMem.setState( puzzlePegs, feedbackPegs );
+		
+		return myMem;
+	}
+	
+	/**
+	 * Reset the internal state to what is saved in the given memento
+	 * 
+	 * @param mem   a PegRowMemento that was saved by the MastermindBoard
+	 */
+	public void setMemento(PegRowMemento mem)
+	{
+		puzzlePegs = mem.getGuessState();
+		feedbackPegs = mem.getFeedbackState();
+	}
 
 }

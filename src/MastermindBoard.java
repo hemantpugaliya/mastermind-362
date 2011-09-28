@@ -27,10 +27,10 @@ public class MastermindBoard {
 	private final int NUMROWS = 10;
 	
 	public MastermindBoard() {
-		// todo: setup board
 		
 		// Populate the set of rows with 10 empty ones
 		rows = new ArrayList<PegRow>();
+		
 		for( int i = 0; i < NUMROWS; i++ )
 		{
 			rows.add(new PegRow());
@@ -52,6 +52,9 @@ public class MastermindBoard {
 		{
 			guessPegs.add(new PuzzlePeg(guess.get(i)));
 		}
+		
+		// Save a memento for the current row
+		mementos.push(rows.get(currRow).createMemento());
 		
 		// Set as the guess for the current row
 		rows.get(currRow).setPuzzlePegs(guessPegs);
@@ -91,12 +94,16 @@ public class MastermindBoard {
 	
 	/**
 	 * Undo the most recent row
+	 * 
+	 * @param   a number representing how many rows to go back with the undo
 	 */
-	public void undoMove()
+	public void undoMove(int numUndo)
 	{
-		// pop a memento off the stack
-		// first row without guess or without feedback (depends)
-		// gets set to blanks
+		// Set the currRow back the number of rows
+		currRow = currRow - numUndo;
+		
+		// Reset the row using the most recent memento
+		rows.get(currRow).setMemento(mementos.pop());
 	}
 	
 	/**
@@ -161,6 +168,7 @@ public class MastermindBoard {
 	 * @return
 	 */
 	public PegRow getLastFullRow() {
+		
 		for (PegRow pr: this.rows) {
 			ArrayList<Peg> pegs = pr.getPuzzlePegs();
 			if ( pegs.get(0).getColor() != PegColor.BLANK

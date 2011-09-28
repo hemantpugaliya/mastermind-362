@@ -12,7 +12,7 @@ public class FeedbackState extends GameState {
 	 *  most recent guess) is undone.
 	 */
 	public int undoTurn() {
-		return 1;
+		return 0;
 	}
 
 }
