@@ -289,7 +289,7 @@ public class BoardController implements ActionListener{
 	}
 	
 	public void eyeball(){
-		if(!looking)
+		if(!looking && !guessState)
 			openEye();
 		else
 			closeEye();
