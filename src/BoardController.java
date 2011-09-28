@@ -175,12 +175,12 @@ public class BoardController implements ActionListener{
 	
 	public void done(){
 		if(settingSolution){
-			ArrayList<PegColor> guess = new ArrayList<PegColor>();
+			ArrayList<PegColor> solutionArray = new ArrayList<PegColor>();
 			boolean full = false;	
 			
 			for(int i = 0; i < 4; i++){
 				if(solution[i] != 8){
-					guess.add(PegColor.values()[solution[i]]);
+					solutionArray.add(PegColor.values()[solution[i]]);
 					if(i == 3)
 						full = true;
 				}
@@ -232,17 +232,17 @@ public class BoardController implements ActionListener{
 				feedback.add(PegColor.values()[currentFeedback[i]]);
 			}
 			
+			int gameState = game.giveFeedback(feedback);
+			currentFeedbackRow -= 1;
+			resetCurrentFeedback();
 			feedbackPanel.setVisible(false);
 			guessPanel.setVisible(true);
-			currentFeedbackRow -= 1;
-			int gameState = game.giveFeedback(feedback);
-			resetCurrentFeedback();
+			guessState = true;
+			instruction.setText("Codbreaker's Turn");
 			
 			if(gameState == 1 || gameState == 2){
 				System.out.println("WINNER");
 			}
-			guessState = true;
-			instruction.setText("Codbreaker's Turn");
 		}
 	}
 	

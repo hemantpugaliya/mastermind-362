@@ -197,5 +197,9 @@ public class MastermindGame extends Game {
 		return breaker;
 		
 	}
+	
+	public void setSolution(ArrayList<PegColor> solutionSet ){
+		board.newSolution(solutionSet);
+	}
 		
 }

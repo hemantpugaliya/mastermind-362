@@ -79,6 +79,16 @@ public class MastermindBoard {
 		currRow++;
 	}
 	
+	public void newSolution(ArrayList< PegColor > solutionSet){
+		ArrayList< PuzzlePeg > solutionPegs = new ArrayList< PuzzlePeg >();
+		
+		for( int i = 0; i < 4; i++ )
+		{
+			solutionPegs.add(new PuzzlePeg(solutionSet.get(i)));
+		}
+		solution = new Solution(solutionPegs);
+	}
+	
 	/**
 	 * Undo the most recent row
 	 */
