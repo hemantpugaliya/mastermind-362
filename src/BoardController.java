@@ -30,7 +30,7 @@ public class BoardController implements ActionListener{
 	private JButton clear;
 	
 	private boolean settingSolution;
-	private boolean guessState; //change once solution implemented
+	private boolean guessState;
 	
 	private MastermindGame game;
 	
