@@ -10,7 +10,7 @@ public class MenuListener implements ActionListener{
 	private JRadioButtonMenuItem[] player;
 	private JCheckBoxMenuItem log;
 	private ButtonGroup playerGroup = new ButtonGroup();
-	private int selectedPlayer = 0;
+	private int selectedCodebreaker = 0;
 	private JFileChooser fc = new JFileChooser();
 	private JFrame menu = new JFrame();
 	private MastermindGame game;
@@ -51,7 +51,7 @@ public class MenuListener implements ActionListener{
 		}
 		
 		if(type == 'p'){
-			setPlayer(action);
+			setCodebreaker(action);
 		}
 		
 		if(type == 'l'){
@@ -73,15 +73,16 @@ public class MenuListener implements ActionListener{
 		}
 	}
 	
-	public void setPlayer(String p){	
+	public void setCodebreaker(String p){	
 		char _player = p.charAt(1);
-		int playerNum = Character.getNumericValue(_player);
-		selectedPlayer = playerNum;		
+		int codebreakerNum = Character.getNumericValue(_player);
+		selectedCodebreaker = codebreakerNum;
+		game.setCodeBreaker(selectedCodebreaker);
 	}
 	
 	public void newGame(){
 		controller.resetGame();
-		game.newGame(log.getModel().isSelected(), selectedPlayer);		
+		game.newGame(log.getModel().isSelected(), selectedCodebreaker);		
 	}
 
 }
