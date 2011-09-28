@@ -60,9 +60,9 @@ public  class SmartCodeBreaker extends CodeBreaker {
 				toReturn.add(PegColor.GBLACK);
 				toReturn.add(PegColor.GWHITE);
 				toReturn.add(PegColor.GWHITE);
-				for (PegColor[] m: possibleMoves) {
-					if (m.equals(toReturn.toArray())) {
-						possibleMoves.remove(m);
+				for (PegColor[] movePegs: possibleMoves) {
+					if (movePegs.equals(toReturn.toArray())) {
+						possibleMoves.remove(movePegs);
 					}
 				}
 				return toReturn;
@@ -70,27 +70,27 @@ public  class SmartCodeBreaker extends CodeBreaker {
 				PegRow lastGuess = myGame.board.getLastFullRow();
 				ArrayList<FeedbackPeg> feedback = lastGuess.getFeedbackPegs();
 				ArrayList<PuzzlePeg> guess = lastGuess.getPuzzlePegs();
-				int b = 0;
-				int w = 0;
+				int fBlack = 0;
+				int fWhite = 0;
 				for (FeedbackPeg fp: feedback) {
-					if (fp.getColor() == PegColor.FBLACK) {++b;}
-					else if (fp.getColor() == PegColor.FWHITE) {++w;}
+					if (fp.getColor() == PegColor.FBLACK) {++fBlack;}
+					else if (fp.getColor() == PegColor.FWHITE) {++fWhite;}
 				}
 				int[] lastScore = new int[2];
-				lastScore[0] = b;
-				lastScore[1] = w;
+				lastScore[0] = fBlack;
+				lastScore[1] = fWhite;
 				if (possibleMoves.size()>1) {
-					for (PegColor[] m: possibleMoves) {
-						if (!lastScore.equals(getScore(m, guess))) {
-							possibleMoves.remove(m);
+					for (PegColor[] movePegs: possibleMoves) {
+						if (!lastScore.equals(getScore(movePegs, guess))) {
+							possibleMoves.remove(movePegs);
 						}
 					}
 				}
 				// You literally cannot take a random element from a HashSet
 				// in any normal way, so let's just do something ridiculous.
-				for (PegColor[] m: possibleMoves) {
-					possibleMoves.remove(m);
-					return (ArrayList<PegColor>) Arrays.asList(m);
+				for (PegColor[] movePegs: possibleMoves) {
+					possibleMoves.remove(movePegs);
+					return (ArrayList<PegColor>) Arrays.asList(movePegs);
 				}
 				// Just in case?
 				return null;
