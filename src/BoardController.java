@@ -247,7 +247,13 @@ public class BoardController implements ActionListener{
 	}
 	
 	public void clear(){
-		if(guessState){
+		if(settingSolution){
+			for(int i = 0; i < 4; i++){
+				solutionSet[i].setIcon(new javax.swing.ImageIcon("icons/gray3.png"));
+				resetSolution();
+			}
+		}
+		else if(guessState){
 			for(int i = 0; i < 4; i++){
 				guessRows[currentGuessRow][i].setIcon(new javax.swing.ImageIcon("icons/gray.png"));
 				resetCurrentGuess();
