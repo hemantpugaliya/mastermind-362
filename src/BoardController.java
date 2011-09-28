@@ -11,6 +11,8 @@ public class BoardController implements ActionListener{
 	private JButton[] solutionSet;
 	private JButton eye;
 	
+	private boolean looking;
+	
 	private JPanel guessPanel;
 	private JPanel feedbackPanel;
 	private JPanel pegsButtonsPanel;
@@ -45,6 +47,9 @@ public class BoardController implements ActionListener{
 		eye = _eye;
 		game = _game;
 		instruction = _instruction;
+		
+		eye.addActionListener(this);
+		eye.setActionCommand("e");
 		
 		undo = _undo;
 		undo.addActionListener(this);
@@ -114,6 +119,10 @@ public class BoardController implements ActionListener{
 		
 		if(type == 'c'){
 			clear();
+		}
+		
+		if(type == 'e'){
+			eyeball();
 		}
 	}
 	
@@ -243,6 +252,10 @@ public class BoardController implements ActionListener{
 			if(gameState == 1 || gameState == 2){
 				System.out.println("WINNER");
 			}
+			
+			if(looking){
+				closeEye();
+			}
 		}
 	}
 	
@@ -265,6 +278,27 @@ public class BoardController implements ActionListener{
 				resetCurrentFeedback();
 			}
 		}
+	}
+	
+	public void eyeball(){
+		if(!looking)
+			openEye();
+		else
+			closeEye();
+	}
+	
+	public void openEye(){
+		for(int i = 0; i < 4; i++){
+			solutionSet[i].setIcon(new javax.swing.ImageIcon("icons/"+solution[i]+".png"));
+		}
+		looking = true;	
+	}
+	
+	public void closeEye(){
+		for(int i = 0; i < 4; i++){
+			solutionSet[i].setIcon(new javax.swing.ImageIcon("icons/gray3.png"));
+		}
+		looking = false;
 	}
 	
 	public void resetCurrentGuess(){
@@ -297,5 +331,6 @@ public class BoardController implements ActionListener{
 		resetSolution();
 		instruction.setText("Set The Code:");
 		settingSolution = true;
+		looking = false;
 	}
 }
