@@ -257,6 +257,14 @@ public class BoardController implements ActionListener{
 				closeEye();
 			}
 		}
+		
+		for(int i = 0; i < 8; i++){
+			if(guessPegs[i].getModel().isSelected()){
+				guessPegs[i].getModel().setSelected(false);
+			}
+		}
+		
+		selectedPeg = 8;
 	}
 	
 	public void clear(){

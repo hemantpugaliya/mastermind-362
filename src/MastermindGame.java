@@ -127,7 +127,6 @@ public class MastermindGame extends Game {
 		// Log the guess
 		if( logging )
 		{
-			System.out.println("hey");
 			gLog.setGuess(guess);
 			gLog.Execute();	
 		}

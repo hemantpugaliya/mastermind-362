@@ -68,6 +68,8 @@ public class Logfile {
 		try
 		{
 			myWriter.write( logMsg );
+			myWriter.newLine();
+			myWriter.flush();
 		}
 		catch( IOException e)
 		{
