@@ -61,7 +61,6 @@ public class MastermindGame extends Game {
 	public void newGame(boolean _logging, int _playerNum)
 	{
 		board = new MastermindBoard();
-		logging = _logging;
 		
 		// Query UI for player types selected...return an int?
 		// Switch statement to create codebreaker based on input
@@ -70,17 +69,18 @@ public class MastermindGame extends Game {
 		breaker = setCodeBreaker(_playerNum);
 		
 		// Create the game states to use during play
-		currState = new GuessState( breaker );
-		nextState = new FeedbackState( maker );
+		currState = new GuessState();
+		nextState = new FeedbackState();
 		
-		// Query UI for logging status
-		// if( logging )
-		// {
-		//		prompt for file name?
-		//		startLogging( filename );
-		// }
+		logging = _logging;
 		
-		// Get solution
+		// Start logging if applicable
+		if( _logging )
+		{
+			// TODO: where does the filename come from?
+			//startLogging(???);
+		}
+		
 			
 	}
 	
@@ -131,6 +131,8 @@ public class MastermindGame extends Game {
 			gLog.Execute();	
 		}
 		
+		toggleState();
+		
 	}
 	
 	/**
@@ -156,6 +158,8 @@ public class MastermindGame extends Game {
 			fLog.Execute();
 		}
 		
+		toggleState();
+		
 		return board.checkWinLoss();
 	}
 	
@@ -164,7 +168,7 @@ public class MastermindGame extends Game {
 	 */
 	public void undo()
 	{
-		int numUndo = 0;
+		int numUndo = currState.undoTurn();
 		
 		// Check the game state and set numUndo
 		
@@ -177,19 +181,37 @@ public class MastermindGame extends Game {
 			uLog.setNumUndo(numUndo);
 			uLog.Execute();
 		}
+		
+		// When a move is undone, regardless of current state, the game
+		// goes back to a guess state
+		currState = new GuessState();
+		nextState = new FeedbackState();
 	}
 	
+	/**
+	 * Facilitates the user's ability to select whether the codebreaker should
+	 *  be another human player or a computer player
+	 *  
+	 * @param _playerNum   indicates which type of codebreaker is playing
+	 * 
+	 * @return   an appropriate CodeBreaker instance
+	 */
 	public CodeBreaker setCodeBreaker( int _playerNum )
 	{
 		CodeBreaker breaker;
 		
 		switch( _playerNum )
 		{
+		
 		case 0: breaker = new HumanCodeBreaker();
 		break;
+		
 		case 1: breaker = new RandomCodeBreaker();
 		break;
+		
 		case 2: breaker = new SmartCodeBreaker(this);
+			break;
+			
 		default:
 			breaker = new HumanCodeBreaker();
 		}
@@ -198,8 +220,25 @@ public class MastermindGame extends Game {
 		
 	}
 	
+	/**
+	 * Stores the solution entered by the human codemaker
+	 * 
+	 * @param solutionSet
+	 */
 	public void setSolution(ArrayList<PegColor> solutionSet ){
 		board.newSolution(solutionSet);
+	}
+	
+	/**
+	 * Toggles the current state between game and feedback
+	 */
+	public void toggleState()
+	{
+		GameState temp;
+		
+		temp = currState;
+		currState = nextState;
+		nextState = temp;
 	}
 		
 }

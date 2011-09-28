@@ -8,18 +8,11 @@
 public class FeedbackState extends GameState {
 
 	/**
-	 * Constructor-pass the player to the superclass
-	 * 
-	 * @param p   the player moving during this state
+	 * When the game is in a feedback state, only the previous move (the 
+	 *  most recent guess) is undone.
 	 */
-	public FeedbackState( MastermindPlayer p )
-	{
-		super(p);
-	}
-	@Override
 	public int undoTurn() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 }

@@ -8,19 +8,13 @@
 public class GuessState extends GameState {
 	
 	/**
-	 * Constructor-pass the player to the superclass
-	 * 
-	 * @param p   the player moving during this state
+	 * When the game is in a guess state, only the previous two moves (the 
+	 *  most recent guess and feedback) is undone.
 	 */
-	public GuessState( MastermindPlayer p )
-	{
-		super(p);
-	}
-
-	@Override
 	public int undoTurn() {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return 2;
+		
 	}
 
 }

@@ -68,11 +68,11 @@ public  class SmartCodeBreaker extends CodeBreaker {
 				return toReturn;
 			} else {
 				PegRow lastGuess = myGame.board.getLastFullRow();
-				ArrayList<FeedbackPeg> feedback = lastGuess.getFeedbackPegs();
-				ArrayList<PuzzlePeg> guess = lastGuess.getPuzzlePegs();
+				ArrayList<Peg> feedback = lastGuess.getFeedbackPegs();
+				ArrayList<Peg> guess = lastGuess.getPuzzlePegs();
 				int fBlack = 0;
 				int fWhite = 0;
-				for (FeedbackPeg fp: feedback) {
+				for (Peg fp: feedback) {
 					if (fp.getColor() == PegColor.FBLACK) {++fBlack;}
 					else if (fp.getColor() == PegColor.FWHITE) {++fWhite;}
 				}
@@ -101,14 +101,14 @@ public  class SmartCodeBreaker extends CodeBreaker {
 		/**
 		 * Compare two rows of pegs to get the resulting feedback score.
 		 * @param guess An array of peg colors (doesn't have to be your guess)
-		 * @param solution An ArrayList of PuzzlePegs (does have to the the sol'n)
+		 * @param guess2 An ArrayList of PuzzlePegs (does have to the the sol'n)
 		 * @return (black, white)
 		 */
 		private int[] getScore(PegColor[] guess, 
-				ArrayList<PuzzlePeg> solution) {
+				ArrayList<Peg> guess2) {
 			int b = 0;
 			for (int i=0; i<4; ++i) {
-				if (guess[i] == solution.get(i).getColor()){++b;}
+				if (guess[i] == guess2.get(i).getColor()){++b;}
 			}
 			int[] gcolors = new int[6];
 			int[] scolors = new int[6];
@@ -122,7 +122,7 @@ public  class SmartCodeBreaker extends CodeBreaker {
 					case GREEN: ++gcolors[4];
 					case BLUE: ++gcolors[5];
 				}
-				switch (solution.get(i).getColor()) {
+				switch (guess2.get(i).getColor()) {
 					case GBLACK: ++scolors[0];
 					case GWHITE: ++scolors[1];
 					case RED: ++scolors[2];

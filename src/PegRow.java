@@ -17,12 +17,12 @@ import java.util.ArrayList;
  */
 public class PegRow {
 	
-	private ArrayList<PuzzlePeg> puzzlePegs;
-	private ArrayList<FeedbackPeg> feedbackPegs;
+	private ArrayList<Peg> puzzlePegs;
+	private ArrayList<Peg> feedbackPegs;
 	
 	public PegRow() {
-		this.puzzlePegs = new ArrayList<PuzzlePeg>();
-		this.feedbackPegs = new ArrayList<FeedbackPeg>();
+		this.puzzlePegs = new ArrayList<Peg>();
+		this.feedbackPegs = new ArrayList<Peg>();
 	}
 	
 	/**
@@ -30,7 +30,7 @@ public class PegRow {
 	 * @param solution
 	 * @return true if solution equals this row's puzzle pegs.
 	 */
-	public boolean compareGuess(ArrayList<PuzzlePeg> solution) {
+	public boolean compareGuess(ArrayList<Peg> solution) {
 		return (solution.get(0).color == puzzlePegs.get(0).color
 				&& solution.get(1).color == puzzlePegs.get(1).color
 				&& solution.get(2).color == puzzlePegs.get(2).color
@@ -40,28 +40,28 @@ public class PegRow {
 	/**
 	 * @return the puzzlePegs
 	 */
-	public ArrayList<PuzzlePeg> getPuzzlePegs() {
+	public ArrayList<Peg> getPuzzlePegs() {
 		return puzzlePegs;
 	}
 
 	/**
 	 * @return the feedbackPegs
 	 */
-	public ArrayList<FeedbackPeg> getFeedbackPegs() {
+	public ArrayList<Peg> getFeedbackPegs() {
 		return feedbackPegs;
 	}
 
 	/**
 	 * @param puzzlePegs the puzzlePegs to set
 	 */
-	public void setPuzzlePegs(ArrayList<PuzzlePeg> puzzlePegs) {
+	public void setPuzzlePegs(ArrayList<Peg> puzzlePegs) {
 		this.puzzlePegs = puzzlePegs;
 	}
 
 	/**
 	 * @param feedbackPegs the feedbackPegs to set
 	 */
-	public void setFeedbackPegs(ArrayList<FeedbackPeg> feedbackPegs) {
+	public void setFeedbackPegs(ArrayList<Peg> feedbackPegs) {
 		this.feedbackPegs = feedbackPegs;
 	}
 	
@@ -74,7 +74,7 @@ public class PegRow {
 	{
 		boolean win = true;
 		
-		for( FeedbackPeg peg : feedbackPegs)
+		for( Peg peg : feedbackPegs)
 		{
 			if( peg.getColor() != PegColor.FBLACK)
 			{
