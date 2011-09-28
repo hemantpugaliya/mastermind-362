@@ -49,7 +49,10 @@ public  class SmartCodeBreaker extends CodeBreaker {
 			}
 		}
 		
-		
+		/**
+		 * Using Knuth's algorithm for solving Mastermind,
+		 * choose a move based on the number of possible moves left.
+		 */
 		public ArrayList<PegColor> makeMove() {
 			if (possibleMoves.size() == 1296) {
 				ArrayList<PegColor> toReturn = new ArrayList<PegColor>();
@@ -95,6 +98,12 @@ public  class SmartCodeBreaker extends CodeBreaker {
 			
 		}
 		
+		/**
+		 * Compare two rows of pegs to get the resulting feedback score.
+		 * @param guess An array of peg colors (doesn't have to be your guess)
+		 * @param solution An ArrayList of PuzzlePegs (does have to the the sol'n)
+		 * @return (black, white)
+		 */
 		private int[] getScore(PegColor[] guess, 
 				ArrayList<PuzzlePeg> solution) {
 			int b = 0;
