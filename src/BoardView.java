@@ -71,7 +71,7 @@ public class BoardView extends JFrame {
 		
 		controller = new BoardController(game, rowsview.getGuessRows(), rowsview.getFeedbackRows(),
 				pegsview.getPegs(), rowsview.getSolution(), rowsview.getEye(), undo, done, clear,
-				guessPanel, feedbackPanel, pegsButtonsPanel);
+				guessPanel, feedbackPanel, pegsButtonsPanel, gameName);
 		menuListener = new MenuListener(game, newGame, player, log, controller);
 		
 		setLocationRelativeTo(null);

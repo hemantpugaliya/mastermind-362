@@ -15,16 +15,20 @@ public class BoardController implements ActionListener{
 	private JPanel feedbackPanel;
 	private JPanel pegsButtonsPanel;
 	
+	private JLabel instruction;
+	
 	private int[] currentGuess = new int[4];
 	private int[] currentFeedback = new int [4];
-	private int currentGuessRow;
-	private int currentFeedbackRow;
+	private int[] solution = new int[4];
+	private int currentGuessRow = -1;
+	private int currentFeedbackRow = -1;
 	
 	private JButton undo;
 	private JButton done;
 	private JButton clear;
 	
-	private boolean guessState = true;
+	private boolean settingSolution;
+	private boolean guessState; //change once solution implemented
 	
 	private MastermindGame game;
 	
@@ -32,7 +36,7 @@ public class BoardController implements ActionListener{
 	
 	public BoardController(MastermindGame _game, JButton[][] guess, JButton[][] feed, JToggleButton[] pegs,
 			JButton[] solution, JButton _eye, JButton _undo, JButton _done, JButton _clear,
-			JPanel _guessPanel, JPanel _feedbackPanel, JPanel _pegButtons){
+			JPanel _guessPanel, JPanel _feedbackPanel, JPanel _pegButtons, JLabel _instruction){
 		
 		guessRows = guess;
 		feedbackRows = feed;
@@ -40,6 +44,7 @@ public class BoardController implements ActionListener{
 		solutionSet = solution;
 		eye = _eye;
 		game = _game;
+		instruction = _instruction;
 		
 		undo = _undo;
 		undo.addActionListener(this);
@@ -81,8 +86,6 @@ public class BoardController implements ActionListener{
 		
 		resetCurrentGuess();
 		resetCurrentFeedback();
-		currentGuessRow = 9;
-		currentFeedbackRow = 9;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -164,11 +167,40 @@ public class BoardController implements ActionListener{
 		char s = p.charAt(1);
 		int guess = Character.getNumericValue(s);
 		
-		solutionSet[guess].setIcon(new javax.swing.ImageIcon("icons/"+selectedPeg+".png"));		
+		if(settingSolution){
+			solutionSet[guess].setIcon(new javax.swing.ImageIcon("icons/"+selectedPeg+".png"));		
+			solution[guess] = selectedPeg;
+		}
 	}
 	
 	public void done(){
-		if(guessState){	
+		if(settingSolution){
+			ArrayList<PegColor> guess = new ArrayList<PegColor>();
+			boolean full = false;	
+			
+			for(int i = 0; i < 4; i++){
+				if(solution[i] != 8){
+					guess.add(PegColor.values()[solution[i]]);
+					if(i == 3)
+						full = true;
+				}
+				else{
+					break;
+				}
+			}
+			
+			if(full){
+				for(int i = 0; i < 4; i++){
+					solutionSet[i].setIcon(new javax.swing.ImageIcon("icons/gray3.png"));
+					settingSolution = false;
+					guessState = true;
+					currentGuessRow = 9;
+					currentFeedbackRow = 9;
+					instruction.setText("Codbreaker's Turn");
+				}
+			}
+		}
+		else if(guessState){	
 			ArrayList<PegColor> guess = new ArrayList<PegColor>();
 			boolean full = false;	
 			
@@ -190,6 +222,7 @@ public class BoardController implements ActionListener{
 				guessPanel.setVisible(false);
 				feedbackPanel.setVisible(true);
 				guessState = false;
+				instruction.setText("Codemaker's Turn");
 			}
 		}
 		else{
@@ -209,6 +242,7 @@ public class BoardController implements ActionListener{
 				System.out.println("WINNER");
 			}
 			guessState = true;
+			instruction.setText("Codbreaker's Turn");
 		}
 	}
 	
@@ -239,6 +273,12 @@ public class BoardController implements ActionListener{
 		}
 	}
 	
+	public void resetSolution(){
+		for(int i = 0; i < 4; i++){
+			solution[i] = 8;
+		}
+	}
+	
 	public void resetGame(){
 		for(int i = 0; i < 10; i++){
 			for(int j = 0; j < 4; j++){
@@ -247,8 +287,9 @@ public class BoardController implements ActionListener{
 			}
 		}
 		resetCurrentGuess();
-		resetCurrentFeedback();	
-		currentGuessRow = 9;
-		currentFeedbackRow = 9;
+		resetCurrentFeedback();
+		resetSolution();
+		instruction.setText("Set The Code:");
+		settingSolution = true;
 	}
 }
