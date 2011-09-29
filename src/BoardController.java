@@ -1,3 +1,4 @@
+import java.awt.Toolkit;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.TimerTask;
@@ -33,14 +34,13 @@ public class BoardController implements ActionListener{
 	private boolean settingSolution;
 	private boolean guessState;
 	private boolean computer;
+	private boolean logging;
 	
 	private boolean buttonsOn = true;
 	
 	private MastermindGame game;
 	
 	private int selectedPeg = 8;
-	
-	private Timer timer;
 	
 	public BoardController(MastermindGame _game, JButton[][] guess, JButton[][] feed, JToggleButton[] pegs,
 			JButton[] solution, JButton _eye, JButton _undo, JButton _done, JButton _clear,
@@ -278,12 +278,14 @@ public class BoardController implements ActionListener{
 				openEye();
 				turnButtonsOff();
 				guessState = false;
+				game.stopLogging();
 			}
 			else if(gameState == 2){
 				instruction.setText("Codebreaker Wins!");
 				openEye();
 				turnButtonsOff();
 				guessState = false;
+				game.stopLogging();
 			}	
 			else if(computer){
 				askForComputerGuess();
@@ -472,5 +474,9 @@ public class BoardController implements ActionListener{
 		eye.addActionListener(this);
 		
 		buttonsOn = true;
+	}
+	
+	public void setLogging(boolean log){
+		logging = log;
 	}
 }

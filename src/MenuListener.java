@@ -17,6 +17,9 @@ public class MenuListener implements ActionListener{
 	private BoardController controller;
 	private JMenuItem exit;
 	
+	private File file = new File("");
+	private boolean logging = false;
+	
 	public MenuListener(MastermindGame _game, JMenuItem newG, JMenuItem _exit, JRadioButtonMenuItem[] _player,
 			JCheckBoxMenuItem _log, BoardController control){
 		
@@ -63,8 +66,9 @@ public class MenuListener implements ActionListener{
 			if(log.getModel().isSelected()){
 				fc.showOpenDialog(menu);
 				try{
-					File file = fc.getSelectedFile();
+					file = fc.getSelectedFile();
 					game.startLogging(file.toString());
+					logging = true;
 				}catch(Exception e1){
 					log.getModel().setSelected(false);
 					fc.setSelectedFile(null);
@@ -73,7 +77,9 @@ public class MenuListener implements ActionListener{
 			else{
 				game.stopLogging();
 				fc.setSelectedFile(null);
+				logging = false;
 			}
+			controller.setLogging(logging);
 				
 		}
 		
@@ -96,11 +102,18 @@ public class MenuListener implements ActionListener{
 	
 	public void newGame(){
 		controller.resetGame();
-		game.newGame(log.getModel().isSelected(), selectedCodebreaker);		
+		if(!logging)
+			game.newGame(log.getModel().isSelected(), null, selectedCodebreaker);
+		else
+			game.newGame(log.getModel().isSelected(), file.toString(), selectedCodebreaker);
 	}
 	
 	public void exit(){
 		System.exit(0);
+	}
+	
+	public boolean getLogging(){
+		return logging;
 	}
 
 }

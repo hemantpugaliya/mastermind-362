@@ -55,10 +55,10 @@ public class MastermindGame extends Game {
 		BoardView gameView = new BoardView(this);
 		gameView.create();
 		controller = gameView.getController();
-		newGame(false, 0);
+		newGame(false, null, 0);
 	}
 	
-	public void newGame(boolean _logging, int _playerNum)
+	public void newGame(boolean _logging, String filename, int _playerNum)
 	{
 		board = new MastermindBoard();
 		
@@ -77,8 +77,7 @@ public class MastermindGame extends Game {
 		// Start logging if applicable
 		if( _logging )
 		{
-			// TODO: where does the filename come from?
-			//startLogging(???);
+			startLogging(filename);
 		}
 		
 			
