@@ -5,7 +5,7 @@
  * @author Gabbie Burns
  *
  */
-public abstract class GameState {
+public interface GameState {
 	
 	public abstract int undoTurn();
 	

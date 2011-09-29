@@ -5,7 +5,8 @@
  *
  */
 
-public class GuessState extends GameState {
+public class GuessState implements GameState 
+{
 	
 	/**
 	 * When the game is in a guess state, only the previous two moves (the 

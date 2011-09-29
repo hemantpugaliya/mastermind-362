@@ -5,7 +5,8 @@
  * @author Gabbie Burns
  *
  */
-public class FeedbackState extends GameState {
+public class FeedbackState implements GameState 
+{
 
 	/**
 	 * When the game is in a feedback state, only the previous move (the 

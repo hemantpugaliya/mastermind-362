@@ -45,26 +45,35 @@ public class MastermindGame extends Game {
 	 */
 	private GameState nextState = null;
 	
-	private BoardView gameView = null;
+	/**
+	 * A reference for the controller that communicates with our UI
+	 */
 	private BoardController controller = null;
 	
-	
-	public MastermindGame()
+		
+	/**
+	 * Store a copy of the controller to use when informing the UI of computer-generated moves
+	 * 
+	 * @param cont
+	 */
+	public void setController( BoardController cont )
 	{
-		// Create the UI
-		BoardView gameView = new BoardView(this);
-		gameView.create();
-		controller = gameView.getController();
-		newGame(false, null, 0);
+		controller = cont;
 	}
 	
+	/**
+	 * Reset everything for a fresh game
+	 * 
+	 * @param _logging   whether or not logging is enabled
+	 * @param filename   the name of the file to use for logging, if enabled
+	 * @param _playerNum   an integer representing which kind of codebreaker
+	 */
 	public void newGame(boolean _logging, String filename, int _playerNum)
 	{
+		// Create the board
 		board = new MastermindBoard();
-		
-		// Query UI for player types selected...return an int?
-		// Switch statement to create codebreaker based on input
 	
+		// Create the players
 		maker = new CodeMaker( );		
 		setCodeBreaker(_playerNum);
 		
@@ -79,7 +88,6 @@ public class MastermindGame extends Game {
 		{
 			startLogging(filename);
 		}
-		
 			
 	}
 	
