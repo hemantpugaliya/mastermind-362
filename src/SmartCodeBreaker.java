@@ -60,19 +60,21 @@ public  class SmartCodeBreaker extends CodeBreaker {
 				toReturn.add(PegColor.GBLACK);
 				toReturn.add(PegColor.GWHITE);
 				toReturn.add(PegColor.GWHITE);
+				ArrayList<PegColor[]> temp = new ArrayList<PegColor[]>();
 				for (PegColor[] movePegs: possibleMoves) {
 					if (Arrays.equals(movePegs, toReturn.toArray())) {
-						possibleMoves.remove(movePegs);
+						temp.add(movePegs);
 					}
 				}
+				possibleMoves.removeAll(temp);
 				return toReturn;
 			} else {
 				PegRow lastGuess = myGame.board.getLastFullRow();
-				ArrayList<Peg> feedback = lastGuess.getFeedbackPegs();
-				ArrayList<Peg> guess = lastGuess.getPuzzlePegs();
+				ArrayList<FeedbackPeg> feedback = lastGuess.getFeedbackPegs();
+				ArrayList<PuzzlePeg> guess = lastGuess.getPuzzlePegs();
 				int fBlack = 0;
 				int fWhite = 0;
-				for (Peg fp: feedback) {
+				for (FeedbackPeg fp: feedback) {
 					if (fp.getColor() == PegColor.FBLACK) {++fBlack;}
 					else if (fp.getColor() == PegColor.FWHITE) {++fWhite;}
 				}
@@ -80,20 +82,41 @@ public  class SmartCodeBreaker extends CodeBreaker {
 				lastScore[0] = fBlack;
 				lastScore[1] = fWhite;
 				if (possibleMoves.size()>1) {
+					
+					HashSet<PegColor[]> temp = new HashSet<PegColor[]>();
 					for (PegColor[] movePegs: possibleMoves) {
-						if (!Arrays.equals(lastScore, getScore(movePegs, guess))) {
-							possibleMoves.remove(movePegs);
+						//System.out.println(lastScore[0] + " " + lastScore[1]);
+						//System.out.println(getScore(movePegs, guess)[0] + " " + getScore(movePegs, guess)[1]);
+						if (!(Arrays.equals(lastScore, getScore(movePegs, guess)))) {
+							temp.add(movePegs);
 						}
 					}
+					//System.out.println(possibleMoves.size());
+					//System.out.println(temp.size());
+					possibleMoves.removeAll(temp);
+					//System.out.println(possibleMoves.size());
 				}
+				
 				// You literally cannot take a random element from a HashSet
 				// in any normal way, so let's just do something ridiculous.
+				PegColor[] temp = null;
+				//ArrayList<PegColor[]> chosen = new ArrayList<PegColor[]>();
 				for (PegColor[] movePegs: possibleMoves) {
-					possibleMoves.remove(movePegs);
-					return (ArrayList<PegColor>) Arrays.asList(movePegs);
+					//for (PegColor pc: movePegs) {
+					//	System.out.println(pc);
+					//}
+					temp = movePegs;
+					//chosen.add(movePegs);
+					break;
 				}
-				// Just in case?
-				return null;
+				//possibleMoves.removeAll(movePegs);
+				possibleMoves.remove(temp);
+				//if (temp == null) {System.out.println("oh no");}
+				ArrayList<PegColor> toReturn = new ArrayList<PegColor>();
+				for (PegColor pc: temp) {
+					toReturn.add(pc);
+				}
+				return toReturn;
 			}
 			
 		}
@@ -105,35 +128,37 @@ public  class SmartCodeBreaker extends CodeBreaker {
 		 * @return (black, white)
 		 */
 		private int[] getScore(PegColor[] guess, 
-				ArrayList<Peg> guess2) {
+				ArrayList<PuzzlePeg> guess2) {
 			int b = 0;
 			for (int i=0; i<4; ++i) {
 				if (guess[i] == guess2.get(i).getColor()){++b;}
 			}
 			int[] gcolors = new int[6];
-			int[] scolors = new int[6];
+			int[] g2colors = new int[6];
 			int t = 0;
 			for (int i=0; i<4; ++i) {
 				switch (guess[i]) {
-					case GBLACK: ++gcolors[0];
-					case GWHITE: ++gcolors[1];
-					case RED: ++gcolors[2];
-					case YELLOW: ++gcolors[3];
-					case GREEN: ++gcolors[4];
-					case BLUE: ++gcolors[5];
+					case GBLACK: ++gcolors[0]; break;
+					case GWHITE: ++gcolors[1]; break;
+					case RED: ++gcolors[2]; break;
+					case YELLOW: ++gcolors[3]; break;
+					case GREEN: ++gcolors[4]; break;
+					case BLUE: ++gcolors[5]; break;
 				}
 				switch (guess2.get(i).getColor()) {
-					case GBLACK: ++scolors[0];
-					case GWHITE: ++scolors[1];
-					case RED: ++scolors[2];
-					case YELLOW: ++scolors[3];
-					case GREEN: ++scolors[4];
-					case BLUE: ++scolors[5];
+					case GBLACK: ++g2colors[0]; break;
+					case GWHITE: ++g2colors[1]; break;
+					case RED: ++g2colors[2]; break;
+					case YELLOW: ++g2colors[3]; break;
+					case GREEN: ++g2colors[4]; break;
+					case BLUE: ++g2colors[5]; break;
 				}
 			}
 			for (int i=0; i<6; ++i) {
-				t += Math.min(gcolors[i], scolors[i]);
+				//System.out.println(Math.min(gcolors[i], g2colors[i]));
+				t += Math.min(gcolors[i], g2colors[i]);
 			}
+			//System.out.println(t);
 			int w = t - b;
 			int[] toReturn = new int[2];
 			toReturn[0] = b;

@@ -20,22 +20,22 @@ public class PegRowMemento {
 	/**
 	 * The guess state that it being stored in this memento
 	 */
-	private ArrayList<Peg> guessState;
+	private ArrayList<PuzzlePeg> guessState;
 	/**
 	 * The feedback state that is being stored in this memento
 	 */
-	private ArrayList<Peg> feedbackState;
+	private ArrayList<FeedbackPeg> feedbackState;
 	
 	/**
 	 * Store the state of the PegRow creating this memento
 	 * 
-	 * @param guess      the guess represented in this row
-	 * @param feedback   the feedback represented in this row
+	 * @param puzzlePegs      the guess represented in this row
+	 * @param feedbackPegs   the feedback represented in this row
 	 */
-	public void setState(ArrayList<Peg> guess, ArrayList<Peg> feedback)
+	public void setState(ArrayList<PuzzlePeg> puzzlePegs, ArrayList<FeedbackPeg> feedbackPegs)
 	{
-		guessState = guess;
-		feedbackState = feedback;
+		guessState = puzzlePegs;
+		feedbackState = feedbackPegs;
 	}
 	
 	/**
@@ -43,7 +43,7 @@ public class PegRowMemento {
 	 * 
 	 * @return guessState
 	 */
-	public ArrayList<Peg> getGuessState()
+	public ArrayList<PuzzlePeg> getGuessState()
 	{
 		return guessState;
 	}
@@ -53,7 +53,7 @@ public class PegRowMemento {
 	 * 
 	 * @return feedbackState
 	 */
-	public ArrayList<Peg> getFeedbackState()
+	public ArrayList<FeedbackPeg> getFeedbackState()
 	{
 		return feedbackState;
 	}

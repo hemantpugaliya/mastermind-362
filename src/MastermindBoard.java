@@ -45,7 +45,7 @@ public class MastermindBoard {
 	 */
 	public void newGuess( ArrayList< PegColor > guess)
 	{
-		ArrayList<Peg> guessPegs = new ArrayList<Peg>();
+		ArrayList<PuzzlePeg> guessPegs = new ArrayList<PuzzlePeg>();
 		
 		// Convert the PegColors into PuzzlePegs to store within the current row
 		for( int i = 0; i < NUMPEGS; i++ )
@@ -67,7 +67,7 @@ public class MastermindBoard {
 	 */
 	public void newFeedback( ArrayList< PegColor > feedback)
 	{
-		ArrayList<Peg> feedbackPegs = new ArrayList<Peg>();
+		ArrayList<FeedbackPeg> feedbackPegs = new ArrayList<FeedbackPeg>();
 		
 		// Convert the PegColors into FeedbackPegs to store within the current row
 		for( int i = 0; i < NUMPEGS; i++ )
@@ -132,7 +132,7 @@ public class MastermindBoard {
 	 */
 	public PegRow getFirstRowWithoutGuess() {
 		for (PegRow pr: this.rows) {
-			ArrayList<Peg> pegs = pr.getPuzzlePegs();
+			ArrayList<PuzzlePeg> pegs = pr.getPuzzlePegs();
 			if ( pegs.get(0).getColor() == PegColor.BLANK
 					&& pegs.get(1).getColor() == PegColor.BLANK
 					&& pegs.get(2).getColor() == PegColor.BLANK
@@ -150,7 +150,7 @@ public class MastermindBoard {
 	 */
 	public PegRow getFirstRowWithoutFeedback() {
 		for (PegRow pr: this.rows) {
-			ArrayList<Peg> pegs = pr.getFeedbackPegs();
+			ArrayList<FeedbackPeg> pegs = pr.getFeedbackPegs();
 			if ( pegs.get(0).getColor() == PegColor.BLANK
 					&& pegs.get(1).getColor() == PegColor.BLANK
 					&& pegs.get(2).getColor() == PegColor.BLANK
@@ -170,7 +170,7 @@ public class MastermindBoard {
 	public PegRow getLastFullRow() {
 		
 		for (PegRow pr: this.rows) {
-			ArrayList<Peg> pegs = pr.getPuzzlePegs();
+			ArrayList<PuzzlePeg> pegs = pr.getPuzzlePegs();
 			if ( pegs.get(0).getColor() != PegColor.BLANK
 					&& pegs.get(1).getColor() != PegColor.BLANK
 					&& pegs.get(2).getColor() != PegColor.BLANK

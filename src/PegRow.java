@@ -17,12 +17,12 @@ import java.util.ArrayList;
  */
 public class PegRow {
 	
-	private ArrayList<Peg> puzzlePegs;
-	private ArrayList<Peg> feedbackPegs;
+	private ArrayList<PuzzlePeg> puzzlePegs;
+	private ArrayList<FeedbackPeg> feedbackPegs;
 	
 	public PegRow() {
-		this.puzzlePegs = new ArrayList<Peg>();
-		this.feedbackPegs = new ArrayList<Peg>();
+		this.puzzlePegs = new ArrayList<PuzzlePeg>();
+		this.feedbackPegs = new ArrayList<FeedbackPeg>();
 	}
 	
 	/**
@@ -40,28 +40,28 @@ public class PegRow {
 	/**
 	 * @return the puzzlePegs
 	 */
-	public ArrayList<Peg> getPuzzlePegs() {
+	public ArrayList<PuzzlePeg> getPuzzlePegs() {
 		return puzzlePegs;
 	}
 
 	/**
 	 * @return the feedbackPegs
 	 */
-	public ArrayList<Peg> getFeedbackPegs() {
+	public ArrayList<FeedbackPeg> getFeedbackPegs() {
 		return feedbackPegs;
 	}
 
 	/**
 	 * @param puzzlePegs the puzzlePegs to set
 	 */
-	public void setPuzzlePegs(ArrayList<Peg> puzzlePegs) {
+	public void setPuzzlePegs(ArrayList<PuzzlePeg> puzzlePegs) {
 		this.puzzlePegs = puzzlePegs;
 	}
 
 	/**
 	 * @param feedbackPegs the feedbackPegs to set
 	 */
-	public void setFeedbackPegs(ArrayList<Peg> feedbackPegs) {
+	public void setFeedbackPegs(ArrayList<FeedbackPeg> feedbackPegs) {
 		this.feedbackPegs = feedbackPegs;
 	}
 	
