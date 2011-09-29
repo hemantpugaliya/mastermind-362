@@ -107,5 +107,27 @@ public class PegRow {
 		puzzlePegs = mem.getGuessState();
 		feedbackPegs = mem.getFeedbackState();
 	}
+	
+	/**
+	 * Determines if the row is "full" meaning that all of the guess states have a color and the 
+	 * feedback has been entered
+	 * 
+	 * @return true if the row is full, else false
+	 */
+	public boolean isFull()
+	{
+		if( puzzlePegs.size() > 3 && feedbackPegs.size() > 3 )
+		{
+			if ( puzzlePegs.get(0).getColor() != PegColor.BLANK
+					&& puzzlePegs.get(1).getColor() != PegColor.BLANK
+					&& puzzlePegs.get(2).getColor() != PegColor.BLANK
+					&& puzzlePegs.get(3).getColor() != PegColor.BLANK ) 
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
 
 }

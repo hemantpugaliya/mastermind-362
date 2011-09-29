@@ -169,13 +169,11 @@ public class MastermindBoard {
 	 */
 	public PegRow getLastFullRow() {
 		
-		for (PegRow pr: this.rows) {
-			ArrayList<PuzzlePeg> pegs = pr.getPuzzlePegs();
-			if ( pegs.get(0).getColor() != PegColor.BLANK
-					&& pegs.get(1).getColor() != PegColor.BLANK
-					&& pegs.get(2).getColor() != PegColor.BLANK
-					&& pegs.get(3).getColor() != PegColor.BLANK ) {
-				return pr;
+		for(int i = NUMROWS - 1; i >= 0; i--)
+		{
+			if( rows.get(i).isFull())
+			{
+				return rows.get(i);
 			}
 		}
 		// If no row is full, return null.
