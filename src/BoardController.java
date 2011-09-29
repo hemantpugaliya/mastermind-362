@@ -33,6 +33,8 @@ public class BoardController implements ActionListener{
 	private boolean guessState;
 	private boolean computer;
 	
+	private boolean buttonsOn = true;
+	
 	private MastermindGame game;
 	
 	private int selectedPeg = 8;
@@ -212,12 +214,15 @@ public class BoardController implements ActionListener{
 				guessState = true;
 				currentGuessRow = 9;
 				currentFeedbackRow = 9;
-				instruction.setText("Codbreaker's Turn");
+				
 				
 				if(computer){
 					guessState = false;
 					askForComputerGuess();
+					instruction.setText("Codemaker's Turn");
 				}
+				else
+					instruction.setText("Codebreaker's Turn");
 			}
 		}
 		else if(guessState){	
@@ -259,7 +264,7 @@ public class BoardController implements ActionListener{
 			feedbackPanel.setVisible(false);
 			guessPanel.setVisible(true);
 			guessState = true;
-			instruction.setText("Codbreaker's Turn");
+
 			
 			if(looking){
 				closeEye();
@@ -268,13 +273,20 @@ public class BoardController implements ActionListener{
 			if(gameState == 1){
 				instruction.setText("Codemaker Wins!");
 				openEye();
+				turnButtonsOff();
+				guessState = false;
 			}
 			else if(gameState == 2){
 				instruction.setText("Codebreaker Wins!");
 				openEye();
+				turnButtonsOff();
+				guessState = false;
 			}	
 			else if(computer){
 				askForComputerGuess();
+			}
+			else{
+				instruction.setText("Codebreaker's Turn");
 			}
 		}
 		
@@ -382,11 +394,15 @@ public class BoardController implements ActionListener{
 		instruction.setText("Set The Code:");
 		settingSolution = true;
 		guessState = false;
+		closeEye();
 		looking = false;
 		
 		feedbackPanel.setVisible(false);
 		guessPanel.setVisible(true);
-
+		
+		if(!buttonsOn){
+			turnButtonsOn();
+		}
 	}
 
 	public void placeComputerGuess(ArrayList<PegColor> guess){
@@ -402,6 +418,7 @@ public class BoardController implements ActionListener{
 		guessPanel.setVisible(false);
 		done.addActionListener(this);
 		clear.addActionListener(this);
+		instruction.setText("Codemaker's Turn");
 	}
 	
 	public void askForComputerGuess(){
@@ -422,6 +439,30 @@ public class BoardController implements ActionListener{
 	public void setCodebreakerHuman(){
 		computer = false;
 		undo.addActionListener(this);
+	}
+	
+	public void turnButtonsOff(){
+		for(int i = 0; i < 8; i++){
+			guessPegs[i].removeActionListener(this);
+		}
+		
+		done.removeActionListener(this);
+		clear.removeActionListener(this);
+		undo.removeActionListener(this);
+		
+		buttonsOn = false;
+	}
+	
+	public void turnButtonsOn(){
+		for(int i = 0; i < 8; i++){
+			guessPegs[i].addActionListener(this);
+		}
+		
+		done.addActionListener(this);
+		clear.addActionListener(this);
+		undo.addActionListener(this);
+		
+		buttonsOn = true;
 	}
 
 }
