@@ -133,7 +133,7 @@ public class MenuListener implements ActionListener{
 		if ((s != null) && (s.length() > 0)) {
 			try{
 				int time = Integer.parseInt(s);
-				if(time < 30)
+				if(time <= 30 && time >= 0)
 					controller.setTime(time);
 				else
 					setTimer();
