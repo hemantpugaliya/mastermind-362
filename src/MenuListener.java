@@ -18,6 +18,8 @@ public class MenuListener implements ActionListener{
 	private JMenuItem exit;
 	private JMenuItem setTimer;
 	
+	private boolean newGameStarted = false;
+	
 	private File file = new File("");
 	private boolean logging = false;
 	
@@ -68,24 +70,7 @@ public class MenuListener implements ActionListener{
 		}
 		
 		if(type == 'l'){
-			if(log.getModel().isSelected()){
-				fc.showOpenDialog(menu);
-				try{
-					file = fc.getSelectedFile();
-					game.startLogging(file.toString());
-					logging = true;
-				}catch(Exception e1){
-					log.getModel().setSelected(false);
-					fc.setSelectedFile(null);
-				}
-			}
-			else{
-				game.stopLogging();
-				fc.setSelectedFile(null);
-				logging = false;
-			}
-			controller.setLogging(logging);
-				
+			promptForFile();
 		}
 		
 		if(type == 't'){
@@ -113,8 +98,19 @@ public class MenuListener implements ActionListener{
 		controller.resetGame();
 		if(!logging)
 			game.newGame(log.getModel().isSelected(), null, selectedCodebreaker);
-		else
-			game.newGame(log.getModel().isSelected(), file.toString(), selectedCodebreaker);
+		else{
+			if(!newGameStarted)
+				game.newGame(log.getModel().isSelected(), file.toString(), selectedCodebreaker);
+			else{
+				promptForFile();
+				if(fc.getSelectedFile() != null){
+					game.newGame(log.getModel().isSelected(), file.toString(), selectedCodebreaker);
+					System.out.println("hey");
+				}
+			}
+		}
+		
+		newGameStarted = true;
 	}
 	
 	public void exit(){
@@ -126,7 +122,6 @@ public class MenuListener implements ActionListener{
 	}
 	
 	public void setTimer(){
-		//Object[] possibilities = null;
 		String s = (String)JOptionPane.showInputDialog(
 		                    null,
 		                    "Seconds: ",
@@ -149,5 +144,28 @@ public class MenuListener implements ActionListener{
 			}
 		    return;
 		}
+	}
+	
+	public void promptForFile(){
+		fc.setSelectedFile(null);
+		file = null;
+		
+		if(log.getModel().isSelected()){
+			fc.showOpenDialog(menu);
+			try{
+				file = fc.getSelectedFile();
+				game.startLogging(file.toString());
+				logging = true;
+			}catch(Exception e1){
+				log.getModel().setSelected(false);
+				fc.setSelectedFile(null);
+			}
+		}
+		else{
+			game.stopLogging();
+			fc.setSelectedFile(null);
+			logging = false;
+		}
+		controller.setLogging(logging);			
 	}
 }
