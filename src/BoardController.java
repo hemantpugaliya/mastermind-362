@@ -1,5 +1,6 @@
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.TimerTask;
 
 import javax.swing.*;
 
@@ -38,6 +39,8 @@ public class BoardController implements ActionListener{
 	private MastermindGame game;
 	
 	private int selectedPeg = 8;
+	
+	private Timer timer;
 	
 	public BoardController(MastermindGame _game, JButton[][] guess, JButton[][] feed, JToggleButton[] pegs,
 			JButton[] solution, JButton _eye, JButton _undo, JButton _done, JButton _clear,
@@ -321,7 +324,7 @@ public class BoardController implements ActionListener{
 	}
 	
 	public void undo(){
-		if(guessState){
+		if(guessState && currentGuessRow <= 8){
 			clear();
 			currentGuessRow += 1;			
 			guessState = false;
@@ -329,17 +332,17 @@ public class BoardController implements ActionListener{
 			clear();
 			guessState = true;
 			clear();
+			game.undo();
 		}
-		else{
+		else if(currentGuessRow <= 8){
 			clear();
 			currentGuessRow += 1;
 			guessState = true;
 			clear();
 			feedbackPanel.setVisible(false);
 			guessPanel.setVisible(true);
+			game.undo();
 		}
-		
-		game.undo();
 	}
 	
 	public void eyeball(){
@@ -402,6 +405,10 @@ public class BoardController implements ActionListener{
 		
 		if(!buttonsOn){
 			turnButtonsOn();
+		}
+		
+		if(computer){
+			undo.removeActionListener(this);
 		}
 	}
 
@@ -466,5 +473,4 @@ public class BoardController implements ActionListener{
 		
 		buttonsOn = true;
 	}
-
 }
