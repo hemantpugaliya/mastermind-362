@@ -105,7 +105,6 @@ public class MenuListener implements ActionListener{
 				promptForFile();
 				if(fc.getSelectedFile() != null){
 					game.newGame(log.getModel().isSelected(), file.toString(), selectedCodebreaker);
-					System.out.println("hey");
 				}
 			}
 		}
