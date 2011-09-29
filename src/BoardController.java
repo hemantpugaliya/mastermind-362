@@ -158,7 +158,7 @@ public class BoardController implements ActionListener{
 		char g = p.charAt(2);
 		int guess = Character.getNumericValue(g);
 		
-		if(row == currentGuessRow){
+		if(row == currentGuessRow && selectedPeg < 6){
 			guessRows[row][guess].setIcon(new javax.swing.ImageIcon("icons/"+selectedPeg+".png"));
 			currentGuess[guess] = selectedPeg;
 		}
@@ -449,6 +449,7 @@ public class BoardController implements ActionListener{
 		done.removeActionListener(this);
 		clear.removeActionListener(this);
 		undo.removeActionListener(this);
+		eye.removeActionListener(this);
 		
 		buttonsOn = false;
 	}
@@ -461,6 +462,7 @@ public class BoardController implements ActionListener{
 		done.addActionListener(this);
 		clear.addActionListener(this);
 		undo.addActionListener(this);
+		eye.addActionListener(this);
 		
 		buttonsOn = true;
 	}
