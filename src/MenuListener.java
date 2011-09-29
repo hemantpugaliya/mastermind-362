@@ -16,12 +16,13 @@ public class MenuListener implements ActionListener{
 	private MastermindGame game;
 	private BoardController controller;
 	private JMenuItem exit;
+	private JMenuItem setTimer;
 	
 	private File file = new File("");
 	private boolean logging = false;
 	
 	public MenuListener(MastermindGame _game, JMenuItem newG, JMenuItem _exit, JRadioButtonMenuItem[] _player,
-			JCheckBoxMenuItem _log, BoardController control){
+			JCheckBoxMenuItem _log, BoardController control, JMenuItem timer){
 		
 		controller = control;
 		
@@ -38,6 +39,10 @@ public class MenuListener implements ActionListener{
 		log = _log;
 		log.addActionListener(this);
 		log.setActionCommand("l");
+		
+		setTimer = timer;
+		setTimer.addActionListener(this);
+		setTimer.setActionCommand("t");
 		
 		player = _player;	
 		for(int i = 0; i < 3; i++){
@@ -83,6 +88,10 @@ public class MenuListener implements ActionListener{
 				
 		}
 		
+		if(type == 't'){
+			setTimer();
+		}
+		
 		if(type == 'x'){
 			exit();
 		}
@@ -115,5 +124,30 @@ public class MenuListener implements ActionListener{
 	public boolean getLogging(){
 		return logging;
 	}
+	
+	public void setTimer(){
+		//Object[] possibilities = null;
+		String s = (String)JOptionPane.showInputDialog(
+		                    null,
+		                    "Seconds: ",
+		                    "Set Timer",
+		                    JOptionPane.PLAIN_MESSAGE,
+		                    null,
+		                    null,
+		                    null);
 
+		if ((s != null) && (s.length() > 0)) {
+			try{
+				int time = Integer.parseInt(s);
+				if(time < 30)
+					controller.setTime(time);
+				else
+					setTimer();
+			}
+			catch(Exception e){
+				setTimer();
+			}
+		    return;
+		}
+	}
 }

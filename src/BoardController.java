@@ -1,6 +1,7 @@
 import java.awt.Toolkit;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.*;
@@ -41,6 +42,9 @@ public class BoardController implements ActionListener{
 	private MastermindGame game;
 	
 	private int selectedPeg = 8;
+	
+	private Timer timer = new Timer();
+	private int time = 0;
 	
 	public BoardController(MastermindGame _game, JButton[][] guess, JButton[][] feed, JToggleButton[] pegs,
 			JButton[] solution, JButton _eye, JButton _undo, JButton _done, JButton _clear,
@@ -222,7 +226,6 @@ public class BoardController implements ActionListener{
 				if(computer){
 					guessState = false;
 					askForComputerGuess();
-					instruction.setText("Codemaker's Turn");
 				}
 				else
 					instruction.setText("Codebreaker's Turn");
@@ -434,7 +437,10 @@ public class BoardController implements ActionListener{
 	}
 	
 	public void askForComputerGuess(){
-		game.makeGuess(null);
+		turnButtonsOff();
+		instruction.setText("Computer is thinking...");
+		setTimer(time);
+		turnButtonsOn();
 		done.removeActionListener(this);
 		clear.removeActionListener(this);
 	}
@@ -473,7 +479,11 @@ public class BoardController implements ActionListener{
 		
 		done.addActionListener(this);
 		clear.addActionListener(this);
-		undo.addActionListener(this);
+		
+		if(!computer){
+			undo.addActionListener(this);
+		}
+		
 		eye.addActionListener(this);
 		
 		buttonsOn = true;
@@ -482,4 +492,20 @@ public class BoardController implements ActionListener{
 	public void setLogging(boolean log){
 		logging = log;
 	}
+	
+	public void setTime(int seconds){
+		time = seconds;
+	}
+	
+	public void setTimer(int seconds) {
+	    timer = new Timer();
+	    timer.schedule(new ComputerTimer(), seconds * 1000);
+	  }
+	
+	class ComputerTimer extends TimerTask {
+	    public void run() {
+	      game.makeGuess(null);
+	    }
+	  }
+
 }
