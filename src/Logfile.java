@@ -63,7 +63,10 @@ public class Logfile {
 	 */
 	public void writeLog( String logMsg )
 	{
-		logMsg = lineNumber + ". " + logMsg;
+		if( lineNumber > 0)
+		{
+			logMsg = lineNumber + ". " + logMsg;
+		}
 		
 		try
 		{

@@ -97,7 +97,10 @@ public class MastermindGame extends Game {
 		
 		gLog = new GuessCommand();
 		fLog = new FeedbackCommand();
-		uLog = new UndoCommand();  
+		uLog = new UndoCommand(); 
+		
+		// Log the existing game history
+		retroLog();
 	}
 	
 	/**
@@ -247,7 +250,27 @@ public class MastermindGame extends Game {
 	 */
 	public void retroLog()
 	{
-		//ArrayList<PegColor> 
+		ArrayList<ArrayList<PegColor>> guessHist = board.getGuessHistory();
+		ArrayList<ArrayList<PegColor>> fbHist = board.getFeedbackHistory();
+		
+		for(int i = 0; i < guessHist.size(); i++)
+		{
+			// Log the past guesses in order
+			if( guessHist.get(i).size() > 0)
+			{
+				gLog.setGuess(guessHist.get(i));
+				gLog.Execute();
+			}
+			
+			// Log the past feedback in order
+			// Note: There could be one less feedback than there are guesses
+			if( fbHist.get(i).size() > 0)
+			{
+				fLog.setFeedback(fbHist.get(i));
+				fLog.Execute();
+			}
+		}
+		
 	}
 		
 }

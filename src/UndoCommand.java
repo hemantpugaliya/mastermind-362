@@ -44,7 +44,7 @@ public class UndoCommand extends LogfileCommand {
 	 */
 	public void Execute()
 	{
-		logMsg = "Undo: Previous " + (numUndo + 1) + " rows'\n'";
+		logMsg = "Undo: Previous " + (numUndo + 1) + " rows";
 		myLog.writeLog(logMsg);
 	}
 

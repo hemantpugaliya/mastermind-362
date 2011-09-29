@@ -56,7 +56,7 @@ public class GuessCommand extends LogfileCommand {
 		else
 		{
 			// Start the log string
-			logMsg = "Guess:";
+			logMsg = "Guess:   ";
 			
 			// Append the guesses for each peg
 			for( int i = 0; i < NUMPEGS; i++ )

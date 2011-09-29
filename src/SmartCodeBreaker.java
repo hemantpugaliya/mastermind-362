@@ -111,7 +111,7 @@ public  class SmartCodeBreaker extends CodeBreaker {
 				}
 				//possibleMoves.removeAll(movePegs);
 				possibleMoves.remove(temp);
-				//if (temp == null) {System.out.println("oh no");}
+				if (temp == null) {System.out.println("oh no");}
 				ArrayList<PegColor> toReturn = new ArrayList<PegColor>();
 				for (PegColor pc: temp) {
 					toReturn.add(pc);

@@ -129,5 +129,39 @@ public class PegRow {
 
 		return false;
 	}
+	
+	/**
+	 * Returns the color values of the puzzle pegs in this row
+	 * 
+	 * @return colors
+	 */
+	public ArrayList<PegColor> getPuzzleColors()
+	{
+		ArrayList<PegColor> colors = new ArrayList<PegColor>();
+		
+		for( PuzzlePeg peg : puzzlePegs )
+		{
+			colors.add(peg.getColor());
+		}
+		
+		return colors;
+	}
+	
+	/**
+	 * Returns the color values of the feedback pegs in this row
+	 * 
+	 * @return colors
+	 */
+	public ArrayList<PegColor> getFeedbackColors()
+	{
+		ArrayList<PegColor> colors = new ArrayList<PegColor>();
+		
+		for( FeedbackPeg peg : feedbackPegs )
+		{
+			colors.add(peg.getColor());
+		}
+		
+		return colors;
+	}
 
 }

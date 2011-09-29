@@ -17,7 +17,7 @@ public class ToggleLogCommand extends LogfileCommand {
 	/**
 	 * Message to be written out to the log.
 	 */
-	private final String startMsg = "Mastermind Game Log \n\n ";
+	private final String startMsg = "Key: Red=R, Yellow=Y, Green=G, Blue=B, White=W, Black=K, Blank=0";
 	/**
 	 * Indicates whether or not the game is being actively logged
 	 */

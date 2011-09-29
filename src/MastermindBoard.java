@@ -179,4 +179,38 @@ public class MastermindBoard {
 		// If no row is full, return null.
 		return null;
 	}
+	
+	/**
+	 * Return the color values for all of the guesses made up until this point
+	 * 
+	 * @return guessHist
+	 */
+	public ArrayList<ArrayList<PegColor>> getGuessHistory()
+	{
+		ArrayList<ArrayList<PegColor>> guessHist = new ArrayList<ArrayList<PegColor>>();
+		
+		for( int i = 0; i <= currRow; i++ )
+		{
+			guessHist.add(rows.get(i).getPuzzleColors());
+		}
+		
+		return guessHist;
+	}
+	
+	/**
+	 * Return the color values for all of the feedback given up until this point
+	 * 
+	 * @return guessHist
+	 */
+	public ArrayList<ArrayList<PegColor>> getFeedbackHistory()
+	{
+		ArrayList<ArrayList<PegColor>> fbHist = new ArrayList<ArrayList<PegColor>>();
+		
+		for( int i = 0; i <= currRow; i++ )
+		{
+			fbHist.add(rows.get(i).getFeedbackColors());
+		}
+		
+		return fbHist;
+	}
 }
