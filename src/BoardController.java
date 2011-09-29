@@ -345,6 +345,7 @@ public class BoardController implements ActionListener{
 			clear();
 			feedbackPanel.setVisible(false);
 			guessPanel.setVisible(true);
+			instruction.setText("Codebreaker's Turn");
 			game.undo();
 		}
 	}
