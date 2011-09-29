@@ -119,6 +119,7 @@ public class MastermindGame extends Game {
 		if( guess == null )
 		{
 			guess = breaker.makeMove();
+			controller.placeComputerGuess(guess);
 		}
 		
 		// Notify the board
@@ -210,7 +211,7 @@ public class MastermindGame extends Game {
 		break;
 		
 		case 2: breaker = new SmartCodeBreaker(this);
-			break;
+		break;
 			
 		default:
 			breaker = new HumanCodeBreaker();

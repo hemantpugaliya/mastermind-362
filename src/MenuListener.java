@@ -78,6 +78,9 @@ public class MenuListener implements ActionListener{
 		int codebreakerNum = Character.getNumericValue(_player);
 		selectedCodebreaker = codebreakerNum;
 		game.setCodeBreaker(selectedCodebreaker);
+		
+		if(selectedCodebreaker != 0)
+			controller.setCodebreakerComputer();
 	}
 	
 	public void newGame(){

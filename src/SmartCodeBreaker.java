@@ -61,7 +61,7 @@ public  class SmartCodeBreaker extends CodeBreaker {
 				toReturn.add(PegColor.GWHITE);
 				toReturn.add(PegColor.GWHITE);
 				for (PegColor[] movePegs: possibleMoves) {
-					if (movePegs.equals(toReturn.toArray())) {
+					if (Arrays.equals(movePegs, toReturn.toArray())) {
 						possibleMoves.remove(movePegs);
 					}
 				}
@@ -81,7 +81,7 @@ public  class SmartCodeBreaker extends CodeBreaker {
 				lastScore[1] = fWhite;
 				if (possibleMoves.size()>1) {
 					for (PegColor[] movePegs: possibleMoves) {
-						if (!lastScore.equals(getScore(movePegs, guess))) {
+						if (!Arrays.equals(lastScore, getScore(movePegs, guess))) {
 							possibleMoves.remove(movePegs);
 						}
 					}

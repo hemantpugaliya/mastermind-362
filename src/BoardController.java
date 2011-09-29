@@ -31,6 +31,7 @@ public class BoardController implements ActionListener{
 	
 	private boolean settingSolution;
 	private boolean guessState;
+	private boolean computer;
 	
 	private MastermindGame game;
 	
@@ -124,6 +125,10 @@ public class BoardController implements ActionListener{
 		if(type == 'e'){
 			eyeball();
 		}
+		
+		if(type == 'u'){
+			undo();
+		}
 	}
 	
 	public void selectPeg(String p){
@@ -201,11 +206,19 @@ public class BoardController implements ActionListener{
 			if(full){
 				for(int i = 0; i < 4; i++){
 					solutionSet[i].setIcon(new javax.swing.ImageIcon("icons/gray3.png"));
-					settingSolution = false;
-					guessState = true;
-					currentGuessRow = 9;
-					currentFeedbackRow = 9;
-					instruction.setText("Codbreaker's Turn");
+				}
+				settingSolution = false;
+				guessState = true;
+				currentGuessRow = 9;
+				currentFeedbackRow = 9;
+				instruction.setText("Codbreaker's Turn");
+				
+				if(computer){
+					guessState = false;
+					for(int i = 0; i < 6; i++){
+						guessPegs[i].removeActionListener(this);
+					}
+					askForComputerGuess();
 				}
 			}
 		}
@@ -256,6 +269,10 @@ public class BoardController implements ActionListener{
 			if(looking){
 				closeEye();
 			}
+			
+			if(computer){
+				askForComputerGuess();
+			}
 		}
 		
 		for(int i = 0; i < 8; i++){
@@ -286,6 +303,28 @@ public class BoardController implements ActionListener{
 				resetCurrentFeedback();
 			}
 		}
+	}
+	
+	public void undo(){
+		if(guessState){
+			clear();
+			currentGuessRow += 1;			
+			guessState = false;
+			currentFeedbackRow += 1;
+			clear();
+			guessState = true;
+			clear();
+		}
+		else{
+			clear();
+			currentGuessRow += 1;
+			guessState = true;
+			clear();
+			feedbackPanel.setVisible(false);
+			guessPanel.setVisible(true);
+		}
+		
+		game.undo();
 	}
 	
 	public void eyeball(){
@@ -339,6 +378,44 @@ public class BoardController implements ActionListener{
 		resetSolution();
 		instruction.setText("Set The Code:");
 		settingSolution = true;
+		guessState = false;
 		looking = false;
+		
+		feedbackPanel.setVisible(false);
+		guessPanel.setVisible(true);
+		
+	}
+
+	public void placeComputerGuess(ArrayList<PegColor> guess){
+		for(int i = 0; i < 4; i++){
+			currentGuess[i] = guess.get(i).ordinal();
+			guessRows[currentGuessRow][i].setIcon(new javax.swing.ImageIcon("icons/"+currentGuess[i]+".png"));	
+		}
+		
+		currentGuessRow -= 1;
+		
+		guessState = false;
+		feedbackPanel.setVisible(true);
+		guessPanel.setVisible(false);
+		done.addActionListener(this);
+		clear.addActionListener(this);
+	}
+	
+	public void askForComputerGuess(){
+		game.makeGuess(null);
+		done.removeActionListener(this);
+		clear.removeActionListener(this);
+	}
+
+	public void setCodebreakerComputer(){
+		computer = true;
+		if(guessState){
+			askForComputerGuess();
+			for(int i = 0; i < 6; i++){
+				guessPegs[i].removeActionListener(this);
+			}
+		}
+		guessState = false;
+		undo.removeActionListener(this);
 	}
 }
