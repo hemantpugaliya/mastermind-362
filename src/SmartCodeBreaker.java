@@ -55,6 +55,7 @@ public  class SmartCodeBreaker extends CodeBreaker {
 		 */
 		public ArrayList<PegColor> makeMove() {
 			if (possibleMoves.size() == 1296) {
+				// FIRST MOVE
 				ArrayList<PegColor> toReturn = new ArrayList<PegColor>();
 				toReturn.add(PegColor.GBLACK);
 				toReturn.add(PegColor.GBLACK);
@@ -68,7 +69,8 @@ public  class SmartCodeBreaker extends CodeBreaker {
 				}
 				possibleMoves.removeAll(temp);
 				return toReturn;
-			} else {
+			} else if (possibleMoves.size() > 1) {
+				// MOVE SEARCH
 				PegRow lastGuess = myGame.board.getLastFullRow();
 				ArrayList<FeedbackPeg> feedback = lastGuess.getFeedbackPegs();
 				ArrayList<PuzzlePeg> guess = lastGuess.getPuzzlePegs();
@@ -81,40 +83,50 @@ public  class SmartCodeBreaker extends CodeBreaker {
 				int[] lastScore = new int[2];
 				lastScore[0] = fBlack;
 				lastScore[1] = fWhite;
-				if (possibleMoves.size()>1) {
+				//if (possibleMoves.size()>1) {
 					
-					HashSet<PegColor[]> temp = new HashSet<PegColor[]>();
-					for (PegColor[] movePegs: possibleMoves) {
-						//System.out.println(lastScore[0] + " " + lastScore[1]);
-						//System.out.println(getScore(movePegs, guess)[0] + " " + getScore(movePegs, guess)[1]);
-						if (!(Arrays.equals(lastScore, getScore(movePegs, guess)))) {
-							temp.add(movePegs);
-						}
+				HashSet<PegColor[]> temp = new HashSet<PegColor[]>();
+				for (PegColor[] movePegs: possibleMoves) {
+					//System.out.println(lastScore[0] + " " + lastScore[1]);
+					//System.out.println(getScore(movePegs, guess)[0] + " " + getScore(movePegs, guess)[1]);
+					if (!(Arrays.equals(lastScore, getScore(movePegs, guess)))) {
+						temp.add(movePegs);
 					}
-					//System.out.println(possibleMoves.size());
-					//System.out.println(temp.size());
-					possibleMoves.removeAll(temp);
-					//System.out.println(possibleMoves.size());
 				}
+				//System.out.println(possibleMoves.size());
+				//System.out.println(temp.size());
+				possibleMoves.removeAll(temp);
+				//System.out.println(possibleMoves.size());
+				//}
 				
 				// You literally cannot take a random element from a HashSet
 				// in any normal way, so let's just do something ridiculous.
-				PegColor[] temp = null;
+				PegColor[] temp2 = null;
 				//ArrayList<PegColor[]> chosen = new ArrayList<PegColor[]>();
 				for (PegColor[] movePegs: possibleMoves) {
 					//for (PegColor pc: movePegs) {
 					//	System.out.println(pc);
 					//}
-					temp = movePegs;
+					temp2 = movePegs;
 					//chosen.add(movePegs);
 					break;
 				}
 				//possibleMoves.removeAll(movePegs);
-				possibleMoves.remove(temp);
+				possibleMoves.remove(temp2);
 				if (temp == null) {System.out.println("oh no");}
 				ArrayList<PegColor> toReturn = new ArrayList<PegColor>();
-				for (PegColor pc: temp) {
+				for (PegColor pc: temp2) {
 					toReturn.add(pc);
+				}
+				return toReturn;
+			} else {
+				// LAST POSSIBLE MOVE
+				ArrayList<PegColor> toReturn = new ArrayList<PegColor>();
+				for (PegColor[] movePegs: possibleMoves) {
+					for (PegColor pc: movePegs) {
+						toReturn.add(pc);
+					}
+					break;
 				}
 				return toReturn;
 			}
