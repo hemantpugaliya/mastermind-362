@@ -50,7 +50,18 @@ public class MastermindGame extends Game {
 	 */
 	private BoardController controller = null;
 	
+	
+	/**
+	 * Initialize a new board and the game states
+	 */
+	public MastermindGame()
+	{
+		board = new MastermindBoard();
 		
+		// Create the game states to use during play
+		currState = new GuessState();
+		nextState = new FeedbackState();
+	}
 	/**
 	 * Store a copy of the controller to use when informing the UI of computer-generated moves
 	 * 
@@ -76,10 +87,6 @@ public class MastermindGame extends Game {
 		// Create the players
 		maker = new CodeMaker( );		
 		setCodeBreaker(_playerNum);
-		
-		// Create the game states to use during play
-		currState = new GuessState();
-		nextState = new FeedbackState();
 		
 		logging = _logging;
 		
