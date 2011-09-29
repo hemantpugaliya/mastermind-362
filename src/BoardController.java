@@ -278,14 +278,16 @@ public class BoardController implements ActionListener{
 				openEye();
 				turnButtonsOff();
 				guessState = false;
-				game.stopLogging();
+				if(logging)
+					game.stopLogging();
 			}
 			else if(gameState == 2){
 				instruction.setText("Codebreaker Wins!");
 				openEye();
 				turnButtonsOff();
 				guessState = false;
-				game.stopLogging();
+				if(logging)
+					game.stopLogging();
 			}	
 			else if(computer){
 				askForComputerGuess();
