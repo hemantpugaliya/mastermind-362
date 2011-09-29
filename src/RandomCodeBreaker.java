@@ -17,7 +17,7 @@ public class RandomCodeBreaker extends CodeBreaker {
 	/**
 	 * The max number with which to seed the random generator
 	 */
-	public final int MAXPEG = 5;
+	public final int MAXPEG = 6;
 	
 	/**
 	 * Generate a random legal guess for the next move in the game
@@ -35,7 +35,7 @@ public class RandomCodeBreaker extends CodeBreaker {
 		{
 			nextRand = rand.nextInt(MAXPEG);
 			// Add one to the generated number to avoid blank
-			guess.add( PegColor.values()[nextRand+1]);	
+			guess.add( PegColor.values()[nextRand]);	
 		}
 		
 		return guess;

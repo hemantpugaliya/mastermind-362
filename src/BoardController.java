@@ -76,9 +76,10 @@ public class BoardController implements ActionListener{
 				feedbackRows[i][j].addActionListener(this);
 				feedbackRows[i][j].setActionCommand("f"+command);
 			}
-		}
+		}		
 		
 		for(int i = 0; i < 8; i++){
+			guessPegs[i].removeActionListener(this);
 			guessPegs[i].addActionListener(this);
 			String command = Integer.toString(i);
 			guessPegs[i].setActionCommand("p"+command);
@@ -215,9 +216,6 @@ public class BoardController implements ActionListener{
 				
 				if(computer){
 					guessState = false;
-					for(int i = 0; i < 6; i++){
-						guessPegs[i].removeActionListener(this);
-					}
 					askForComputerGuess();
 				}
 			}
@@ -383,7 +381,7 @@ public class BoardController implements ActionListener{
 		
 		feedbackPanel.setVisible(false);
 		guessPanel.setVisible(true);
-		
+
 	}
 
 	public void placeComputerGuess(ArrayList<PegColor> guess){
@@ -417,5 +415,9 @@ public class BoardController implements ActionListener{
 		}
 		guessState = false;
 		undo.removeActionListener(this);
+	}
+	
+	public void setCodebreakerHuman(){
+		computer = false;
 	}
 }

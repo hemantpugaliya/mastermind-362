@@ -22,7 +22,7 @@ public class MastermindGame extends Game {
 	 * The two players responsible for game play
 	 */
 	private MastermindPlayer maker = null;
-	private MastermindPlayer breaker = null;
+	private MastermindPlayer breaker = new HumanCodeBreaker();
 	
 	/**
 	 * A representation of the board
@@ -66,7 +66,7 @@ public class MastermindGame extends Game {
 		// Switch statement to create codebreaker based on input
 	
 		maker = new CodeMaker( );		
-		breaker = setCodeBreaker(_playerNum);
+		//breaker = setCodeBreaker(_playerNum);
 		
 		// Create the game states to use during play
 		currState = new GuessState();
@@ -197,9 +197,9 @@ public class MastermindGame extends Game {
 	 * 
 	 * @return   an appropriate CodeBreaker instance
 	 */
-	public CodeBreaker setCodeBreaker( int _playerNum )
+	public void setCodeBreaker( int _playerNum )
 	{
-		CodeBreaker breaker;
+		//CodeBreaker breaker;
 		
 		switch( _playerNum )
 		{
@@ -217,7 +217,7 @@ public class MastermindGame extends Game {
 			breaker = new HumanCodeBreaker();
 		}
 		
-		return breaker;
+		//return breaker;
 		
 	}
 	

@@ -81,6 +81,8 @@ public class MenuListener implements ActionListener{
 		
 		if(selectedCodebreaker != 0)
 			controller.setCodebreakerComputer();
+		else
+			controller.setCodebreakerHuman();
 	}
 	
 	public void newGame(){
