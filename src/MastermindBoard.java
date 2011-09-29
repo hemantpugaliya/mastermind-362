@@ -12,20 +12,45 @@ import java.util.Stack;
  */
 
 /**
+ * MastermindBoard
+ * Holds the internal representation of the playing board
+ * 
  * @author ajg9132
  * @contributor Gabbie Burns
  *
  */
 public class MastermindBoard {
 	
+	/**
+	 * Holds a row (empty or full) for each row of the game
+	 */
 	private ArrayList<PegRow> rows;
+	/**
+	 * The solution entered by the codemaker
+	 */
 	private Solution solution;
+	/**
+	 * Holds the mementos for the rows as moves are made
+	 */
 	private Stack<PegRowMemento> mementos;
+	/**
+	 * Indicates the current row of gameplay
+	 */
 	private int currRow = 0;
 	
+	/**
+	 * There are 4 pegs in either a guess section or feedback section of a row
+	 */
 	private final int NUMPEGS = 4;
+	/**
+	 * There are 10 rows in a game of Mastermind
+	 */
 	private final int NUMROWS = 10;
 	
+	
+	/**
+	 * Create all rows now and store them empty
+	 */
 	public MastermindBoard() {
 		
 		// Populate the set of rows with 10 empty ones
@@ -82,10 +107,15 @@ public class MastermindBoard {
 		currRow++;
 	}
 	
+	/**
+	 * Store the solution entered by the codemaker
+	 * 
+	 * @param solutionSet
+	 */
 	public void newSolution(ArrayList< PegColor > solutionSet){
 		ArrayList< PuzzlePeg > solutionPegs = new ArrayList< PuzzlePeg >();
 		
-		for( int i = 0; i < 4; i++ )
+		for( int i = 0; i < NUMPEGS; i++ )
 		{
 			solutionPegs.add(new PuzzlePeg(solutionSet.get(i)));
 		}
@@ -128,7 +158,8 @@ public class MastermindBoard {
 	
 	/**
 	 * Return the most recent PegRow that does not have a guess.
-	 * @return
+	 * 
+	 * @return the first row found
 	 */
 	public PegRow getFirstRowWithoutGuess() {
 		for (PegRow pr: this.rows) {
@@ -146,7 +177,8 @@ public class MastermindBoard {
 	
 	/**
 	 * Return the most recent PegRow that has not received feedback.
-	 * @return
+	 * 
+	 * @return the first row found
 	 */
 	public PegRow getFirstRowWithoutFeedback() {
 		for (PegRow pr: this.rows) {
@@ -165,7 +197,8 @@ public class MastermindBoard {
 	/**
 	 * Return the most recent PegRow that has a guess.
 	 * Checking for feedback is more difficult because of (0,0) feedback.
-	 * @return
+	 * 
+	 * @return the first row found
 	 */
 	public PegRow getLastFullRow() {
 		

@@ -1,5 +1,6 @@
 /**
  * GuessState
+ * The state of the game when it is the codebreaker's turn
  * 
  * @author Gabbie Burns
  *

@@ -9,6 +9,9 @@
  */
 
 /**
+ * Peg
+ * The most basic unit of the state representation, contains a color
+ * 
  * @author ajg9132
  *
  */

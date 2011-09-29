@@ -3,11 +3,12 @@ import java.util.ArrayList;
 
 /**
  * FeedbackCommand
+ * Prepares a message for the logfile containing the most recent feedback
  * 
  * @author Gabbie Burns
  *
  */
-public class FeedbackCommand extends LogfileCommand {
+public class FeedbackCommand implements LogfileCommand {
 	
 	/**
 	 * Logfile acts as the receiver for this command.

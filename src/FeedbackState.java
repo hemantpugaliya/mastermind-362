@@ -1,6 +1,7 @@
 
 /**
  * FeedbackState
+ * The state of the game when it is the codemaker's turn
  * 
  * @author Gabbie Burns
  *

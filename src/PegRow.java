@@ -12,14 +12,25 @@ import java.util.ArrayList;
  */
 
 /**
+ * PegRow
+ * Represents an entire row (both guess and feedback)
  * @author ajg9132
  *
  */
 public class PegRow {
 	
+	/**
+	 * The pegs composing the codebreaker guess for this row
+	 */
 	private ArrayList<PuzzlePeg> puzzlePegs;
+	/**
+	 * The pegs composing the codemaker feedback for this row
+	 */
 	private ArrayList<FeedbackPeg> feedbackPegs;
 	
+	/**
+	 * Constructor
+	 */
 	public PegRow() {
 		this.puzzlePegs = new ArrayList<PuzzlePeg>();
 		this.feedbackPegs = new ArrayList<FeedbackPeg>();

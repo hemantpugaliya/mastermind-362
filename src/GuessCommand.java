@@ -3,11 +3,12 @@ import java.util.ArrayList;
 
 /**
  * GuessCommand
+ * Prepares a message for the logfile containing the most recent guess
  * 
  * @author Gabbie Burns
  *
  */
-public class GuessCommand extends LogfileCommand {
+public class GuessCommand implements LogfileCommand {
 	
 	/**
 	 * Logfile acts as the receiver for this command.

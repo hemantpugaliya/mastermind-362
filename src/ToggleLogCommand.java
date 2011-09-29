@@ -1,10 +1,11 @@
 /**
- * StartCommand
+ * ToggleLogCommand
+ * Begins or ends logging, depending on the current state
  * 
  * @author Gabbie Burns
  *
  */
-public class ToggleLogCommand extends LogfileCommand {
+public class ToggleLogCommand implements LogfileCommand {
 	
 	/**
 	 * The name of the file to write logs to

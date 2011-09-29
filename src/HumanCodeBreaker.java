@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 /**
  * HumanCodeBreaker
+ * Represents a CodeBreaker being operated by the human user
  * 
  * @author Gabbie Burns
  *

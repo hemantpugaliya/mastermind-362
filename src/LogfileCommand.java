@@ -1,12 +1,13 @@
 /**
  * LogfileCommand
+ * The interface defining all log-related commands
  * 
  * @author Gabbie Burns
  *
  */
 
-public abstract class LogfileCommand {
+public interface LogfileCommand {
 	
-	public abstract void Execute();
+	public void Execute();
 
 }

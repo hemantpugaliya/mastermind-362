@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 /**
  * MastermindGame
+ * Contains all of the game components and facilitates communicate between them
  * 
  * @author Gabbie Burns
  * @contributor Jim Kuglics
@@ -62,6 +63,7 @@ public class MastermindGame extends Game {
 		currState = new GuessState();
 		nextState = new FeedbackState();
 	}
+	
 	/**
 	 * Store a copy of the controller to use when informing the UI of computer-generated moves
 	 * 
@@ -215,9 +217,7 @@ public class MastermindGame extends Game {
 	 * @return   an appropriate CodeBreaker instance
 	 */
 	public void setCodeBreaker( int _playerNum )
-	{
-		//CodeBreaker breaker;
-		
+	{	
 		switch( _playerNum )
 		{
 		
@@ -233,9 +233,6 @@ public class MastermindGame extends Game {
 		default:
 			breaker = new HumanCodeBreaker();
 		}
-		
-		//return breaker;
-		
 	}
 	
 	/**
@@ -250,7 +247,7 @@ public class MastermindGame extends Game {
 	/**
 	 * Toggles the current state between game and feedback
 	 */
-	public void toggleState()
+	private void toggleState()
 	{
 		GameState temp;
 		
@@ -262,7 +259,7 @@ public class MastermindGame extends Game {
 	/**
 	 * Retroactively logs all of the guesses and feedback made in the game up to this point
 	 */
-	public void retroLog()
+	private void retroLog()
 	{
 		ArrayList<ArrayList<PegColor>> guessHist = board.getGuessHistory();
 		ArrayList<ArrayList<PegColor>> fbHist = board.getFeedbackHistory();

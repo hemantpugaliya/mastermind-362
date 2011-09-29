@@ -9,6 +9,9 @@
  */
 
 /**
+ * FeedbackPeg
+ * A Peg restricted to be used only for feedback
+ *  
  * @author ajg9132
  *
  */
@@ -30,17 +33,16 @@ public class FeedbackPeg extends Peg {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see Peg#getColor()
+	/**
+	 * Return the color of this peg
+	 * 
+	 * @return   color
 	 */
 	@Override
 	public PegColor getColor() {
 		return this.color;
 	}
 
-	/* (non-Javadoc)
-	 * @see Peg#setColor(PegColor)
-	 */
 	/**
 	 * Change the color of this peg.
 	 * Choosing an invalid color will do nothing.

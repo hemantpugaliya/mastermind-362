@@ -9,6 +9,9 @@
  */
 
 /**
+ * PuzzlePeg
+ * A Peg restricted to be used only for guesses
+ * 
  * @author ajg9132
  *
  */
@@ -16,14 +19,28 @@ public class PuzzlePeg extends Peg {
 
 	/**
 	 * Create a PuzzlePeg.
+	 * If an invalid color is chosen, the peg will be blank.
 	 * @param color
 	 */
 	public PuzzlePeg(PegColor color) {
 		super(color);
+		
+		if (color == PegColor.BLANK || 
+				color == PegColor.FBLACK  ||
+				color == PegColor.FWHITE) 
+		{
+			this.color = PegColor.BLANK;
+		} 
+		else 
+		{
+			this.color = color;
+		}
 	}
 
-	/* (non-Javadoc)
-	 * @see Peg#getColor()
+	/**
+	 * Return the color of this peg
+	 * 
+	 * @return   color
 	 */
 	@Override
 	public PegColor getColor() {
@@ -31,12 +48,23 @@ public class PuzzlePeg extends Peg {
 		return this.color;
 	}
 
-	/* (non-Javadoc)
-	 * @see Peg#setColor(PegColor)
+	/**
+	 * Change the color of this peg.
+	 * Choosing an invalid color will do nothing.
 	 */
 	@Override
-	public void setColor(PegColor color) {
+	public void setColor(PegColor color) 
+	{
+		if (color == PegColor.BLANK || 
+				color == PegColor.FBLACK  ||
+				color == PegColor.FWHITE) 
+		{
+			// Do nothing
+		}
+		else
+		{
 		this.color = color;
+		}
 	}
 
 }

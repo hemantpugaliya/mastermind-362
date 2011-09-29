@@ -4,7 +4,13 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-
+/**
+ * SmartCodeBreaker
+ * Tries to win the game by using algorithms based on feedback
+ * 
+ * @author ajg9132
+ *
+ */
 public  class SmartCodeBreaker extends CodeBreaker {
 		
 		/**

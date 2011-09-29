@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 /**
  * CodeMaker
+ * The player choosing the solution and providing feedback after each guess
  * 
  * @author Gabbie Burns
  *

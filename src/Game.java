@@ -1,6 +1,7 @@
 
 /**
  * Game
+ * The main method, initiates the game and creates the UI
  * 
  * @author Gabbie Burns
  *

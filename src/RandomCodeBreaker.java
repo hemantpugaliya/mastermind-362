@@ -3,6 +3,7 @@ import java.util.Random;
 
 /**
  * RandomCodeBreaker
+ * Tries to win the game by randomly guessing at the solution
  * 
  * @author Gabbie Burns
  *

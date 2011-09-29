@@ -4,15 +4,26 @@ import java.io.IOException;
 
 /**
  * Logfile
+ * Encapsulates the operation of writing log messages out to file
  * 
  * @author Gabbie Burns
  *
  */
 public class Logfile {
 
-	
+	/**
+	 * A self-instance used as part of the Singleton pattern
+	 */
 	private static Logfile myInstance = null;
+	
+	/**
+	 * Writer used to push messages out to the actual log file
+	 */
 	BufferedWriter myWriter = null;
+	
+	/**
+	 * Keep count of the current line number to label the file
+	 */
 	private static int lineNumber;
 	
 	/**

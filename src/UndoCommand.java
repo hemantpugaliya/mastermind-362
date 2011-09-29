@@ -1,11 +1,12 @@
 
 /**
  * UndoCommand
+ * Prepares a message for the logfile containing the most recent undo
  * 
  * @author Gabbie Burns
  *
  */
-public class UndoCommand extends LogfileCommand {
+public class UndoCommand implements LogfileCommand {
 	
 	/**
 	 * Logfile acts as the receiver for this command.

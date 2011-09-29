@@ -11,6 +11,9 @@ import java.util.ArrayList;
  */
 
 /**
+ * PegRowMemento
+ * Stores the state of a PegRow to be used if it is necessary to revert to an old state
+ * 
  * @author ajg9132
  * @contributor Gabbie Burns
  *

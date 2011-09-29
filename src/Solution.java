@@ -11,13 +11,23 @@ import java.util.ArrayList;
  */
 
 /**
+ * Solutions
+ * Stores the solution set by the codemaker
+ * 
  * @author ajg9132
  *
  */
 public class Solution {
 
+	/**
+	 * The solution for the current game
+	 */
 	private ArrayList<PuzzlePeg> solution;
 	
+	/**
+	 * Save the solution upon creation 
+	 * @param colors   the solution
+	 */
 	public Solution(ArrayList<PuzzlePeg> colors) {
 		this.solution = colors;
 	}
