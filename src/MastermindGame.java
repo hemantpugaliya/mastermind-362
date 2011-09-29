@@ -66,7 +66,7 @@ public class MastermindGame extends Game {
 		// Switch statement to create codebreaker based on input
 	
 		maker = new CodeMaker( );		
-		//breaker = setCodeBreaker(_playerNum);
+		setCodeBreaker(_playerNum);
 		
 		// Create the game states to use during play
 		currState = new GuessState();
@@ -240,6 +240,14 @@ public class MastermindGame extends Game {
 		temp = currState;
 		currState = nextState;
 		nextState = temp;
+	}
+	
+	/**
+	 * Retroactively logs all of the guesses and feedback made in the game up to this point
+	 */
+	public void retroLog()
+	{
+		//ArrayList<PegColor> 
 	}
 		
 }
