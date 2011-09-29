@@ -15,8 +15,9 @@ public class MenuListener implements ActionListener{
 	private JFrame menu = new JFrame();
 	private MastermindGame game;
 	private BoardController controller;
+	private JMenuItem exit;
 	
-	public MenuListener(MastermindGame _game, JMenuItem newG, JRadioButtonMenuItem[] _player,
+	public MenuListener(MastermindGame _game, JMenuItem newG, JMenuItem _exit, JRadioButtonMenuItem[] _player,
 			JCheckBoxMenuItem _log, BoardController control){
 		
 		controller = control;
@@ -24,6 +25,10 @@ public class MenuListener implements ActionListener{
 		newGame = newG;
 		newGame.addActionListener(this);
 		newGame.setActionCommand("n");
+		
+		exit = _exit;
+		exit.addActionListener(this);
+		exit.setActionCommand("x");
 		
 		game = _game;
 		
@@ -71,6 +76,10 @@ public class MenuListener implements ActionListener{
 			}
 				
 		}
+		
+		if(type == 'x'){
+			exit();
+		}
 	}
 	
 	public void setCodebreaker(String p){	
@@ -88,6 +97,10 @@ public class MenuListener implements ActionListener{
 	public void newGame(){
 		controller.resetGame();
 		game.newGame(log.getModel().isSelected(), selectedCodebreaker);		
+	}
+	
+	public void exit(){
+		System.exit(0);
 	}
 
 }

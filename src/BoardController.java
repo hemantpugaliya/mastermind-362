@@ -253,6 +253,7 @@ public class BoardController implements ActionListener{
 			}
 			
 			int gameState = game.giveFeedback(feedback);
+			
 			currentFeedbackRow -= 1;
 			resetCurrentFeedback();
 			feedbackPanel.setVisible(false);
@@ -260,15 +261,19 @@ public class BoardController implements ActionListener{
 			guessState = true;
 			instruction.setText("Codbreaker's Turn");
 			
-			if(gameState == 1 || gameState == 2){
-				System.out.println("WINNER");
-			}
-			
 			if(looking){
 				closeEye();
 			}
 			
-			if(computer){
+			if(gameState == 1){
+				instruction.setText("Codemaker Wins!");
+				openEye();
+			}
+			else if(gameState == 2){
+				instruction.setText("Codebreaker Wins!");
+				openEye();
+			}	
+			else if(computer){
 				askForComputerGuess();
 			}
 		}
@@ -409,9 +414,6 @@ public class BoardController implements ActionListener{
 		computer = true;
 		if(guessState){
 			askForComputerGuess();
-			for(int i = 0; i < 6; i++){
-				guessPegs[i].removeActionListener(this);
-			}
 		}
 		guessState = false;
 		undo.removeActionListener(this);
@@ -419,5 +421,7 @@ public class BoardController implements ActionListener{
 	
 	public void setCodebreakerHuman(){
 		computer = false;
+		undo.addActionListener(this);
 	}
+
 }
