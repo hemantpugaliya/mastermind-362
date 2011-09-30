@@ -1,10 +1,19 @@
-import java.awt.Toolkit;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.*;
+
+/**
+ * BoardController
+ * 
+ * This class works as the controller for the view.
+ * All logic for updating the UI is done here.
+ * 
+ * @author Jim Kuglics
+ *
+ */
 
 public class BoardController implements ActionListener{
 	
@@ -18,7 +27,6 @@ public class BoardController implements ActionListener{
 	
 	private JPanel guessPanel;
 	private JPanel feedbackPanel;
-	private JPanel pegsButtonsPanel;
 	
 	private JLabel instruction;
 	
@@ -46,14 +54,30 @@ public class BoardController implements ActionListener{
 	private Timer timer = new Timer();
 	private int time = 0;
 	
-	public BoardController(MastermindGame _game, JButton[][] guess, JButton[][] feed, JToggleButton[] pegs,
-			JButton[] solution, JButton _eye, JButton _undo, JButton _done, JButton _clear,
+	/**
+	 * Creates a new BoardController and adds ActionListener's to appropriate items
+	 * @param _game - MastermindGame
+	 * @param _guess - 2d array of buttons used to place guess pegs
+	 * @param _feed - 2d array of buttons used to place feedback pegs
+	 * @param _pegs - used to select pegs
+	 * @param _solution - buttons used to add solution
+	 * @param _eye - shows solution
+	 * @param _undo - used to undo move
+	 * @param _done - used to submit a move
+	 * @param _clear - clears a row
+	 * @param _guessPanel - contains guess pegs
+	 * @param _feedbackPanel - contains feedback pegs
+	 * @param _pegButtons - contains guessPanel and feedbackPanel
+	 * @param _instruction - displays game information
+	 */
+	public BoardController(MastermindGame _game, JButton[][] _guess, JButton[][] _feed, JToggleButton[] _pegs,
+			JButton[] _solution, JButton _eye, JButton _undo, JButton _done, JButton _clear,
 			JPanel _guessPanel, JPanel _feedbackPanel, JPanel _pegButtons, JLabel _instruction){
 		
-		guessRows = guess;
-		feedbackRows = feed;
-		guessPegs = pegs;
-		solutionSet = solution;
+		guessRows = _guess;
+		feedbackRows = _feed;
+		guessPegs = _pegs;
+		solutionSet = _solution;
 		eye = _eye;
 		game = _game;
 		instruction = _instruction;
@@ -75,7 +99,6 @@ public class BoardController implements ActionListener{
 		
 		guessPanel = _guessPanel;
 		feedbackPanel = _feedbackPanel;
-		pegsButtonsPanel = _pegButtons;
 		
 		for(int i = 0; i < 10; i++){
 			for(int j = 0; j < 4; j++){
@@ -104,6 +127,9 @@ public class BoardController implements ActionListener{
 		resetCurrentFeedback();
 	}
 	
+	/**
+	 * Responds to all input from user accordingly
+	 */
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
 		char type = action.charAt(0);
@@ -141,6 +167,10 @@ public class BoardController implements ActionListener{
 		}
 	}
 	
+	/**
+	 * Makes sure only one peg is selected at a time.
+	 * @param p
+	 */
 	public void selectPeg(String p){
 		char peg = p.charAt(1);
 		int pegNum = Character.getNumericValue(peg);
@@ -158,6 +188,10 @@ public class BoardController implements ActionListener{
 			selectedPeg = 8;
 	}
 	
+	/**
+	 * Allows a guess peg to be placed on the current row of the board.
+	 * @param p
+	 */
 	public void placeGuessPeg(String p){
 		char r = p.charAt(1);
 		int row = Character.getNumericValue(r);
@@ -171,6 +205,10 @@ public class BoardController implements ActionListener{
 		}
 	}
 	
+	/**
+	 * Allows a feedback peg to be placed on the current row of the board.
+	 * @param p
+	 */
 	public void placeFeedbackPeg(String p){
 		char r = p.charAt(1);
 		int row = Character.getNumericValue(r);
@@ -187,6 +225,10 @@ public class BoardController implements ActionListener{
 		}
 	}
 	
+	/**
+	 * Allows a solution peg to be placed in the solution row.
+	 * @param p
+	 */
 	public void placeSolutionPeg(String p){
 		char s = p.charAt(1);
 		int guess = Character.getNumericValue(s);
@@ -197,6 +239,9 @@ public class BoardController implements ActionListener{
 		}
 	}
 	
+	/**
+	 * Used whenever a move is finished or solution is set.
+	 */
 	public void done(){
 		if(settingSolution){
 			ArrayList<PegColor> solutionArray = new ArrayList<PegColor>();
@@ -213,6 +258,7 @@ public class BoardController implements ActionListener{
 				}
 			}
 			
+			//only react if row is full
 			if(full){
 				for(int i = 0; i < 4; i++){
 					solutionSet[i].setIcon(new javax.swing.ImageIcon("icons/gray3.png"));
@@ -246,6 +292,7 @@ public class BoardController implements ActionListener{
 				}
 			}
 			
+			//only react if row is full
 			if(full){
 				game.makeGuess(guess);
 				currentGuessRow -= 1;
@@ -276,6 +323,7 @@ public class BoardController implements ActionListener{
 				closeEye();
 			}
 			
+			//checks for winning conditions
 			if(gameState == 1){
 				instruction.setText("Codemaker Wins!");
 				openEye();
@@ -300,6 +348,7 @@ public class BoardController implements ActionListener{
 			}
 		}
 		
+		//unselects current peg
 		for(int i = 0; i < 8; i++){
 			if(guessPegs[i].getModel().isSelected()){
 				guessPegs[i].getModel().setSelected(false);
@@ -309,6 +358,9 @@ public class BoardController implements ActionListener{
 		selectedPeg = 8;
 	}
 	
+	/**
+	 * Clears the current row the user is adding pegs to.
+	 */
 	public void clear(){
 		if(settingSolution){
 			for(int i = 0; i < 4; i++){
@@ -330,6 +382,9 @@ public class BoardController implements ActionListener{
 		}
 	}
 	
+	/**
+	 * Removes current pegs from the board and returns to the last finished guessing turn.
+	 */
 	public void undo(){
 		if(guessState && currentGuessRow <= 8){
 			clear();
@@ -353,6 +408,9 @@ public class BoardController implements ActionListener{
 		}
 	}
 	
+	/**
+	 * checks whether to make solution visible or not
+	 */
 	public void eyeball(){
 		if(!looking && !guessState)
 			openEye();
@@ -360,6 +418,9 @@ public class BoardController implements ActionListener{
 			closeEye();
 	}
 	
+	/**
+	 * makes solution visible
+	 */
 	public void openEye(){
 		for(int i = 0; i < 4; i++){
 			solutionSet[i].setIcon(new javax.swing.ImageIcon("icons/"+solution[i]+".png"));
@@ -367,6 +428,9 @@ public class BoardController implements ActionListener{
 		looking = true;	
 	}
 	
+	/**
+	 * makes solution invisible
+	 */
 	public void closeEye(){
 		for(int i = 0; i < 4; i++){
 			solutionSet[i].setIcon(new javax.swing.ImageIcon("icons/gray3.png"));
@@ -374,24 +438,37 @@ public class BoardController implements ActionListener{
 		looking = false;
 	}
 	
+	/**
+	 * used when clearing a row, undoing a move, or resetting the game
+	 */
 	public void resetCurrentGuess(){
 		for(int i = 0; i < 4; i++){
 			currentGuess[i] = 8;
 		}
 	}
 	
+	/**
+	 * used when clearing a row, undoing a move, or resetting the game
+	 */
 	public void resetCurrentFeedback(){
 		for(int i = 0; i < 4; i++){
 			currentFeedback[i] = 8;
 		}
 	}
 	
+	/**
+	 * used when clearing solution or resetting the game
+	 */
 	public void resetSolution(){
 		for(int i = 0; i < 4; i++){
 			solution[i] = 8;
 		}
 	}
 	
+	/**
+	 * Called when New Game is selected from menu.
+	 * Resets the UI board back to original state.
+	 */
 	public void resetGame(){
 		for(int i = 0; i < 10; i++){
 			for(int j = 0; j < 4; j++){
@@ -419,7 +496,11 @@ public class BoardController implements ActionListener{
 			undo.removeActionListener(this);
 		}
 	}
-
+	
+	/**
+	 * Places the computers guess of the board.
+	 * @param guess
+	 */
 	public void placeComputerGuess(ArrayList<PegColor> guess){
 		for(int i = 0; i < 4; i++){
 			currentGuess[i] = guess.get(i).ordinal();
@@ -436,6 +517,10 @@ public class BoardController implements ActionListener{
 		instruction.setText("Codemaker's Turn");
 	}
 	
+	/**
+	 * Used to retrieve the computers guess.  Uses a Timer to wait
+	 * a specified time.
+	 */
 	public void askForComputerGuess(){
 		turnButtonsOff();
 		instruction.setText("Computer is thinking...");
@@ -444,7 +529,11 @@ public class BoardController implements ActionListener{
 		done.removeActionListener(this);
 		clear.removeActionListener(this);
 	}
-
+	
+	/**
+	 * Sets computer boolean to true so the UI responds correctly
+	 * to moves made by the computer.
+	 */
 	public void setCodebreakerComputer(){
 		computer = true;
 		if(guessState){
@@ -454,11 +543,17 @@ public class BoardController implements ActionListener{
 		undo.removeActionListener(this);
 	}
 	
+	/**
+	 * Sets computer boolean to false.
+	 */
 	public void setCodebreakerHuman(){
 		computer = false;
 		undo.addActionListener(this);
 	}
 	
+	/**
+	 * Turns off all the buttons on the bottom panel.
+	 */
 	public void turnButtonsOff(){
 		for(int i = 0; i < 8; i++){
 			guessPegs[i].removeActionListener(this);
@@ -472,6 +567,9 @@ public class BoardController implements ActionListener{
 		buttonsOn = false;
 	}
 	
+	/**
+	 * Turns the buttons back on accordingly.
+	 */
 	public void turnButtonsOn(){
 		for(int i = 0; i < 8; i++){
 			guessPegs[i].addActionListener(this);
@@ -489,22 +587,40 @@ public class BoardController implements ActionListener{
 		buttonsOn = true;
 	}
 	
+	/**
+	 * Sets logging boolean
+	 * @param log
+	 */
 	public void setLogging(boolean log){
 		logging = log;
 	}
 	
+	/**
+	 * Sets time to wait for computer move.
+	 * @param seconds
+	 */
 	public void setTime(int seconds){
 		time = seconds;
 	}
 	
+	/**
+	 * Waits to retrieve the computer's move for a specified time.
+	 * @param seconds
+	 */
 	public void setTimer(int seconds) {
 	    timer = new Timer();
 	    timer.schedule(new ComputerTimer(), seconds * 1000);
 	  }
 	
+	/**
+	 * Class that does the actual Timer threading magic.
+	 * 
+	 * @author kuglics
+	 *
+	 */
 	class ComputerTimer extends TimerTask {
 	    public void run() {
-	      game.makeGuess(null);
+	      game.makeGuess(null); //notifies computer to make a guess
 	    }
 	  }
 

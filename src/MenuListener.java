@@ -3,32 +3,51 @@ import java.io.File;
 
 import javax.swing.*;
 
+/**
+ * MenuListener
+ * 
+ * @author Jim Kuglics
+ *
+ */
 
 public class MenuListener implements ActionListener{
 	
 	private JMenuItem newGame;
-	private JRadioButtonMenuItem[] player;
-	private JCheckBoxMenuItem log;
-	private ButtonGroup playerGroup = new ButtonGroup();
-	private int selectedCodebreaker = 0;
-	private JFileChooser fc = new JFileChooser();
-	private JFrame menu = new JFrame();
-	private MastermindGame game;
-	private BoardController controller;
 	private JMenuItem exit;
 	private JMenuItem setTimer;
+	private JCheckBoxMenuItem log;
 	
+	private JRadioButtonMenuItem[] player;	
+	private ButtonGroup playerGroup = new ButtonGroup();
+	private int selectedCodebreaker = 0;
+	
+	private JFileChooser fc = new JFileChooser();
+	private JFrame menu = new JFrame();
+	
+	private MastermindGame game;
+	private BoardController controller;
+		
 	private boolean newGameStarted = false;
 	
 	private File file = new File("");
 	private boolean logging = false;
 	
-	public MenuListener(MastermindGame _game, JMenuItem newG, JMenuItem _exit, JRadioButtonMenuItem[] _player,
-			JCheckBoxMenuItem _log, BoardController control, JMenuItem timer){
+	/**
+	 * Creates a new MenuListener and adds ActionListener's to items accordingly
+	 * @param _game
+	 * @param _newGame
+	 * @param _exit
+	 * @param _player
+	 * @param _log
+	 * @param _control
+	 * @param _timer
+	 */
+	public MenuListener(MastermindGame _game, JMenuItem _newGame, JMenuItem _exit, JRadioButtonMenuItem[] _player,
+			JCheckBoxMenuItem _log, BoardController _control, JMenuItem _timer){
 		
-		controller = control;
+		controller = _control;
 		
-		newGame = newG;
+		newGame = _newGame;
 		newGame.addActionListener(this);
 		newGame.setActionCommand("n");
 		
@@ -42,7 +61,7 @@ public class MenuListener implements ActionListener{
 		log.addActionListener(this);
 		log.setActionCommand("l");
 		
-		setTimer = timer;
+		setTimer = _timer;
 		setTimer.addActionListener(this);
 		setTimer.setActionCommand("t");
 		
@@ -57,6 +76,9 @@ public class MenuListener implements ActionListener{
 		
 	}
 	
+	/**
+	 * Responds to any slection of menu items accordingly.
+	 */
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
 		char type = action.charAt(0);
@@ -82,6 +104,10 @@ public class MenuListener implements ActionListener{
 		}
 	}
 	
+	/**
+	 * Notifies the controller and the game when the codebreaker is changed.
+	 * @param p
+	 */
 	public void setCodebreaker(String p){	
 		char _player = p.charAt(1);
 		int codebreakerNum = Character.getNumericValue(_player);
@@ -94,6 +120,9 @@ public class MenuListener implements ActionListener{
 			controller.setCodebreakerHuman();
 	}
 	
+	/**
+	 * Notifies the controller and the game when the user has called for a new game.
+	 */
 	public void newGame(){
 		controller.resetGame();
 		if(!logging)
@@ -112,14 +141,24 @@ public class MenuListener implements ActionListener{
 		newGameStarted = true;
 	}
 	
+	/**
+	 * exits the game
+	 */
 	public void exit(){
 		System.exit(0);
 	}
 	
+	/**
+	 * gets logging boolean
+	 * @return logging
+	 */
 	public boolean getLogging(){
 		return logging;
 	}
 	
+	/**
+	 * Shows a dialog box to allow the user to set the Timer.
+	 */
 	public void setTimer(){
 		String s = (String)JOptionPane.showInputDialog(
 		                    null,
@@ -129,7 +168,8 @@ public class MenuListener implements ActionListener{
 		                    null,
 		                    null,
 		                    null);
-
+		
+		//only accepts correct input or nothing at all.
 		if ((s != null) && (s.length() > 0)) {
 			try{
 				int time = Integer.parseInt(s);
@@ -145,6 +185,10 @@ public class MenuListener implements ActionListener{
 		}
 	}
 	
+	/**
+	 * Used to start logging.
+	 * Shows a file chooser which allows the user to select a file to log to.
+	 */
 	public void promptForFile(){
 		fc.setSelectedFile(null);
 		file = null;

@@ -2,6 +2,13 @@ import java.awt.*;
 
 import javax.swing.*;
 
+/**
+ * PegsView
+ * 
+ * @author Jim Kuglics
+ *
+ */
+
 public class PegsView {
 	
 	private JPanel guessPanel;
@@ -23,6 +30,9 @@ public class PegsView {
 		pegs = new JToggleButton[8];
 	}
 	
+	/**
+	 * Creates the panel that has selectable guess pegs
+	 */
 	public void createGuessPanel(){
 		for(int i = 0; i < 6; i++){
 			ImageIcon icon = new ImageIcon("icons/"+i+".png");	
@@ -39,10 +49,16 @@ public class PegsView {
 		guessPanel.add(pegs2, "Center");	
 	}
 	
+	/**
+	 * @return guessPanel
+	 */
 	public JPanel getGuessPanel(){
 		return guessPanel;
 	}
 	
+	/**
+	 * Creates feedback panel with selectable feedback pegs
+	 */
 	public void createFeedbackPanel(){
 		for(int i = 4; i < 6; i++){
 			ImageIcon icon = new ImageIcon("icons/"+i+".png");	
@@ -59,10 +75,16 @@ public class PegsView {
 		feedbackPanel.add(pegs4, "Center");	
 	}
 	
+	/**
+	 * @return feedbackPanel
+	 */
 	public JPanel getFeedbackPanel(){
 		return feedbackPanel;
 	}
 	
+	/**
+	 * @return pegs - all the pegs used for the game
+	 */
 	public JToggleButton[] getPegs(){
 		return pegs;
 	}

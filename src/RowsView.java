@@ -1,6 +1,13 @@
 import java.awt.*;
 import javax.swing.*;
 
+/**
+ * RowsView
+ * 
+ * @author Jim Kuglics
+ *
+ */
+
 public class RowsView {
 	
 	private JPanel board;
@@ -11,7 +18,7 @@ public class RowsView {
 	private JButton[][] feedbackRows;
 	private JButton[] solutionSlot;
 	private JButton eye;
-
+	
 	public RowsView(){
 		board = new JPanel(new BorderLayout());
 		rows = new JPanel(new GridLayout(10,5));
@@ -22,6 +29,9 @@ public class RowsView {
 		eye = new JButton();
 	}
 	
+	/**
+	 * Creates the RowsView panel
+	 */
 	public void create(){
 		createSolution();
 		createRows();
@@ -29,10 +39,17 @@ public class RowsView {
 		board.add(rows, BorderLayout.CENTER);	
 	}
 	
+	/**
+	 * 
+	 * @return board - panel of game rows
+	 */
 	public JPanel getBoard(){
 		return board;
 	}
 	
+	/**
+	 * Creates solution panel
+	 */
 	public void createSolution(){
 		
 		for(int i = 0; i < 5; i++){
@@ -62,6 +79,9 @@ public class RowsView {
 		solution.setBorder(BorderFactory.createLineBorder(Color.BLUE, 3));
 	}
 	
+	/**
+	 * Adds buttons to rows and creates their icons.
+	 */
 	public void createRows(){	
 		for(int i = 0; i < 10; i++){
 			JButton[] guessSlot = new JButton[4];
@@ -86,7 +106,10 @@ public class RowsView {
 		}
 	}
 	
-	
+	/**
+	 * Adds buttons to feedback row and creates their icons.
+	 * @param row
+	 */
 	public void createFeedback(int row){
 		JPanel feedbackPanel = new JPanel(new GridLayout(2, 2));
 		JButton[] feedbackSlot = new JButton[4];
@@ -108,19 +131,31 @@ public class RowsView {
 		feedbackPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		rows.add(feedbackPanel);
 	}
-
+	
+	/**
+	 * @returnm guessRows
+	 */
 	public JButton[][] getGuessRows(){
 		return guessRows;
 	}
 	
+	/** 
+	 * @return feedbackRows
+	 */
 	public JButton[][] getFeedbackRows(){
 		return feedbackRows;
 	}
 	
+	/**
+	 * @return solutionSlot
+	 */
 	public JButton[] getSolution(){
 		return solutionSlot;
 	}
 	
+	/**
+	 * @return eye
+	 */
 	public JButton getEye(){
 		return eye;
 	}

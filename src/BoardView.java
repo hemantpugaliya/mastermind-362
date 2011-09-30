@@ -2,6 +2,13 @@ import java.awt.*;
 
 import javax.swing.*;
 
+/**
+ * BoardView
+ * 
+ * @author Jim Kuglics
+ *
+ */
+
 public class BoardView extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
@@ -26,12 +33,19 @@ public class BoardView extends JFrame {
 	public BoardController controller;
 	public MenuListener menuListener;
 	public MastermindGame game;
-
+	
+	/**
+	 * Constructor
+	 * @param _game instance of MastermindGame
+	 */
 	public BoardView(MastermindGame _game){
 		gameName = new JLabel("Mastermind");
 		game = _game;
 	}
 	
+	/**
+	 * Creates the main GUI window
+	 */
 	public void create(){
 		setSize(250,575);	
 		setTitle("MASTERMIND");
@@ -70,6 +84,7 @@ public class BoardView extends JFrame {
 		
 		createMenus();
 		
+		//create a BoardController and MenuListener
 		controller = new BoardController(game, rowsview.getGuessRows(), rowsview.getFeedbackRows(),
 				pegsview.getPegs(), rowsview.getSolution(), rowsview.getEye(), undo, done, clear,
 				guessPanel, feedbackPanel, pegsButtonsPanel, gameName);
@@ -80,6 +95,9 @@ public class BoardView extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
+	/**
+	 * Create a menu bar and add all the items to it
+	 */
 	public void createMenus(){
 		JMenuBar bar = new JMenuBar();
 		
@@ -107,6 +125,9 @@ public class BoardView extends JFrame {
 		setJMenuBar(bar);
 	}
 	
+	/**
+	 * @return controller - instance of BoardController
+	 */
 	public BoardController getController(){
 		return controller;
 	}
