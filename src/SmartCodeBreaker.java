@@ -80,6 +80,10 @@ public  class SmartCodeBreaker extends CodeBreaker {
 				PegRow lastGuess = myGame.board.getLastFullRow();
 				ArrayList<FeedbackPeg> feedback = lastGuess.getFeedbackPegs();
 				ArrayList<PuzzlePeg> guess = lastGuess.getPuzzlePegs();
+				PegColor[] pcguess = new PegColor[4];
+				for (int i=0; i<4; ++i) {
+					pcguess[i] = guess.get(i).getColor();
+				}
 				int fBlack = 0;
 				int fWhite = 0;
 				for (FeedbackPeg fp: feedback) {
@@ -95,7 +99,7 @@ public  class SmartCodeBreaker extends CodeBreaker {
 				for (PegColor[] movePegs: possibleMoves) {
 					//System.out.println(lastScore[0] + " " + lastScore[1]);
 					//System.out.println(getScore(movePegs, guess)[0] + " " + getScore(movePegs, guess)[1]);
-					if (!(Arrays.equals(lastScore, getScore(movePegs, guess)))) {
+					if (!(Arrays.equals(lastScore, Mastermind.getScore(movePegs, pcguess)))) {
 						temp.add(movePegs);
 					}
 				}
@@ -156,50 +160,50 @@ public  class SmartCodeBreaker extends CodeBreaker {
 			}
 		}
 		
-		/**
-		 * Compare two rows of pegs to get the resulting feedback score.
-		 * @param guess An array of peg colors (doesn't have to be your guess)
-		 * @param guess2 An ArrayList of PuzzlePegs (does have to the the sol'n)
-		 * @return (black, white)
-		 */
-		private int[] getScore(PegColor[] guess, 
-				ArrayList<PuzzlePeg> guess2) {
-			int b = 0;
-			for (int i=0; i<4; ++i) {
-				if (guess[i] == guess2.get(i).getColor()){++b;}
-			}
-			int[] gcolors = new int[6];
-			int[] g2colors = new int[6];
-			int t = 0;
-			for (int i=0; i<4; ++i) {
-				switch (guess[i]) {
-					case GBLACK: ++gcolors[0]; break;
-					case GWHITE: ++gcolors[1]; break;
-					case RED: ++gcolors[2]; break;
-					case YELLOW: ++gcolors[3]; break;
-					case GREEN: ++gcolors[4]; break;
-					case BLUE: ++gcolors[5]; break;
-				}
-				switch (guess2.get(i).getColor()) {
-					case GBLACK: ++g2colors[0]; break;
-					case GWHITE: ++g2colors[1]; break;
-					case RED: ++g2colors[2]; break;
-					case YELLOW: ++g2colors[3]; break;
-					case GREEN: ++g2colors[4]; break;
-					case BLUE: ++g2colors[5]; break;
-				}
-			}
-			for (int i=0; i<6; ++i) {
-				//System.out.println(Math.min(gcolors[i], g2colors[i]));
-				t += Math.min(gcolors[i], g2colors[i]);
-			}
-			//System.out.println(t);
-			int w = t - b;
-			int[] toReturn = new int[2];
-			toReturn[0] = b;
-			toReturn[1] = w;
-			return toReturn;
-			
-		}
+//		/**
+//		 * Compare two rows of pegs to get the resulting feedback score.
+//		 * @param guess An array of peg colors (doesn't have to be your guess)
+//		 * @param guess2 An ArrayList of PuzzlePegs (does have to the the sol'n)
+//		 * @return (black, white)
+//		 */
+//		private int[] getScore(PegColor[] guess, 
+//				ArrayList<PuzzlePeg> guess2) {
+//			int b = 0;
+//			for (int i=0; i<4; ++i) {
+//				if (guess[i] == guess2.get(i).getColor()){++b;}
+//			}
+//			int[] gcolors = new int[6];
+//			int[] g2colors = new int[6];
+//			int t = 0;
+//			for (int i=0; i<4; ++i) {
+//				switch (guess[i]) {
+//					case GBLACK: ++gcolors[0]; break;
+//					case GWHITE: ++gcolors[1]; break;
+//					case RED: ++gcolors[2]; break;
+//					case YELLOW: ++gcolors[3]; break;
+//					case GREEN: ++gcolors[4]; break;
+//					case BLUE: ++gcolors[5]; break;
+//				}
+//				switch (guess2.get(i).getColor()) {
+//					case GBLACK: ++g2colors[0]; break;
+//					case GWHITE: ++g2colors[1]; break;
+//					case RED: ++g2colors[2]; break;
+//					case YELLOW: ++g2colors[3]; break;
+//					case GREEN: ++g2colors[4]; break;
+//					case BLUE: ++g2colors[5]; break;
+//				}
+//			}
+//			for (int i=0; i<6; ++i) {
+//				//System.out.println(Math.min(gcolors[i], g2colors[i]));
+//				t += Math.min(gcolors[i], g2colors[i]);
+//			}
+//			//System.out.println(t);
+//			int w = t - b;
+//			int[] toReturn = new int[2];
+//			toReturn[0] = b;
+//			toReturn[1] = w;
+//			return toReturn;
+//			
+//		}
 	
 }
