@@ -105,6 +105,16 @@ public  class SmartCodeBreaker extends CodeBreaker {
 				//System.out.println(possibleMoves.size());
 				//}
 				
+				// If the CodeMaker is a liar, you will have to deal.
+				if (possibleMoves.size()==0) {
+					ArrayList<PegColor> toReturn = new ArrayList<PegColor>();
+					toReturn.add(PegColor.GBLACK);
+					toReturn.add(PegColor.GBLACK);
+					toReturn.add(PegColor.GWHITE);
+					toReturn.add(PegColor.GWHITE);
+					return toReturn;
+				}
+				
 				// You literally cannot take a random element from a HashSet
 				// in any normal way, so let's just do something ridiculous.
 				PegColor[] temp2 = null;
@@ -119,13 +129,13 @@ public  class SmartCodeBreaker extends CodeBreaker {
 				}
 				//possibleMoves.removeAll(movePegs);
 				possibleMoves.remove(temp2);
-				if (temp == null) {System.out.println("oh no");}
+				//if (temp == null) {System.out.println("oh no");}
 				ArrayList<PegColor> toReturn = new ArrayList<PegColor>();
 				for (PegColor pc: temp2) {
 					toReturn.add(pc);
 				}
 				return toReturn;
-			} else {
+			} else if (possibleMoves.size() == 1) {
 				// LAST POSSIBLE MOVE
 				ArrayList<PegColor> toReturn = new ArrayList<PegColor>();
 				for (PegColor[] movePegs: possibleMoves) {
@@ -135,8 +145,15 @@ public  class SmartCodeBreaker extends CodeBreaker {
 					break;
 				}
 				return toReturn;
+			} else {
+				// STUMPED. RAGEQUIT.
+				ArrayList<PegColor> toReturn = new ArrayList<PegColor>();
+				toReturn.add(PegColor.GBLACK);
+				toReturn.add(PegColor.GBLACK);
+				toReturn.add(PegColor.GWHITE);
+				toReturn.add(PegColor.GWHITE);
+				return toReturn;
 			}
-			
 		}
 		
 		/**
