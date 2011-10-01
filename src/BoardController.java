@@ -44,6 +44,7 @@ public class BoardController implements ActionListener{
 	private boolean guessState;
 	private boolean computer;
 	private boolean logging;
+	private boolean gameOver;
 	
 	private boolean buttonsOn = true;
 	
@@ -329,6 +330,7 @@ public class BoardController implements ActionListener{
 				openEye();
 				turnButtonsOff();
 				guessState = false;
+				gameOver = true;
 				if(logging)
 					game.stopLogging();
 			}
@@ -337,6 +339,7 @@ public class BoardController implements ActionListener{
 				openEye();
 				turnButtonsOff();
 				guessState = false;
+				gameOver = true;
 				if(logging)
 					game.stopLogging();
 			}	
@@ -482,6 +485,7 @@ public class BoardController implements ActionListener{
 		instruction.setText("Set The Code:");
 		settingSolution = true;
 		guessState = false;
+		gameOver = false;
 		closeEye();
 		looking = false;
 		
@@ -548,7 +552,8 @@ public class BoardController implements ActionListener{
 	 */
 	public void setCodebreakerHuman(){
 		computer = false;
-		undo.addActionListener(this);
+		if(!gameOver)
+			undo.addActionListener(this);
 	}
 	
 	/**
