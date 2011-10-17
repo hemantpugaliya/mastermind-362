@@ -63,8 +63,8 @@ public class MastermindGame extends Game {
 		cbFact = new CodeBreakerFactory( board );
 		
 		// Create the game states to use during play
-		currState = new GuessState();
-		nextState = new FeedbackState();
+		//currState = new GuessState();
+		//nextState = new FeedbackState();
 	}
 	
 	/**
@@ -148,8 +148,8 @@ public class MastermindGame extends Game {
 		// Log the guess
 		if( logging )
 		{
-			gLog.setGuess(guess);
-			gLog.Execute();	
+			//gLog.setGuess(guess);
+			//gLog.Execute();	
 		}
 		
 		toggleState();
@@ -175,8 +175,8 @@ public class MastermindGame extends Game {
 		// Log the feedback
 		if( logging )
 		{
-			fLog.setFeedback(feedback);
-			fLog.Execute();
+			//fLog.setFeedback(feedback);
+			//fLog.Execute();
 		}
 		
 		toggleState();
@@ -189,7 +189,8 @@ public class MastermindGame extends Game {
 	 */
 	public void undo()
 	{
-		int numUndo = currState.undoTurn();
+		int numUndo = 0;
+		//int numUndo = currState.undoTurn();
 		
 		// Check the game state and set numUndo
 		
@@ -199,14 +200,14 @@ public class MastermindGame extends Game {
 		// Log the undo
 		if( logging )
 		{
-			uLog.setNumUndo(numUndo);
-			uLog.Execute();
+			//uLog.setNumUndo(numUndo);
+			//uLog.Execute();
 		}
 		
 		// When a move is undone, regardless of current state, the game
 		// goes back to a guess state
-		currState = new GuessState();
-		nextState = new FeedbackState();
+		//currState = new GuessState();
+		//nextState = new FeedbackState();
 	}
 	
 	/**
@@ -265,16 +266,16 @@ public class MastermindGame extends Game {
 			// Log the past guesses in order
 			if( guessHist.get(i).size() > 0)
 			{
-				gLog.setGuess(guessHist.get(i));
-				gLog.Execute();
+				//gLog.setGuess(guessHist.get(i));
+				//gLog.Execute();
 			}
 			
 			// Log the past feedback in order
 			// Note: There could be one less feedback than there are guesses
 			if( fbHist.get(i).size() > 0)
 			{
-				fLog.setFeedback(fbHist.get(i));
-				fLog.Execute();
+				//fLog.setFeedback(fbHist.get(i));
+				//fLog.Execute();
 			}
 		}
 		
