@@ -3,36 +3,24 @@ import java.util.ArrayList;
 
 /**
  * FeedbackCommand
- * Prepares a message for the logfile containing the most recent feedback
+ * Processes a feedback move during the game
  * 
  * @author Gabbie Burns
  *
  */
-public class FeedbackCommand implements LogfileCommand {
+public class FeedbackCommand implements MastermindCommand {
 	
-	/**
-	 * Logfile acts as the receiver for this command.
-	 */
-	private Logfile myLog = null;
 	/**
 	 * Message to be written out to the log.
 	 */
 	private String logMsg = null;
 	/**
-	 * Most recent feedback from the codebreaker.
+	 * Most recent feedback from the codemaker
 	 */
 	private ArrayList< PegColor > feedback = null;
 	
 	private final int NUMPEGS = 4;
-	
-	/**
-	 * Constructor-gets logfile instance at creation.
-	 */
-	public FeedbackCommand()
-	{
-		myLog = Logfile.getInstance();
-	}
-	
+		
 	/**
 	 * Update the most recent feedback when a move is made
 	 * 
@@ -45,28 +33,28 @@ public class FeedbackCommand implements LogfileCommand {
 	}
 	
 	/**
-	 * Write the feedback out to the logfile.
+	 * 
 	 */
 	public void Execute()
 	{
-		if( feedback.size() != NUMPEGS )
+	}
+	
+	/**
+	 * Return a representation of the most recent move made
+	 * 
+	 * @return   the message form of the last move
+	 */
+	public String getMessage()
+	{
+		logMsg = "Feedback:";
+		
+		// Append the guesses for each peg
+		for( int i = 0; i < NUMPEGS; i++ )
 		{
-			// Error
-			// Should I bother checking this?
-		}
-		else
-		{
-			// Start the log string
-			logMsg = "Feedback:";
-			
-			// Append the guesses for each peg
-			for( int i = 0; i < NUMPEGS; i++ )
-			{
-				logMsg = logMsg + " " + feedback.get(i).toString();
-			}
+			logMsg = logMsg + " " + feedback.get(i).toString();
 		}
 		
-		myLog.writeLog(logMsg);
+		return logMsg;
 	}
 	
 }

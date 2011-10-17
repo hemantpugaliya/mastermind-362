@@ -3,17 +3,13 @@ import java.util.ArrayList;
 
 /**
  * GuessCommand
- * Prepares a message for the logfile containing the most recent guess
+ * Processes a guess move during the game
  * 
  * @author Gabbie Burns
  *
  */
-public class GuessCommand implements LogfileCommand {
+public class GuessCommand implements MastermindCommand {
 	
-	/**
-	 * Logfile acts as the receiver for this command.
-	 */
-	private Logfile myLog = null;
 	/**
 	 * Message to be written out to the log.
 	 */
@@ -24,14 +20,6 @@ public class GuessCommand implements LogfileCommand {
 	private ArrayList< PegColor > guess = null;
 	
 	private final int NUMPEGS = 4;
-	
-	/**
-	 * Constructor-gets logfile instance at creation.
-	 */
-	public GuessCommand()
-	{
-		myLog = Logfile.getInstance();
-	}
 	
 	/**
 	 * Update the most recent guess when a move is made
@@ -45,28 +33,29 @@ public class GuessCommand implements LogfileCommand {
 	}
 	
 	/**
-	 * Write the guess out to the logfile.
+	 *
 	 */
 	public void Execute()
 	{
-		if( guess.size() != NUMPEGS )
+	}
+	
+	/**
+	 * Return a representation of the most recent move made
+	 * 
+	 * @return   the message form of the last move
+	 */
+	public String getMessage()
+	{
+		// Start the log string
+		logMsg = "Guess:   ";
+				
+		// Append the guesses for each peg
+		for( int i = 0; i < NUMPEGS; i++ )
 		{
-			// Error
-			// Should I bother checking this?
-		}
-		else
-		{
-			// Start the log string
-			logMsg = "Guess:   ";
-			
-			// Append the guesses for each peg
-			for( int i = 0; i < NUMPEGS; i++ )
-			{
-				logMsg = logMsg + " " + guess.get(i).toString();
-			}
+			logMsg = logMsg + " " + guess.get(i).toString();
 		}
 		
-		myLog.writeLog(logMsg);
+		return logMsg;
 	}
 	
 }

@@ -10,11 +10,6 @@ import java.io.IOException;
  *
  */
 public class Logfile {
-
-	/**
-	 * A self-instance used as part of the Singleton pattern
-	 */
-	private static Logfile myInstance = null;
 	
 	/**
 	 * Writer used to push messages out to the actual log file
@@ -24,29 +19,7 @@ public class Logfile {
 	/**
 	 * Keep count of the current line number to label the file
 	 */
-	private static int lineNumber;
-	
-	/**
-	 * Private constructor for compliance with Singleton pattern.
-	 */
-	private Logfile()
-	{
-	}
-	
-	/**
-	 * Provide an instance of yourself
-	 * 
-	 * @return Singleton instance for the class
-	 */
-	public static Logfile getInstance()
-	{
-		if ( myInstance == null)
-		{
-			myInstance = new Logfile();
-		}
-		
-		return myInstance;
-	}
+	private int lineNumber;
 	
 	/**
 	 * Open a file for writing the log of the current game
@@ -106,9 +79,6 @@ public class Logfile {
 		{
 			// handle the exception
 		}
-		
-		// Set the self-instance to null so that it can be created again with the next logging session
-		myInstance = null;
 		
 	}
 	

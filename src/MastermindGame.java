@@ -14,7 +14,6 @@ public class MastermindGame extends Game {
 	/**
 	 * A set of commands used for logging different moves
 	 */
-	private ToggleLogCommand tLog = null;
 	private GuessCommand gLog = null;
 	private FeedbackCommand fLog = null;
 	private UndoCommand uLog = null;
@@ -113,8 +112,6 @@ public class MastermindGame extends Game {
 	public void startLogging( String filename )
 	{
 		logging = true;
-		tLog = new ToggleLogCommand(filename);
-		tLog.Execute();
 		
 		gLog = new GuessCommand();
 		fLog = new FeedbackCommand();
@@ -129,7 +126,6 @@ public class MastermindGame extends Game {
 	 */
 	public void stopLogging()
 	{
-		tLog.Execute();
 	}
 	
 	/**
