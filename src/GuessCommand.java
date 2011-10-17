@@ -22,21 +22,11 @@ public class GuessCommand implements MastermindCommand {
 	private final int NUMPEGS = 4;
 	
 	/**
-	 * Update the most recent guess when a move is made
-	 * 
-	 * @param newGuess: the newest guess from the codebreaker
-	 * 
+	 * TODO
 	 */
-	public void setGuess( ArrayList< PegColor > newGuess )
+	public void Execute( ArrayList< PegColor > move )
 	{
-		guess = newGuess;
-	}
-	
-	/**
-	 *
-	 */
-	public void Execute()
-	{
+		guess = move;
 	}
 	
 	/**

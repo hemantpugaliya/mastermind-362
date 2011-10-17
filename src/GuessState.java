@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+
+
 /**
  * GuessState
  * The state of the game when it is the codebreaker's turn
@@ -5,18 +8,40 @@
  * @author Gabbie Burns
  *
  */
-
-public class GuessState implements GameState 
+public class GuessState extends GameState 
 {
+	/**
+	 * A reference to a FeedbackCommand
+	 */
+	private MastermindCommand guess;
 	
 	/**
-	 * When the game is in a guess state, only the previous two moves (the 
-	 *  most recent guess and feedback) is undone.
+	 * Constructor, pass up parameters and create guess command
 	 */
-	public int undoTurn() {
+	public GuessState( BoardController bc, boolean logOn )
+	{
+		super(bc, logOn);
+		guess = new FeedbackCommand();
+	}
+	
+	/**
+	 * Apply guess to the board
+	 */
+	public void makeMove( ArrayList<PegColor> move)
+	{
 		
-		return 1;
-		
+	}
+	/**
+	 * When the game is in a guess state, only the two moves (the 
+	 *  most recent guess and feedback) are undone.
+	 */
+	public void undoTurn() 
+	{
+		// Perform the undo operation
+		// TODO
+		//undo.Execute();
+		// Log the move
+		logging.writeMessage(undo);
 	}
 
 }

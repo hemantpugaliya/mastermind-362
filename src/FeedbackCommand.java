@@ -22,21 +22,11 @@ public class FeedbackCommand implements MastermindCommand {
 	private final int NUMPEGS = 4;
 		
 	/**
-	 * Update the most recent feedback when a move is made
-	 * 
-	 * @param newGuess: the newest feedback from the codemaker
-	 * 
+	 * TODO
 	 */
-	public void setFeedback( ArrayList< PegColor > newFeedback )
+	public void Execute( ArrayList< PegColor > move )
 	{
-		feedback = newFeedback;
-	}
-	
-	/**
-	 * 
-	 */
-	public void Execute()
-	{
+		feedback = move;
 	}
 	
 	/**

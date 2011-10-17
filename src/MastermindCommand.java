@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * MastermindCommand
  * 
@@ -9,7 +11,10 @@
 
 public interface MastermindCommand {
 	
-	public void Execute();
+	/**
+	 * TODO
+	 */
+	public void Execute( ArrayList< PegColor > move );
 	
 	/**
 	 * Return a representation of the most recent move made

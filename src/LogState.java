@@ -10,19 +10,18 @@
 public class LogState extends LoggingState {
 	
 	/**
-	 * Initial message to be written out to the log.
+	 * Stop logging and return the new logging state
+	 * 
+	 * @param filename    not used
+	 * @return newState   a NoLogState
 	 */
-	private final String startMsg = "Key: Red=R, Yellow=Y, Green=G, Blue=B, White=W, Black=K, Blank=0";
-	
-	/**
-	 * Create the logfile and open a new log
-	 * @param filename
-	 */
-	public void startLoggging(String filename)
-	{
-		myLog = new Logfile();
-		myLog.openLog(filename);
-		myLog.writeLog(startMsg);
+	public LoggingState toggleLogging( String filename )
+	{	
+		myLog.closeLog();
+		myLog = null;
+		
+		LoggingState newState = new NoLogState();
+		return newState;
 	}
 
 	/**

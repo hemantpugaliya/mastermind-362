@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 
 /**
  * UndoCommand
@@ -18,21 +20,11 @@ public class UndoCommand implements MastermindCommand {
 	private int numUndo = 0;
 	
 	/**
-	 * Update the info for the effects of this undo
-	 * 
-	 * @param undo   the number of moves affected by the most recent undo
-	 * 
+	 * TODO
 	 */
-	public void setNumUndo( int undo )
+	public void Execute( ArrayList< PegColor > move )
 	{
-		numUndo = undo;
-	}
-	
-	/**
-	 *
-	 */
-	public void Execute()
-	{
+		// TODO: this one is complicated...
 	}
 	
 	/**

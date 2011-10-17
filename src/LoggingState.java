@@ -15,6 +15,11 @@ public abstract class LoggingState {
 	protected static Logfile myLog;
 	
 	/**
+	 * Starts or stops logging, depending on the current state and return new state
+	 */
+	public abstract LoggingState toggleLogging( String filename );
+	
+	/**
 	 * Writes out a message to the log file, if appropriate
 	 * 
 	 * @param command   the command that was just executed by the game, used to generate message
