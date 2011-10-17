@@ -21,7 +21,7 @@ public class GuessState extends GameState
 	public GuessState( BoardController bc, boolean logOn )
 	{
 		super(bc, logOn);
-		guess = new FeedbackCommand();
+		guess = new GuessCommand();
 	}
 	
 	/**
@@ -29,7 +29,14 @@ public class GuessState extends GameState
 	 */
 	public void makeMove( ArrayList<PegColor> move)
 	{
+		// Execute the move
+		guess.Execute(move);
 		
+		// Log the move
+		logging.writeMessage(guess);
+		
+		// Change the state
+		// set BoardController state to Feedback
 	}
 	/**
 	 * When the game is in a guess state, only the two moves (the 
@@ -37,11 +44,15 @@ public class GuessState extends GameState
 	 */
 	public void undoTurn() 
 	{
-		// Perform the undo operation
+		// Execute the undo
 		// TODO
 		//undo.Execute();
+		
 		// Log the move
 		logging.writeMessage(undo);
+		
+		// Change the state
+		// set BoardController state to Guess
 	}
 
 }

@@ -8,8 +8,12 @@ import java.util.ArrayList;
  * @author Gabbie Burns
  *
  */
-public class FeedbackCommand implements MastermindCommand {
+public class FeedbackCommand extends MastermindCommand {
 	
+	/**
+	 * An instance of a codebreaker player, who makes guesses
+	 */
+	CodeMaker maker = null;
 	/**
 	 * Message to be written out to the log.
 	 */
@@ -22,11 +26,23 @@ public class FeedbackCommand implements MastermindCommand {
 	private final int NUMPEGS = 4;
 		
 	/**
-	 * TODO
+	 * Execute the given move or get one from the current codemaker
+	 * 
+	 * @param move    null if using a computer codemaker
 	 */
 	public void Execute( ArrayList< PegColor > move )
 	{
+		// If the guess is null, we are using a computer codemaker
+		if( move == null )
+		{
+			move = maker.makeMove();
+		}
+		
+		// Save the move
 		feedback = move;
+				
+		// Notify the board
+		board.newFeedback(feedback);
 	}
 	
 	/**

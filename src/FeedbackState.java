@@ -29,6 +29,14 @@ public class FeedbackState extends GameState
 	 */
 	public void makeMove( ArrayList<PegColor> move)
 	{
+		// Execute the move
+		feedback.Execute( move );
+		
+		// Log the move
+		logging.writeMessage( feedback );
+		
+		// Change the state
+		// set BoardController state to guess
 		
 	}
 	/**
@@ -37,11 +45,15 @@ public class FeedbackState extends GameState
 	 */
 	public void undoTurn() 
 	{
-		// Perform the undo operation
+		// Execute the undo
 		// TODO
 		//undo.Execute();
+		
 		// Log the move
 		logging.writeMessage(undo);
+		
+		// Change the state
+		// setBoardController state to guess
 	}
 
 }

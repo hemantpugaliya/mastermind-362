@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * @author Gabbie Burns
  *
  */
-public class UndoCommand implements MastermindCommand {
+public class UndoCommand extends MastermindCommand {
 	
 	/**
 	 * Message to be written out to the log.
@@ -25,6 +25,10 @@ public class UndoCommand implements MastermindCommand {
 	public void Execute( ArrayList< PegColor > move )
 	{
 		// TODO: this one is complicated...
+		// Extract the int that we need
+		
+		// Notify the board
+		board.undoMove(numUndo);
 	}
 	
 	/**
