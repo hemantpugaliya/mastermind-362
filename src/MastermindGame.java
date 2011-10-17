@@ -20,10 +20,13 @@ public class MastermindGame extends Game {
 	private UndoCommand uLog = null;
 	
 	/**
-	 * The two players responsible for game play
+	 * The two players responsible for game play and factories to create them
 	 */
 	private MastermindPlayer maker = null;
 	private MastermindPlayer breaker = new HumanCodeBreaker();
+	private CodeMakerFactory cmFact = new CodeMakerFactory();
+	// Instantiate later because of dependency on board
+	private CodeBreakerFactory cbFact;
 	
 	/**
 	 * A representation of the board
@@ -58,6 +61,7 @@ public class MastermindGame extends Game {
 	public MastermindGame()
 	{
 		board = new MastermindBoard();
+		cbFact = new CodeBreakerFactory( board );
 		
 		// Create the game states to use during play
 		currState = new GuessState();
@@ -85,6 +89,7 @@ public class MastermindGame extends Game {
 	{
 		// Create the board
 		board = new MastermindBoard();
+		cbFact = new CodeBreakerFactory( board );
 	
 		// Create the players
 		maker = new CodeMaker( );		
@@ -213,26 +218,21 @@ public class MastermindGame extends Game {
 	 *  be another human player or a computer player
 	 *  
 	 * @param _playerNum   indicates which type of codebreaker is playing
-	 * 
-	 * @return   an appropriate CodeBreaker instance
 	 */
 	public void setCodeBreaker( int _playerNum )
 	{	
-		switch( _playerNum )
-		{
-		
-		case 0: breaker = new HumanCodeBreaker();
-		break;
-		
-		case 1: breaker = new RandomCodeBreaker();
-		break;
-		
-		case 2: breaker = new SmartCodeBreaker(this);
-		break;
-			
-		default:
-			breaker = new HumanCodeBreaker();
-		}
+		breaker = cbFact.setCodeBreaker(_playerNum);
+	}
+	
+	/**
+	 * Facilitates the user's ability to select whether the codebreaker should
+	 *  be another human player or a computer player
+	 *  
+	 *  @param _playerNum   indicates which type of codemaker is playing
+	 */
+	public void setCodeMaker( int _playerNum )
+	{
+		maker = cmFact.setCodeMaker(_playerNum);
 	}
 	
 	/**

@@ -20,17 +20,17 @@ public  class SmartCodeBreaker extends CodeBreaker {
 		private HashSet<PegColor[]> possibleMoves;
 		
 		/**
-		 * A reference to the game where this
+		 * A reference to the board where this
 		 * SmartCodeBreaker is playing.
 		 */
-		private MastermindGame myGame;
+		private MastermindBoard myBoard;
 		
 		/**
 		 * Create a new SmartCodeBreaker and initialize its
 		 * possible move set.
 		 */
-		public SmartCodeBreaker(MastermindGame mg) {
-			this.myGame = mg;
+		public SmartCodeBreaker(MastermindBoard mb) {
+			this.myBoard = mb;
 			this.possibleMoves = new HashSet<PegColor[]>(1296);
 			PegColor[] colors = new PegColor[6];
 			colors[0] = PegColor.GBLACK;
@@ -77,7 +77,7 @@ public  class SmartCodeBreaker extends CodeBreaker {
 				return toReturn;
 			} else if (possibleMoves.size() > 1) {
 				// MOVE SEARCH
-				PegRow lastGuess = myGame.board.getLastFullRow();
+				PegRow lastGuess = myBoard.getLastFullRow();
 				ArrayList<FeedbackPeg> feedback = lastGuess.getFeedbackPegs();
 				ArrayList<PuzzlePeg> guess = lastGuess.getPuzzlePegs();
 				PegColor[] pcguess = new PegColor[4];
