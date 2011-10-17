@@ -11,17 +11,11 @@ import java.util.ArrayList;
 public class FeedbackState extends GameState 
 {
 	/**
-	 * A reference to a FeedbackCommand
-	 */
-	private MastermindCommand feedback;
-	
-	/**
 	 * Constructor, pass up parameters and create feedback command
 	 */
 	public FeedbackState( BoardController bc, boolean logOn )
 	{
 		super(bc, logOn);
-		feedback = new FeedbackCommand();
 	}
 	
 	/**
@@ -30,10 +24,14 @@ public class FeedbackState extends GameState
 	public void makeMove( ArrayList<PegColor> move)
 	{
 		// Execute the move
-		feedback.Execute( move );
+		MastermindCommand feedback = new FeedbackCommand(move);
+		feedback.Execute();
 		
 		// Log the move
 		logging.writeMessage( feedback );
+		
+		// Store the move in the history
+		gameHistory.add(feedback);
 		
 		// Change the state
 		// set BoardController state to guess
@@ -46,11 +44,14 @@ public class FeedbackState extends GameState
 	public void undoTurn() 
 	{
 		// Execute the undo
-		// TODO
-		//undo.Execute();
+		MastermindCommand undo = new UndoCommand(0);
+		undo.Execute();
 		
 		// Log the move
 		logging.writeMessage(undo);
+		
+		// Remove the most recent guess from the game history
+		gameHistory.remove(gameHistory.size() - 1);
 		
 		// Change the state
 		// setBoardController state to guess

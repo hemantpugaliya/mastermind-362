@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * LoggingState
  * 
@@ -17,7 +19,7 @@ public abstract class LoggingState {
 	/**
 	 * Starts or stops logging, depending on the current state and return new state
 	 */
-	public abstract LoggingState toggleLogging( String filename );
+	public abstract LoggingState toggleLogging( String filename, ArrayList<MastermindCommand> history );
 	
 	/**
 	 * Writes out a message to the log file, if appropriate
@@ -26,5 +28,4 @@ public abstract class LoggingState {
 	 */
 	public abstract void writeMessage( MastermindCommand command );
 	
-
 }

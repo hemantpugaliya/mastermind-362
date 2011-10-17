@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * NoLogState
  * 
@@ -20,11 +22,18 @@ public class NoLogState extends LoggingState {
 	 * @param filename   the name of the file to save logs in
 	 * @return newState   a LogState
 	 */
-	public LoggingState toggleLogging( String filename )
+	public LoggingState toggleLogging( String filename, ArrayList<MastermindCommand> history )
 	{
+		// Start the log
 		myLog = new Logfile();
 		myLog.openLog(filename);
 		myLog.writeLog(startMsg);
+		
+		// Log the game history up to this point
+		for(int i = 0; i < history.size(); i++)
+		{
+			myLog.writeLog(history.get(i).getMessage());
+		}
 		
 		LoggingState newState = new LogState();
 		return newState;

@@ -17,9 +17,9 @@ public abstract class MastermindCommand {
 	protected static MastermindBoard board;
 	
 	/**
-	 * TODO
+	 * Execute the stored move and apply it to the state of the game
 	 */
-	public abstract void Execute( ArrayList< PegColor > move );
+	public abstract void Execute();
 	
 	/**
 	 * Return a representation of the most recent move made

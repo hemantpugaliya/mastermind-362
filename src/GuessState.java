@@ -9,19 +9,13 @@ import java.util.ArrayList;
  *
  */
 public class GuessState extends GameState 
-{
-	/**
-	 * A reference to a FeedbackCommand
-	 */
-	private MastermindCommand guess;
-	
+{	
 	/**
 	 * Constructor, pass up parameters and create guess command
 	 */
 	public GuessState( BoardController bc, boolean logOn )
 	{
 		super(bc, logOn);
-		guess = new GuessCommand();
 	}
 	
 	/**
@@ -30,10 +24,14 @@ public class GuessState extends GameState
 	public void makeMove( ArrayList<PegColor> move)
 	{
 		// Execute the move
-		guess.Execute(move);
+		MastermindCommand guess = new GuessCommand(move);
+		guess.Execute();
 		
 		// Log the move
 		logging.writeMessage(guess);
+		
+		// Store the move in the history
+		gameHistory.add(guess);
 		
 		// Change the state
 		// set BoardController state to Feedback
@@ -45,11 +43,15 @@ public class GuessState extends GameState
 	public void undoTurn() 
 	{
 		// Execute the undo
-		// TODO
-		//undo.Execute();
+		MastermindCommand undo = new UndoCommand(1);
+		undo.Execute();
 		
 		// Log the move
 		logging.writeMessage(undo);
+		
+		// Remove the most recent guess and feedback from the game history
+		gameHistory.remove(gameHistory.size() - 1);
+		gameHistory.remove(gameHistory.size() - 1);
 		
 		// Change the state
 		// set BoardController state to Guess

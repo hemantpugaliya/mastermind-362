@@ -20,13 +20,19 @@ public class UndoCommand extends MastermindCommand {
 	private int numUndo = 0;
 	
 	/**
-	 * TODO
+	 * Constructor
+	 * 
+	 * @param move   the number of moves to undo
 	 */
-	public void Execute( ArrayList< PegColor > move )
+	public UndoCommand( int move )
 	{
-		// TODO: this one is complicated...
-		// Extract the int that we need
-		
+		numUndo = move;
+	}
+	/**
+	 * Apply the undo to the board
+	 */
+	public void Execute()
+	{
 		// Notify the board
 		board.undoMove(numUndo);
 	}

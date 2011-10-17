@@ -113,9 +113,9 @@ public class MastermindGame extends Game {
 	{
 		logging = true;
 		
-		gLog = new GuessCommand();
-		fLog = new FeedbackCommand();
-		uLog = new UndoCommand(); 
+		//gLog = new GuessCommand();
+		//fLog = new FeedbackCommand();
+		//uLog = new UndoCommand(); 
 		
 		// Log the existing game history
 		retroLog();

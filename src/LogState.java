@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * LogState
  * 
@@ -13,9 +15,10 @@ public class LogState extends LoggingState {
 	 * Stop logging and return the new logging state
 	 * 
 	 * @param filename    not used
+	 * @param history     not used
 	 * @return newState   a NoLogState
 	 */
-	public LoggingState toggleLogging( String filename )
+	public LoggingState toggleLogging( String filename, ArrayList<MastermindCommand> history )
 	{	
 		myLog.closeLog();
 		myLog = null;

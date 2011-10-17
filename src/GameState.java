@@ -14,9 +14,9 @@ public abstract class GameState {
 	 */
 	protected BoardController myBC;
 	/**
-	 * A reference to an UndoCommand
+	 * A collection of commands representing the history of the game thus far
 	 */
-	protected MastermindCommand undo;
+	protected static ArrayList<MastermindCommand> gameHistory;
 	/**
 	 * Determines whether or not logging is enabled and handles it appropriately
 	 */
@@ -31,7 +31,7 @@ public abstract class GameState {
 	public GameState( BoardController bc, boolean logOn )
 	{
 		myBC = bc;
-		undo = new UndoCommand();
+		gameHistory = new ArrayList<MastermindCommand>();
 		
 		// Set the log state
 		if( logOn )
@@ -61,7 +61,7 @@ public abstract class GameState {
 	 */
 	public void toggleLogging(String filename)
 	{
-		logging = logging.toggleLogging(filename);
+		logging = logging.toggleLogging(filename, gameHistory);
 	}
 	
 }

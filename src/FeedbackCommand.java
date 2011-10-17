@@ -24,22 +24,29 @@ public class FeedbackCommand extends MastermindCommand {
 	private ArrayList< PegColor > feedback = null;
 	
 	private final int NUMPEGS = 4;
-		
+	
+	/**
+	 * Constructor
+	 * 
+	 * @param move   a set of feedback from the codemaker
+	 */
+	public FeedbackCommand( ArrayList<PegColor> move )
+	{
+		feedback = move;
+	}
+	
 	/**
 	 * Execute the given move or get one from the current codemaker
 	 * 
 	 * @param move    null if using a computer codemaker
 	 */
-	public void Execute( ArrayList< PegColor > move )
+	public void Execute()
 	{
 		// If the guess is null, we are using a computer codemaker
-		if( move == null )
+		if( feedback == null )
 		{
-			move = maker.makeMove();
+			feedback = maker.makeMove();
 		}
-		
-		// Save the move
-		feedback = move;
 				
 		// Notify the board
 		board.newFeedback(feedback);

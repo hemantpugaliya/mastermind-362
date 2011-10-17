@@ -26,21 +26,28 @@ public class GuessCommand extends MastermindCommand {
 	private final int NUMPEGS = 4;
 	
 	/**
+	 * Constructor
+	 * 
+	 * @param move   a guess from the codebreaker
+	 */
+	public GuessCommand( ArrayList<PegColor> move )
+	{
+		guess = move;
+	}
+	
+	/**
 	 * Execute the given move or get one from the current codebreaker
 	 * 
 	 * @param move    null if using a computer codebreaker
 	 */
-	public void Execute( ArrayList< PegColor > move )
+	public void Execute()
 	{
 		// If the guess is null, we are using a computer codebreaker
-		if( move == null )
+		if( guess == null )
 		{
-			move = breaker.makeMove();		
+			guess = breaker.makeMove();		
 		}
-		
-		// Store the move
-		guess = move;
-		
+				
 		// Notify the board
 		board.newGuess(guess);
 	}
