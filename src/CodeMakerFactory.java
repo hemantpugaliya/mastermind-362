@@ -9,21 +9,6 @@
 public class CodeMakerFactory {
 
 	/**
-	 * A representation of the current board
-	 */
-	private MastermindBoard myBoard;
-	
-	/**
-	 * Constructor. Takes an instance of the board for computer players that need the access
-	 * 
-	 * @param board
-	 */
-	public CodeMakerFactory( MastermindBoard board )
-	{
-		myBoard = board;
-	}
-	
-	/**
 	 * Selects the type of codemaker to create based on input and returns the appropriate
 	 * object
 	 * 
@@ -31,24 +16,26 @@ public class CodeMakerFactory {
 	 */
 	public CodeMaker setCodeMaker( int playerNum )
 	{
-		CodeMaker maker;
+		CodeMaker maker = null;
+		
+		//CodeMaker maker = new CodeMaker();
 		
 		// Decide based on the input which to return
 		switch( playerNum )
 		{
 		
-		case 0: maker = new HumanCodeMaker();
-		break;
+		//case 0: breaker = new HumanCodeMaker();
+		//break;
 		
-		case 1: maker = new ComputerCodeMaker(myBoard);
-		break;
+		//case 1: breaker = new ComputerCodeBreaker();
+		//break;
 		
-		case 2: maker = new NetworkCodeMaker();
-		break;
+		//case 2: breaker = new NetworkCodeBreaker();
+		//break;
 			
 		default:
 			// Return a HumanCodeMaker by default
-			maker = new HumanCodeMaker();
+			//breaker = new HumanCodeMaker();
 		}
 		
 		return maker;
