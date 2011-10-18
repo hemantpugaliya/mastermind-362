@@ -55,6 +55,9 @@ public class BoardController implements ActionListener{
 	private Timer timer = new Timer();
 	private int time = 0;
 	
+	private GameState currState;
+	private GameState nextState;
+	
 	/**
 	 * Creates a new BoardController and adds ActionListener's to appropriate items
 	 * @param _game - MastermindGame
@@ -295,12 +298,13 @@ public class BoardController implements ActionListener{
 			
 			//only react if row is full
 			if(full){
-				game.makeGuess(guess);
+				currState.makeMove(guess);
+				toggleGameState();
+				guessState = false;
 				currentGuessRow -= 1;
 				resetCurrentGuess();
 				guessPanel.setVisible(false);
 				feedbackPanel.setVisible(true);
-				guessState = false;
 				instruction.setText("Codemaker's Turn");
 			}
 		}
@@ -311,13 +315,15 @@ public class BoardController implements ActionListener{
 				feedback.add(PegColor.values()[currentFeedback[i]]);
 			}
 			
-			int gameState = game.giveFeedback(feedback);
+			//int state = game.giveFeedback(feedback);
+			currState.makeMove(feedback);
+			toggleGameState();
+			guessState = true;
 			
 			currentFeedbackRow -= 1;
 			resetCurrentFeedback();
 			feedbackPanel.setVisible(false);
 			guessPanel.setVisible(true);
-			guessState = true;
 
 			
 			if(looking){
@@ -325,7 +331,7 @@ public class BoardController implements ActionListener{
 			}
 			
 			//checks for winning conditions
-			if(gameState == 1){
+			/*if(state == 1){
 				instruction.setText("Codemaker Wins!");
 				openEye();
 				turnButtonsOff();
@@ -334,7 +340,7 @@ public class BoardController implements ActionListener{
 				if(logging)
 					game.stopLogging();
 			}
-			else if(gameState == 2){
+			else if(state == 2){
 				instruction.setText("Codebreaker Wins!");
 				openEye();
 				turnButtonsOff();
@@ -342,8 +348,9 @@ public class BoardController implements ActionListener{
 				gameOver = true;
 				if(logging)
 					game.stopLogging();
-			}	
-			else if(computer){
+			}*/
+			
+			if(computer){
 				askForComputerGuess();
 			}
 			else{
@@ -397,7 +404,8 @@ public class BoardController implements ActionListener{
 			clear();
 			guessState = true;
 			clear();
-			game.undo();
+			currState.undoTurn();
+			toggleGameState();
 		}
 		else if(currentGuessRow <= 8){
 			clear();
@@ -407,7 +415,8 @@ public class BoardController implements ActionListener{
 			feedbackPanel.setVisible(false);
 			guessPanel.setVisible(true);
 			instruction.setText("Codebreaker's Turn");
-			game.undo();
+			currState.undoTurn();
+			toggleGameState();
 		}
 	}
 	
@@ -492,6 +501,9 @@ public class BoardController implements ActionListener{
 		feedbackPanel.setVisible(false);
 		guessPanel.setVisible(true);
 		
+		currState = new GuessState(this, false);
+		nextState = new FeedbackState(this, false);
+		
 		if(!buttonsOn){
 			turnButtonsOn();
 		}
@@ -511,14 +523,16 @@ public class BoardController implements ActionListener{
 			guessRows[currentGuessRow][i].setIcon(new javax.swing.ImageIcon("icons/"+currentGuess[i]+".png"));	
 		}
 		
-		currentGuessRow -= 1;
-		
 		guessState = false;
 		feedbackPanel.setVisible(true);
 		guessPanel.setVisible(false);
 		done.addActionListener(this);
 		clear.addActionListener(this);
 		instruction.setText("Codemaker's Turn");
+	}
+	
+	public void placeComputerFeedback(ArrayList<PegColor> feedback){
+		
 	}
 	
 	/**
@@ -617,6 +631,31 @@ public class BoardController implements ActionListener{
 	    timer.schedule(new ComputerTimer(), seconds * 1000);
 	  }
 	
+	public void toggleGameState(){
+		GameState temp;
+		
+		temp = currState;
+		currState = nextState;
+		nextState = temp;
+	}
+	
+	public void endGame(int winner){
+		if(winner == 1){
+			instruction.setText("Codemaker Wins!");
+		}
+		else if(winner == 2){
+			instruction.setText("Codebreaker Wins!");
+		}
+		
+		openEye();
+		turnButtonsOff();
+		guessState = false;
+		gameOver = true;
+		if(logging)
+			game.stopLogging();
+	}
+	
+	
 	/**
 	 * Class that does the actual Timer threading magic.
 	 * 
@@ -625,7 +664,8 @@ public class BoardController implements ActionListener{
 	 */
 	class ComputerTimer extends TimerTask {
 	    public void run() {
-	      game.makeGuess(null); //notifies computer to make a guess
+	      currState.makeMove(null); //notifies computer to make a guess
+	      currentGuessRow -= 1;
 	    }
 	  }
 
