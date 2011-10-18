@@ -8,14 +8,10 @@ import java.util.ArrayList;
  * @author Gabbie Burns
  *
  */
-public class CodeMaker extends MastermindPlayer {
+public abstract class CodeMaker extends MastermindGame {
 	
 	/**
-	 * Stub because human feedback information comes from the UI
+	 * feedback information comes from the UI
 	 */
-	public ArrayList<PegColor> makeMove()
-	{
-		return null;
-	}
-
+	public abstract ArrayList<PegColor> makeMove();		
 }
