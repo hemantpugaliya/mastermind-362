@@ -16,7 +16,7 @@ public class Game {
 	public static void main(String[] args){
 		
 		// Create the game model
-		MastermindGame game = new MastermindGame();
+		OldMastermindGame game = new OldMastermindGame();
 		
 		// Create the view
 		BoardView view = new BoardView(game);

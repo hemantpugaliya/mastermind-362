@@ -13,9 +13,9 @@ public class FeedbackState extends GameState
 	/**
 	 * Constructor, pass up parameters and create feedback command
 	 */
-	public FeedbackState( BoardController bc, boolean logOn )
+	public FeedbackState( BoardController bc, MastermindBoard board )
 	{
-		super(bc, logOn);
+		super(bc, board);
 	}
 	
 	/**
@@ -24,18 +24,18 @@ public class FeedbackState extends GameState
 	public void makeMove( ArrayList<PegColor> move)
 	{
 		// Execute the move
-		MastermindCommand feedback = new FeedbackCommand(move);
+		MastermindCommand feedback = new FeedbackCommand(board, move);
 		feedback.Execute();
 		
 		// Log the move
-		logging.writeMessage( feedback );
+		//logging.writeMessage( feedback );
 		
 		// Store the move in the history
-		gameHistory.add(feedback);
+		//gameHistory.add(feedback);
 		
-		// Change the state
-		// set BoardController state to guess
+		// Check to see if the game is over
 		
+				
 	}
 	/**
 	 * When the game is in a feedback state, only the previous move (the 
@@ -44,17 +44,15 @@ public class FeedbackState extends GameState
 	public void undoTurn() 
 	{
 		// Execute the undo
-		MastermindCommand undo = new UndoCommand(0);
+		MastermindCommand undo = new UndoCommand(board, 0);
 		undo.Execute();
 		
 		// Log the move
-		logging.writeMessage(undo);
+		//logging.writeMessage(undo);
 		
 		// Remove the most recent guess from the game history
-		gameHistory.remove(gameHistory.size() - 1);
+		//gameHistory.remove(gameHistory.size() - 1);
 		
-		// Change the state
-		// setBoardController state to guess
 	}
 
 }

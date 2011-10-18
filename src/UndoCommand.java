@@ -24,9 +24,10 @@ public class UndoCommand extends MastermindCommand {
 	 * 
 	 * @param move   the number of moves to undo
 	 */
-	public UndoCommand( int move )
+	public UndoCommand( MastermindBoard b, int move )
 	{
 		numUndo = move;
+		board = b;
 	}
 	/**
 	 * Apply the undo to the board

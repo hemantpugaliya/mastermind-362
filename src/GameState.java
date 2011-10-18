@@ -13,14 +13,16 @@ public abstract class GameState {
 	 * A reference to the controller driving the game that holds these states
 	 */
 	protected BoardController myBC;
+	
 	/**
-	 * A collection of commands representing the history of the game thus far
+	 * A representation of the board to be used by commands that update it
 	 */
-	protected static ArrayList<MastermindCommand> gameHistory;
-	/**
-	 * Determines whether or not logging is enabled and handles it appropriately
-	 */
-	protected LoggingState logging;
+	protected MastermindBoard board;
+	
+	 /**
+     * Determines whether or not logging is enabled and handles it appropriately
+     */
+    protected LoggingState logging;
 	
 	/**
 	 * Constructor, store the reference to the BoardController and create undo command
@@ -28,20 +30,10 @@ public abstract class GameState {
 	 * @param bc   the BoardController
 	 * @param logOn   true if logging is currently enabled
 	 */
-	public GameState( BoardController bc, boolean logOn )
+	public GameState( BoardController bc, MastermindBoard b )
 	{
 		myBC = bc;
-		gameHistory = new ArrayList<MastermindCommand>();
-		
-		// Set the log state
-		if( logOn )
-		{
-			logging = new LogState();
-		}
-		else
-		{
-			logging = new NoLogState();
-		}
+		board = b;
 	}
 	
 	/**
@@ -54,14 +46,22 @@ public abstract class GameState {
 	 */
 	public abstract void undoTurn();
 	
-	/**
-	 * Enable or disable logging, depending on the state
-	 * 
-	 * @param filename   a valid filename or null if disabling logging
-	 */
-	public void toggleLogging(String filename)
-	{
-		logging = logging.toggleLogging(filename, gameHistory);
-	}
-	
+	 /**
+     * Start loggging
+     * 
+     * @param filename   a valid filename or null if disabling logging
+     */
+    public void startLogging(String filename)
+    {
+            //logging = logging.toggleLogging(filename, gameHistory);
+    }
+    
+    /**
+     * Stop logging
+     */
+    public void stopLogging()
+    {
+    	logging = logging.toggleLogging(null, null);
+    }
+		
 }

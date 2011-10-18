@@ -8,7 +8,8 @@ import java.util.ArrayList;
  * @author Gabbie Burns
  *
  */
-public abstract  class CodeMaker extends MastermindGame {
+
+public abstract  class CodeMaker extends MastermindPlayer {
 	
 	/**
 	 * feedback information comes from the UI

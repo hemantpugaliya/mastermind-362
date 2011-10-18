@@ -32,13 +32,13 @@ public class BoardView extends JFrame {
 	
 	public BoardController controller;
 	public MenuListener menuListener;
-	public MastermindGame game;
+	public OldMastermindGame game;
 	
 	/**
 	 * Constructor
 	 * @param _game instance of MastermindGame
 	 */
-	public BoardView(MastermindGame _game){
+	public BoardView(OldMastermindGame _game){
 		gameName = new JLabel("Mastermind");
 		game = _game;
 	}

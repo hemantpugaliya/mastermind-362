@@ -30,9 +30,10 @@ public class GuessCommand extends MastermindCommand {
 	 * 
 	 * @param move   a guess from the codebreaker
 	 */
-	public GuessCommand( ArrayList<PegColor> move )
+	public GuessCommand( MastermindBoard b, ArrayList<PegColor> move )
 	{
 		guess = move;
+		board = b;
 	}
 	
 	/**

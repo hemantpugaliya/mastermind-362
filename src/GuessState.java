@@ -13,9 +13,9 @@ public class GuessState extends GameState
 	/**
 	 * Constructor, pass up parameters and create guess command
 	 */
-	public GuessState( BoardController bc, boolean logOn )
+	public GuessState( BoardController bc, MastermindBoard board )
 	{
-		super(bc, logOn);
+		super(bc, board);
 	}
 	
 	/**
@@ -24,17 +24,15 @@ public class GuessState extends GameState
 	public void makeMove( ArrayList<PegColor> move)
 	{
 		// Execute the move
-		MastermindCommand guess = new GuessCommand(move);
+		MastermindCommand guess = new GuessCommand(board, move);
 		guess.Execute();
 		
 		// Log the move
-		logging.writeMessage(guess);
+		//logging.writeMessage(guess);
 		
 		// Store the move in the history
-		gameHistory.add(guess);
+		//gameHistory.add(guess);
 		
-		// Change the state
-		// set BoardController state to Feedback
 	}
 	/**
 	 * When the game is in a guess state, only the two moves (the 
@@ -43,18 +41,16 @@ public class GuessState extends GameState
 	public void undoTurn() 
 	{
 		// Execute the undo
-		MastermindCommand undo = new UndoCommand(1);
+		MastermindCommand undo = new UndoCommand(board, 1);
 		undo.Execute();
 		
 		// Log the move
-		logging.writeMessage(undo);
+		//logging.writeMessage(undo);
 		
 		// Remove the most recent guess and feedback from the game history
-		gameHistory.remove(gameHistory.size() - 1);
-		gameHistory.remove(gameHistory.size() - 1);
+		//gameHistory.remove(gameHistory.size() - 1);
+		//gameHistory.remove(gameHistory.size() - 1);
 		
-		// Change the state
-		// set BoardController state to Guess
 	}
 
 }

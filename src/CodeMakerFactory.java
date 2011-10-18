@@ -16,7 +16,7 @@ public class CodeMakerFactory {
 	 */
 	public CodeMaker setCodeMaker( int playerNum )
 	{
-		CodeMaker maker = new CodeMaker();
+		//CodeMaker maker = new CodeMaker();
 		
 		// Decide based on the input which to return
 		switch( playerNum )

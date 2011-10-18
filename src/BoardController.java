@@ -48,7 +48,7 @@ public class BoardController implements ActionListener{
 	
 	private boolean buttonsOn = true;
 	
-	private MastermindGame game;
+	private OldMastermindGame game;
 	
 	private int selectedPeg = 8;
 	
@@ -74,7 +74,7 @@ public class BoardController implements ActionListener{
 	 * @param _pegButtons - contains guessPanel and feedbackPanel
 	 * @param _instruction - displays game information
 	 */
-	public BoardController(MastermindGame _game, JButton[][] _guess, JButton[][] _feed, JToggleButton[] _pegs,
+	public BoardController(OldMastermindGame _game, JButton[][] _guess, JButton[][] _feed, JToggleButton[] _pegs,
 			JButton[] _solution, JButton _eye, JButton _undo, JButton _done, JButton _clear,
 			JPanel _guessPanel, JPanel _feedbackPanel, JPanel _pegButtons, JLabel _instruction){
 		
@@ -501,8 +501,8 @@ public class BoardController implements ActionListener{
 		feedbackPanel.setVisible(false);
 		guessPanel.setVisible(true);
 		
-		currState = new GuessState(this, false);
-		nextState = new FeedbackState(this, false);
+		//currState = new GuessState(this, false);
+		//nextState = new FeedbackState(this, false);
 		
 		if(!buttonsOn){
 			turnButtonsOn();

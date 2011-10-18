@@ -24,13 +24,13 @@ public class ComputerCodeMaker extends CodeMaker {
 	/**
 	 * A reference to the game this ComputerCodeMaker is playing in.
 	 */
-	private MastermindGame myGame;
+	private OldMastermindGame myGame;
 	
 	/**
 	 * Create a ComputerCodeMaker that generates a random code.
 	 * @param mg the current instance of MastermindGame.
 	 */
-	public ComputerCodeMaker(MastermindGame mg) {
+	public ComputerCodeMaker(OldMastermindGame mg) {
 		this.myGame = mg;
 		this.code = new PegColor[4];
 		Random rand = new Random();

@@ -24,7 +24,7 @@ public class MenuListener implements ActionListener{
 	private JFileChooser fc = new JFileChooser();
 	private JFrame menu = new JFrame();
 	
-	private MastermindGame game;
+	private OldMastermindGame game;
 	private BoardController controller;
 		
 	private boolean newGameStarted = false;
@@ -42,7 +42,7 @@ public class MenuListener implements ActionListener{
 	 * @param _control
 	 * @param _timer
 	 */
-	public MenuListener(MastermindGame _game, JMenuItem _newGame, JMenuItem _exit, JRadioButtonMenuItem[] _player,
+	public MenuListener(OldMastermindGame _game, JMenuItem _newGame, JMenuItem _exit, JRadioButtonMenuItem[] _player,
 			JCheckBoxMenuItem _log, BoardController _control, JMenuItem _timer){
 		
 		controller = _control;

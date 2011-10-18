@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @author mmo2912
  *
  */
-public abstract class CodeBreaker extends MastermindGame {
+public abstract class CodeBreaker extends MastermindPlayer {
 	
 	/**
 	 * Calculate  a move during this player's turn

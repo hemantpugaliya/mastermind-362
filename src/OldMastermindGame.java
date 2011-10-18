@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @contributor Jim Kuglics
  *
  */
-public class MastermindGame extends Game {
+public class OldMastermindGame extends Game {
 	
 	/**
 	 * A set of commands used for logging different moves
@@ -22,7 +22,7 @@ public class MastermindGame extends Game {
 	 * The two players responsible for game play and factories to create them
 	 */
 	private MastermindPlayer maker = null;
-	private MastermindPlayer breaker = new HumanCodeBreaker();
+	//private MastermindPlayer breaker = new HumanCodeBreaker();
 	private CodeMakerFactory cmFact = new CodeMakerFactory();
 	// Instantiate later because of dependency on board
 	private CodeBreakerFactory cbFact;
@@ -57,7 +57,7 @@ public class MastermindGame extends Game {
 	/**
 	 * Initialize a new board and the game states
 	 */
-	public MastermindGame()
+	public OldMastermindGame()
 	{
 		board = new MastermindBoard();
 		cbFact = new CodeBreakerFactory( board );
@@ -91,7 +91,7 @@ public class MastermindGame extends Game {
 		cbFact = new CodeBreakerFactory( board );
 	
 		// Create the players
-		maker = new CodeMaker( );		
+		//maker = new CodeMaker( );		
 		setCodeBreaker(_playerNum);
 		
 		logging = _logging;
@@ -138,7 +138,7 @@ public class MastermindGame extends Game {
 		// If the guess is null, we are using a computer codebreaker
 		if( guess == null )
 		{
-			guess = breaker.makeMove();
+			//guess = breaker.makeMove();
 			controller.placeComputerGuess(guess);
 		}
 		
@@ -218,7 +218,7 @@ public class MastermindGame extends Game {
 	 */
 	public void setCodeBreaker( int _playerNum )
 	{	
-		breaker = cbFact.setCodeBreaker(_playerNum);
+		//breaker = cbFact.setCodeBreaker(_playerNum);
 	}
 	
 	/**
@@ -229,7 +229,7 @@ public class MastermindGame extends Game {
 	 */
 	public void setCodeMaker( int _playerNum )
 	{
-		maker = cmFact.setCodeMaker(_playerNum);
+		//maker = cmFact.setCodeMaker(_playerNum);
 	}
 	
 	/**

@@ -30,9 +30,10 @@ public class FeedbackCommand extends MastermindCommand {
 	 * 
 	 * @param move   a set of feedback from the codemaker
 	 */
-	public FeedbackCommand( ArrayList<PegColor> move )
+	public FeedbackCommand( MastermindBoard b, ArrayList<PegColor> move )
 	{
 		feedback = move;
+		board = b;
 	}
 	
 	/**

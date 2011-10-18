@@ -12,9 +12,9 @@ import java.util.ArrayList;
 public abstract class MastermindCommand {
 	
 	/**
-	 * An instance of the board, static so that all commands use the same instance
+	 * An instance of the board
 	 */
-	protected static MastermindBoard board;
+	protected MastermindBoard board;
 	
 	/**
 	 * Execute the stored move and apply it to the state of the game
