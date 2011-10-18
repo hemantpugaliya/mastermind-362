@@ -8,7 +8,10 @@
  */
 public class CodeBreakerFactory {
 	
-	MastermindBoard myBoard;
+	/**
+	 * A representation of the current board
+	 */
+	private MastermindBoard myBoard;
 	
 	/**
 	 * Constructor. Takes an instance of the board for computer players that need the access
@@ -19,6 +22,7 @@ public class CodeBreakerFactory {
 	{
 		myBoard = board;
 	}
+	
 	/**
 	 * Selects the type of codebreaker to create based on input and returns the appropriate
 	 * object

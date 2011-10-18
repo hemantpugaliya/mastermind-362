@@ -24,14 +24,14 @@ public class ComputerCodeMaker extends CodeMaker {
 	/**
 	 * A reference to the game this ComputerCodeMaker is playing in.
 	 */
-	private OldMastermindGame myGame;
+	private MastermindBoard myBoard;
 	
 	/**
 	 * Create a ComputerCodeMaker that generates a random code.
 	 * @param mg the current instance of MastermindGame.
 	 */
-	public ComputerCodeMaker(OldMastermindGame mg) {
-		this.myGame = mg;
+	public ComputerCodeMaker(MastermindBoard board) {
+		this.myBoard = board;
 		this.code = new PegColor[4];
 		Random rand = new Random();
 		for (int i=0; i<4; ++i) {
@@ -53,7 +53,7 @@ public class ComputerCodeMaker extends CodeMaker {
 	 * @return four FeedbackPeg colors
 	 */
 	public ArrayList<PegColor> getMove() {
-		PegRow row = myGame.board.getFirstRowWithoutFeedback();
+		PegRow row = myBoard.getFirstRowWithoutFeedback();
 		ArrayList<PuzzlePeg> lastGuess = row.getPuzzlePegs();
 		PegColor[] guess = new PegColor[4];
 		for (int i=0; i<4; ++i) {
