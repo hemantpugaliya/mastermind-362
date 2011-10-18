@@ -24,13 +24,13 @@ public class CodeMakerFactory {
 		switch( playerNum )
 		{
 		
-		//case 0: breaker = new HumanCodeMaker();
+		//case 0: maker = new HumanCodeMaker();
 		//break;
 		
-		//case 1: breaker = new ComputerCodeBreaker();
+		//case 1: maker = new ComputerCodeMaker();
 		//break;
 		
-		//case 2: breaker = new NetworkCodeBreaker();
+		//case 2: maker = new NetworkCodeMAker();
 		//break;
 			
 		default:
