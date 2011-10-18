@@ -11,11 +11,18 @@ import java.util.ArrayList;
 public class FeedbackState extends GameState 
 {
 	/**
+	 * The player responsible for moves during FeedbackState
+	 */
+	private CodeMaker maker;
+	
+	/**
 	 * Constructor, pass up parameters and create feedback command
 	 */
-	public FeedbackState( BoardController bc, MastermindBoard board )
+	public FeedbackState( BoardController bc, MastermindBoard board, LoggingState logging, 
+			ArrayList<MastermindCommand> history, CodeMaker player)
 	{
-		super(bc, board);
+		super(bc, board, logging, history);
+		maker = player;
 	}
 	
 	/**
@@ -24,16 +31,22 @@ public class FeedbackState extends GameState
 	public void makeMove( ArrayList<PegColor> move)
 	{
 		// Execute the move
-		MastermindCommand feedback = new FeedbackCommand(board, move);
+		MastermindCommand feedback = new FeedbackCommand(board, maker, move);
 		feedback.Execute();
 		
 		// Log the move
 		//logging.writeMessage( feedback );
 		
 		// Store the move in the history
-		//gameHistory.add(feedback);
+		gameHistory.add(feedback);
 		
 		// Check to see if the game is over
+		int gameOver = board.checkWinLoss();
+		
+		if( gameOver != 0 )
+		{
+			myBC.endGame(gameOver);
+		}
 		
 				
 	}
@@ -48,10 +61,10 @@ public class FeedbackState extends GameState
 		undo.Execute();
 		
 		// Log the move
-		//logging.writeMessage(undo);
+		logging.writeMessage(undo);
 		
 		// Remove the most recent guess from the game history
-		//gameHistory.remove(gameHistory.size() - 1);
+		gameHistory.remove(gameHistory.size() - 1);
 		
 	}
 

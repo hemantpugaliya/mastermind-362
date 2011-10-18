@@ -23,6 +23,11 @@ public abstract class GameState {
      * Determines whether or not logging is enabled and handles it appropriately
      */
     protected LoggingState logging;
+    
+    /**
+     * A history of the moves made in the game thus far
+     */
+    protected ArrayList<MastermindCommand> gameHistory;
 	
 	/**
 	 * Constructor, store the reference to the BoardController and create undo command
@@ -30,10 +35,12 @@ public abstract class GameState {
 	 * @param bc   the BoardController
 	 * @param logOn   true if logging is currently enabled
 	 */
-	public GameState( BoardController bc, MastermindBoard b )
+	public GameState( BoardController bc, MastermindBoard b, LoggingState l, ArrayList<MastermindCommand> gH )
 	{
 		myBC = bc;
 		board = b;
+		logging = l;
+		gameHistory = gH;
 	}
 	
 	/**
@@ -53,7 +60,7 @@ public abstract class GameState {
      */
     public void startLogging(String filename)
     {
-            //logging = logging.toggleLogging(filename, gameHistory);
+    	logging = logging.toggleLogging(filename, gameHistory);
     }
     
     /**

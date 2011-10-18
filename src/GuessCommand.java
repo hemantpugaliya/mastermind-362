@@ -13,7 +13,7 @@ public class GuessCommand extends MastermindCommand {
 	/**
 	 * An instance of a codebreaker player, who makes guesses
 	 */
-	CodeBreaker breaker = null;
+	private CodeBreaker breaker = null;
 	/**
 	 * Message to be written out to the log.
 	 */
@@ -30,10 +30,11 @@ public class GuessCommand extends MastermindCommand {
 	 * 
 	 * @param move   a guess from the codebreaker
 	 */
-	public GuessCommand( MastermindBoard b, ArrayList<PegColor> move )
+	public GuessCommand( MastermindBoard b, CodeBreaker player, ArrayList<PegColor> move )
 	{
 		guess = move;
 		board = b;
+		breaker = player;
 	}
 	
 	/**

@@ -12,6 +12,13 @@ import java.util.ArrayList;
 public class LogState extends LoggingState {
 	
 	/**
+	 * Constructor-default
+	 */
+	public LogState()
+	{
+		
+	}
+	/**
 	 * Stop logging and return the new logging state
 	 * 
 	 * @param filename    not used

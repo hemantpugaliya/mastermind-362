@@ -11,11 +11,18 @@ import java.util.ArrayList;
 public class GuessState extends GameState 
 {	
 	/**
+	 * The player responsible for moves during the guess state
+	 */
+	private CodeBreaker breaker;
+	
+	/**
 	 * Constructor, pass up parameters and create guess command
 	 */
-	public GuessState( BoardController bc, MastermindBoard board )
+	public GuessState( BoardController bc, MastermindBoard board, LoggingState logging, 
+			ArrayList<MastermindCommand> history, CodeBreaker player)
 	{
-		super(bc, board);
+		super(bc, board, logging, history);
+		breaker = player;
 	}
 	
 	/**
@@ -24,14 +31,14 @@ public class GuessState extends GameState
 	public void makeMove( ArrayList<PegColor> move)
 	{
 		// Execute the move
-		MastermindCommand guess = new GuessCommand(board, move);
+		MastermindCommand guess = new GuessCommand(board, breaker, move);
 		guess.Execute();
 		
 		// Log the move
-		//logging.writeMessage(guess);
+		logging.writeMessage(guess);
 		
 		// Store the move in the history
-		//gameHistory.add(guess);
+		gameHistory.add(guess);
 		
 	}
 	/**
@@ -45,11 +52,11 @@ public class GuessState extends GameState
 		undo.Execute();
 		
 		// Log the move
-		//logging.writeMessage(undo);
+		logging.writeMessage(undo);
 		
 		// Remove the most recent guess and feedback from the game history
-		//gameHistory.remove(gameHistory.size() - 1);
-		//gameHistory.remove(gameHistory.size() - 1);
+		gameHistory.remove(gameHistory.size() - 1);
+		gameHistory.remove(gameHistory.size() - 1);
 		
 	}
 

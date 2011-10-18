@@ -14,7 +14,7 @@ public abstract class LoggingState {
 	/**
 	 * A reference to the logfile being used by the game
 	 */
-	protected static Logfile myLog;
+	protected Logfile myLog;
 	
 	/**
 	 * Starts or stops logging, depending on the current state and return new state

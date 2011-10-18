@@ -11,9 +11,9 @@ import java.util.ArrayList;
 public class FeedbackCommand extends MastermindCommand {
 	
 	/**
-	 * An instance of a codebreaker player, who makes guesses
+	 * An instance of a codemaker player, who makes guesses
 	 */
-	CodeMaker maker = null;
+	private CodeMaker maker = null;
 	/**
 	 * Message to be written out to the log.
 	 */
@@ -30,10 +30,11 @@ public class FeedbackCommand extends MastermindCommand {
 	 * 
 	 * @param move   a set of feedback from the codemaker
 	 */
-	public FeedbackCommand( MastermindBoard b, ArrayList<PegColor> move )
+	public FeedbackCommand( MastermindBoard b, CodeMaker player, ArrayList<PegColor> move )
 	{
 		feedback = move;
 		board = b;
+		maker = player;
 	}
 	
 	/**
