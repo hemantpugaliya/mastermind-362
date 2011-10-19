@@ -36,7 +36,6 @@ public class BoardView extends JFrame {
 	
 	public BoardController controller;
 	public MenuListener menuListener;
-	public OldMastermindGame game;
 	
 	private int currentGuessRow = -1;
 	private int currentFeedbackRow = -1;
@@ -45,9 +44,8 @@ public class BoardView extends JFrame {
 	 * Constructor
 	 * @param _game instance of MastermindGame
 	 */
-	public BoardView(OldMastermindGame _game){
+	public BoardView(){
 		instruction = new JLabel("Mastermind");
-		game = _game;
 	}
 	
 	/**
@@ -91,10 +89,10 @@ public class BoardView extends JFrame {
 		createMenus();
 		
 		//create a BoardController and MenuListener
-		controller = new BoardController(game, rowsview.getGuessRows(), rowsview.getFeedbackRows(),
+		controller = new BoardController(this, rowsview.getGuessRows(), rowsview.getFeedbackRows(),
 				pegsview.getPegs(), rowsview.getSolution(), rowsview.getEye(), undo, done, clear,
 				guessPanel, feedbackPanel, pegsButtonsPanel, instruction, currentGuessRow, currentFeedbackRow);
-		menuListener = new MenuListener(game, newGame, exit, codebreaker, log, controller, setTimer, codemaker);
+		menuListener = new MenuListener(newGame, exit, codebreaker, log, controller, setTimer, codemaker);
 		
 		setLocationRelativeTo(null);
 		setVisible(true);

@@ -14,16 +14,11 @@ public class Game {
 	 * @param args   ignored
 	 */
 	public static void main(String[] args){
-		
-		// Create the game model
-		OldMastermindGame game = new OldMastermindGame();
-		
+				
 		// Create the view
-		BoardView view = new BoardView(game);
+		BoardView view = new BoardView();
 		view.create();
 		
-		// Set the controller within the game
-		game.setController(view.getController());
 	}
 	
 }

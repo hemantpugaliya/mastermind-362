@@ -17,6 +17,8 @@ import javax.swing.*;
 
 public class BoardController implements ActionListener{
 	
+	private BoardView view;
+	
 	private JButton[][] guessRows;
 	private JButton[][] feedbackRows;
 	private JToggleButton[] guessPegs;
@@ -76,10 +78,12 @@ public class BoardController implements ActionListener{
 	 * @param _pegButtons - contains guessPanel and feedbackPanel
 	 * @param _instruction - displays game information
 	 */
-	public BoardController(OldMastermindGame _game, JButton[][] _guess, JButton[][] _feed, JToggleButton[] _pegs,
+	public BoardController(BoardView _view, JButton[][] _guess, JButton[][] _feed, JToggleButton[] _pegs,
 			JButton[] _solution, JButton _eye, JButton _undo, JButton _done, JButton _clear,
 			JPanel _guessPanel, JPanel _feedbackPanel, JPanel _pegButtons, JLabel _instruction,
 			int _curGuessRow, int _curFeedbackRow){
+		
+		view = _view;
 		
 		guessRows = _guess;
 		feedbackRows = _feed;
@@ -486,6 +490,7 @@ public class BoardController implements ActionListener{
 		guessPanel.setVisible(true);
 		
 		MastermindBoard board = new MastermindBoard();
+		board.registerObserver(view);
 		cbFactory = new CodeBreakerFactory(board);
 		cmFactory = new CodeMakerFactory(board);
 		

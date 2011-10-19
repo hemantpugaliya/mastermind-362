@@ -37,6 +37,10 @@ public class MastermindBoard {
 	 * Indicates the current row of gameplay
 	 */
 	private int currRow = 0;
+	/**
+	 * The current observer for the board
+	 */
+	private BoardView view;
 	
 	/**
 	 * There are 4 pegs in either a guess section or feedback section of a row
@@ -84,6 +88,9 @@ public class MastermindBoard {
 		// Set as the guess for the current row
 		rows.get(currRow).setPuzzlePegs(guessPegs);
 		
+		// Notify the observer
+		view.placeComputerGuess(guess);
+		
 	}
 
 	/**
@@ -102,6 +109,9 @@ public class MastermindBoard {
 		
 		// Set as the feedback for the current row
 		rows.get(currRow).setFeedbackPegs(feedbackPegs);
+		
+		// Notify the observer
+		view.placeComputerFeedback(feedback);
 		
 		// Update the current row
 		currRow++;
@@ -213,36 +223,12 @@ public class MastermindBoard {
 	}
 	
 	/**
-	 * Return the color values for all of the guesses made up until this point
+	 * Registers an observer to be updated whenever the board makes a change
 	 * 
-	 * @return guessHist
+	 * @param   the observer
 	 */
-	public ArrayList<ArrayList<PegColor>> getGuessHistory()
+	public void registerObserver(BoardView obs)
 	{
-		ArrayList<ArrayList<PegColor>> guessHist = new ArrayList<ArrayList<PegColor>>();
-		
-		for( int i = 0; i <= currRow; i++ )
-		{
-			guessHist.add(rows.get(i).getPuzzleColors());
-		}
-		
-		return guessHist;
-	}
-	
-	/**
-	 * Return the color values for all of the feedback given up until this point
-	 * 
-	 * @return guessHist
-	 */
-	public ArrayList<ArrayList<PegColor>> getFeedbackHistory()
-	{
-		ArrayList<ArrayList<PegColor>> fbHist = new ArrayList<ArrayList<PegColor>>();
-		
-		for( int i = 0; i <= currRow; i++ )
-		{
-			fbHist.add(rows.get(i).getFeedbackColors());
-		}
-		
-		return fbHist;
+		view = obs;
 	}
 }

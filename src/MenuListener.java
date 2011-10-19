@@ -27,7 +27,6 @@ public class MenuListener implements ActionListener{
 	private JFileChooser fc = new JFileChooser();
 	private JFrame menu = new JFrame();
 	
-	private OldMastermindGame game;
 	private BoardController controller;
 		
 	private boolean newGameStarted = false;
@@ -47,7 +46,7 @@ public class MenuListener implements ActionListener{
 	 * @param _control
 	 * @param _timer
 	 */
-	public MenuListener(OldMastermindGame _game, JMenuItem _newGame, JMenuItem _exit, JRadioButtonMenuItem[] _codebreaker,
+	public MenuListener(JMenuItem _newGame, JMenuItem _exit, JRadioButtonMenuItem[] _codebreaker,
 			JCheckBoxMenuItem _log, BoardController _control, JMenuItem _timer, JRadioButtonMenuItem[] _codemaker){
 		
 		controller = _control;
@@ -59,8 +58,6 @@ public class MenuListener implements ActionListener{
 		exit = _exit;
 		exit.addActionListener(this);
 		exit.setActionCommand("x");
-		
-		game = _game;
 		
 		log = _log;
 		log.addActionListener(this);
@@ -152,14 +149,18 @@ public class MenuListener implements ActionListener{
 	public void newGame(){
 		controller.resetGame();
 		if(!logging)
-			game.newGame(log.getModel().isSelected(), null, selectedCodebreaker);
+		{
+			//game.newGame(log.getModel().isSelected(), null, selectedCodebreaker);
+		}
 		else{
 			if(!newGameStarted)
-				game.newGame(log.getModel().isSelected(), file.toString(), selectedCodebreaker);
+			{
+				//game.newGame(log.getModel().isSelected(), file.toString(), selectedCodebreaker);
+			}
 			else{
 				promptForFile();
 				if(fc.getSelectedFile() != null){
-					game.newGame(log.getModel().isSelected(), file.toString(), selectedCodebreaker);
+					//game.newGame(log.getModel().isSelected(), file.toString(), selectedCodebreaker);
 				}
 			}
 		}
@@ -224,7 +225,7 @@ public class MenuListener implements ActionListener{
 			fc.showOpenDialog(menu);
 			try{
 				file = fc.getSelectedFile();
-				game.startLogging(file.toString());
+				//game.startLogging(file.toString());
 				logging = true;
 			}catch(Exception e1){
 				log.getModel().setSelected(false);
@@ -232,7 +233,7 @@ public class MenuListener implements ActionListener{
 			}
 		}
 		else{
-			game.stopLogging();
+			//game.stopLogging();
 			fc.setSelectedFile(null);
 			logging = false;
 		}
