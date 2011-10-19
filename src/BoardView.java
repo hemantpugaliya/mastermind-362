@@ -179,4 +179,19 @@ public class BoardView extends JFrame {
 		return controller;
 	}
 	
+	public void setCurrentGuessRow(int num){
+		currentGuessRow = num;
+	}
+	
+	public void setCurrentFeedbackRow(int num){
+		currentFeedbackRow = num;
+	}
+	
+	public int getCurrentGuessRow(){
+		return currentGuessRow;
+	}
+	
+	public int getCurrentFeedbackRow(){
+		return currentFeedbackRow;
+	}
 }

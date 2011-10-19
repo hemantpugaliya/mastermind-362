@@ -211,7 +211,7 @@ public class BoardController implements ActionListener{
 		char g = p.charAt(2);
 		int guess = Character.getNumericValue(g);
 		
-		if(row == currentGuessRow && selectedPeg < 6){
+		if(row == view.getCurrentGuessRow() && selectedPeg < 6){
 			guessRows[row][guess].setIcon(new javax.swing.ImageIcon("icons/"+selectedPeg+".png"));
 			currentGuess[guess] = selectedPeg;
 		}
@@ -228,7 +228,10 @@ public class BoardController implements ActionListener{
 		char g = p.charAt(2);
 		int guess = Character.getNumericValue(g);
 		
-		if(row == currentFeedbackRow){
+		System.out.println(row+ " "+guess+" "+view.getCurrentFeedbackRow());
+		
+		if(row == view.getCurrentFeedbackRow()){
+			System.out.println("?");
 			int smallPeg = selectedPeg;
 			if(smallPeg > 5){
 				feedbackRows[row][guess].setIcon(new javax.swing.ImageIcon("icons/"+smallPeg+".png"));
@@ -276,12 +279,12 @@ public class BoardController implements ActionListener{
 					solutionSet[i].setIcon(new javax.swing.ImageIcon("icons/gray3.png"));
 				}
 				settingSolution = false;
-				currentGuessRow = 9;
-				currentFeedbackRow = 9;
+				view.setCurrentGuessRow(9);
+				view.setCurrentFeedbackRow(9);
 				
 				
 				if(computerCB){
-					guessing = false;
+					guessing = true;
 					askForComputerGuess();
 				}
 				else{
@@ -310,7 +313,7 @@ public class BoardController implements ActionListener{
 				currState.makeMove(guess);
 				toggleGameState();
 				guessing = false;
-				currentGuessRow -= 1;
+				view.setCurrentGuessRow(view.getCurrentGuessRow() - 1);
 				resetCurrentGuess();
 				guessPanel.setVisible(false);
 				feedbackPanel.setVisible(true);
@@ -326,22 +329,26 @@ public class BoardController implements ActionListener{
 			
 			currState.makeMove(feedback);
 			toggleGameState();
-			guessing = true;
 			
-			currentFeedbackRow -= 1;
-			resetCurrentFeedback();
-			feedbackPanel.setVisible(false);
-			guessPanel.setVisible(true);
-		
-			if(looking){
-				closeEye();
-			}
+			if(!gameOver){
+				guessing = true;
+				
+				view.setCurrentFeedbackRow(view.getCurrentFeedbackRow() - 1);
+				resetCurrentFeedback();
+				feedbackPanel.setVisible(false);
+				guessPanel.setVisible(true);
 			
-			if(computerCB){
-				askForComputerGuess();
-			}
-			else{
-				instruction.setText("Codebreaker's Turn");
+				if(looking){
+					closeEye();
+				}
+				
+				if(computerCB){
+					System.out.println("gds");
+					askForComputerGuess();
+				}
+				else{
+					instruction.setText("Codebreaker's Turn");
+				}
 			}
 		}
 		
@@ -368,13 +375,13 @@ public class BoardController implements ActionListener{
 		}
 		else if(guessing){
 			for(int i = 0; i < 4; i++){
-				guessRows[currentGuessRow][i].setIcon(new javax.swing.ImageIcon("icons/gray.png"));
+				guessRows[view.getCurrentGuessRow()][i].setIcon(new javax.swing.ImageIcon("icons/gray.png"));
 				resetCurrentGuess();
 			}
 		}
 		else{
 			for(int i = 0; i < 4; i++){
-				feedbackRows[currentFeedbackRow][i].setIcon(new javax.swing.ImageIcon("icons/gray2.png"));
+				feedbackRows[view.getCurrentFeedbackRow()][i].setIcon(new javax.swing.ImageIcon("icons/gray2.png"));
 				resetCurrentFeedback();
 			}
 		}
@@ -384,20 +391,20 @@ public class BoardController implements ActionListener{
 	 * Removes current pegs from the board and returns to the last finished guessing turn.
 	 */
 	public void undo(){
-		if(guessing && currentGuessRow <= 8){
+		if(guessing && view.getCurrentGuessRow() <= 8){
 			clear();
-			currentGuessRow += 1;			
+			view.setCurrentGuessRow(view.getCurrentGuessRow() + 1);			
 			guessing = false;
-			currentFeedbackRow += 1;
+			view.setCurrentFeedbackRow(view.getCurrentFeedbackRow() + 1);
 			clear();
 			guessing = true;
 			clear();
 			currState.undoTurn();
 			toggleGameState();
 		}
-		else if(currentGuessRow <= 8){
+		else if(view.getCurrentGuessRow() <= 8){
 			clear();
-			currentGuessRow += 1;
+			view.setCurrentGuessRow(view.getCurrentGuessRow() + 1);
 			guessing = true;
 			clear();
 			feedbackPanel.setVisible(false);
@@ -510,6 +517,7 @@ public class BoardController implements ActionListener{
 		if(computerCB){
 			undo.removeActionListener(this);
 		}
+
 	}
 	
 
@@ -610,6 +618,7 @@ public class BoardController implements ActionListener{
 	  }
 	
 	public void toggleGameState(){
+		System.out.println("meow");
 		GameState temp;
 		
 		temp = currState;
@@ -654,13 +663,14 @@ public class BoardController implements ActionListener{
 	    public void run() {
 	      
 	    	currState.makeMove(null);
-	      
 	    	if(guessing){
-	    		currentGuessRow -= 1;
+	    		view.setCurrentGuessRow(view.getCurrentGuessRow() - 1);
+	    		toggleGameState();
 	    		guessing = false;
 	    	}
 	    	else{
-	    		currentFeedbackRow -= 1;
+	    		toggleGameState();
+	    		view.setCurrentFeedbackRow(view.getCurrentGuessRow() - 1);
 	    	}
 	      
 	    }
