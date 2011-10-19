@@ -7,7 +7,13 @@
  *
  */
 public class CodeMakerFactory {
-
+	
+	private MastermindBoard myBoard;
+	
+	public CodeMakerFactory(MastermindBoard board){
+		myBoard = board;
+	}
+	
 	/**
 	 * Selects the type of codemaker to create based on input and returns the appropriate
 	 * object
@@ -24,14 +30,14 @@ public class CodeMakerFactory {
 		switch( playerNum )
 		{
 		
-		//case 0: maker = new HumanCodeMaker();
-		//break;
+		case 0: maker = new HumanCodeMaker();
+		break;
 		
-		//case 1: maker = new ComputerCodeMaker();
-		//break;
+		case 1: maker = new ComputerCodeMaker(myBoard);
+		break;
 		
-		//case 2: maker = new NetworkCodeMAker();
-		//break;
+		case 2: maker = new NetworkCodeMaker();
+		break;
 			
 		default:
 			// Return a HumanCodeMaker by default

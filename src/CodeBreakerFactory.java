@@ -46,8 +46,8 @@ public class CodeBreakerFactory {
 		case 2: breaker = new SmartCodeBreaker(myBoard);
 		break;
 		
-		//case 3: breaker = new NetworkCodeBreaker();
-		//break;
+		case 3: breaker = new NetworkCodeBreaker();
+		break;
 			
 		default:
 			// Return a HumanCodeBreaker by default

@@ -23,7 +23,7 @@ public class OldMastermindGame extends Game {
 	 */
 	private MastermindPlayer maker = null;
 	//private MastermindPlayer breaker = new HumanCodeBreaker();
-	private CodeMakerFactory cmFact = new CodeMakerFactory();
+	//private CodeMakerFactory cmFact = new CodeMakerFactory();
 	// Instantiate later because of dependency on board
 	private CodeBreakerFactory cbFact;
 	
@@ -139,7 +139,7 @@ public class OldMastermindGame extends Game {
 		if( guess == null )
 		{
 			//guess = breaker.makeMove();
-			controller.placeComputerGuess(guess);
+			//controller.placeComputerGuess(guess);
 		}
 		
 		// Notify the board

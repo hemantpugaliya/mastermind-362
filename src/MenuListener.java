@@ -17,9 +17,12 @@ public class MenuListener implements ActionListener{
 	private JMenuItem setTimer;
 	private JCheckBoxMenuItem log;
 	
-	private JRadioButtonMenuItem[] player;	
-	private ButtonGroup playerGroup = new ButtonGroup();
+	private JRadioButtonMenuItem[] codebreaker;	
+	private ButtonGroup codebreakerGroup = new ButtonGroup();
 	private int selectedCodebreaker = 0;
+	private JRadioButtonMenuItem[] codemaker;	
+	private ButtonGroup codemakerGroup = new ButtonGroup();
+	private int selectedCodemaker = 0;
 	
 	private JFileChooser fc = new JFileChooser();
 	private JFrame menu = new JFrame();
@@ -28,22 +31,24 @@ public class MenuListener implements ActionListener{
 	private BoardController controller;
 		
 	private boolean newGameStarted = false;
+	private boolean playing = false;
 	
 	private File file = new File("");
 	private boolean logging = false;
+	
 	
 	/**
 	 * Creates a new MenuListener and adds ActionListener's to items accordingly
 	 * @param _game
 	 * @param _newGame
 	 * @param _exit
-	 * @param _player
+	 * @param _codebreaker
 	 * @param _log
 	 * @param _control
 	 * @param _timer
 	 */
-	public MenuListener(OldMastermindGame _game, JMenuItem _newGame, JMenuItem _exit, JRadioButtonMenuItem[] _player,
-			JCheckBoxMenuItem _log, BoardController _control, JMenuItem _timer){
+	public MenuListener(OldMastermindGame _game, JMenuItem _newGame, JMenuItem _exit, JRadioButtonMenuItem[] _codebreaker,
+			JCheckBoxMenuItem _log, BoardController _control, JMenuItem _timer, JRadioButtonMenuItem[] _codemaker){
 		
 		controller = _control;
 		
@@ -65,13 +70,22 @@ public class MenuListener implements ActionListener{
 		setTimer.addActionListener(this);
 		setTimer.setActionCommand("t");
 		
-		player = _player;	
-		for(int i = 0; i < 3; i++){
-			player[i].addActionListener(this);
+		codebreaker = _codebreaker;	
+		for(int i = 0; i < 4; i++){
+			codebreaker[i].addActionListener(this);
 			String command = Integer.toString(i);
-			player[i].setActionCommand("p"+command);
+			codebreaker[i].setActionCommand("b"+command);
 			
-			playerGroup.add(player[i]);
+			codebreakerGroup.add(codebreaker[i]);
+		}
+		
+		codemaker = _codemaker;
+		for(int i = 0; i < 3; i++){
+			codemaker[i].addActionListener(this);
+			String command = Integer.toString(i);
+			codemaker[i].setActionCommand("m"+command);
+			
+			codemakerGroup.add(codemaker[i]);
 		}
 		
 	}
@@ -87,7 +101,7 @@ public class MenuListener implements ActionListener{
 			newGame();
 		}
 		
-		if(type == 'p'){
+		if(type == 'b'){
 			setCodebreaker(action);
 		}
 		
@@ -112,9 +126,21 @@ public class MenuListener implements ActionListener{
 		char _player = p.charAt(1);
 		int codebreakerNum = Character.getNumericValue(_player);
 		selectedCodebreaker = codebreakerNum;
-		game.setCodeBreaker(selectedCodebreaker);
+		controller.setCodeBreaker(selectedCodebreaker);
 		
 		if(selectedCodebreaker != 0)
+			controller.setCodebreakerComputer();
+		else
+			controller.setCodebreakerHuman();
+	}
+	
+	public void setCodemaker(String p){	
+		char _player = p.charAt(1);
+		int codemakerNum = Character.getNumericValue(_player);
+		selectedCodemaker = codemakerNum;
+		controller.setCodeMaker(selectedCodemaker);
+		
+		if(selectedCodemaker != 0)
 			controller.setCodebreakerComputer();
 		else
 			controller.setCodebreakerHuman();
@@ -139,6 +165,7 @@ public class MenuListener implements ActionListener{
 		}
 		
 		newGameStarted = true;
+		playing = true;
 	}
 	
 	/**

@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -13,7 +14,7 @@ public class BoardView extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private JLabel gameName;
+	private JLabel instruction;
 	private JPanel rows;
 	private JPanel guessPanel;
 	private JPanel feedbackPanel;
@@ -27,19 +28,25 @@ public class BoardView extends JFrame {
 	private JMenuItem newGame = new JMenuItem("New Game");
 	private JMenuItem setTimer = new JMenuItem("Set Timer");
 	private JMenuItem exit = new JMenuItem("Exit");
-	private JRadioButtonMenuItem[] player = new JRadioButtonMenuItem[3];
+	private JRadioButtonMenuItem[] codebreaker = new JRadioButtonMenuItem[4];
+	private JRadioButtonMenuItem[] codemaker = new JRadioButtonMenuItem[3];
 	private JCheckBoxMenuItem log = new JCheckBoxMenuItem("Logging");
+	
+	private RowsView rowsview = new RowsView();
 	
 	public BoardController controller;
 	public MenuListener menuListener;
 	public OldMastermindGame game;
+	
+	private int currentGuessRow = -1;
+	private int currentFeedbackRow = -1;
 	
 	/**
 	 * Constructor
 	 * @param _game instance of MastermindGame
 	 */
 	public BoardView(OldMastermindGame _game){
-		gameName = new JLabel("Mastermind");
+		instruction = new JLabel("Mastermind");
 		game = _game;
 	}
 	
@@ -51,10 +58,9 @@ public class BoardView extends JFrame {
 		setTitle("MASTERMIND");
 		setLayout(new BorderLayout());
 		
-		add(gameName, BorderLayout.NORTH);
-		gameName.setHorizontalAlignment(SwingConstants.CENTER);
+		add(instruction, BorderLayout.NORTH);
+		instruction.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		RowsView rowsview = new RowsView();
 		rowsview.create();
 		rows = rowsview.getBoard();
 		rows.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));
@@ -87,8 +93,8 @@ public class BoardView extends JFrame {
 		//create a BoardController and MenuListener
 		controller = new BoardController(game, rowsview.getGuessRows(), rowsview.getFeedbackRows(),
 				pegsview.getPegs(), rowsview.getSolution(), rowsview.getEye(), undo, done, clear,
-				guessPanel, feedbackPanel, pegsButtonsPanel, gameName);
-		menuListener = new MenuListener(game, newGame, exit, player, log, controller, setTimer);
+				guessPanel, feedbackPanel, pegsButtonsPanel, instruction, currentGuessRow, currentFeedbackRow);
+		menuListener = new MenuListener(game, newGame, exit, codebreaker, log, controller, setTimer, codemaker);
 		
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -105,18 +111,30 @@ public class BoardView extends JFrame {
 		bar.add(file);
 		file.add(newGame);
 		file.add(exit);
-		
-		JMenu codebreakerMenu = new JMenu("Codebreaker");		
+			
 		JMenu options = new JMenu("Options");
+		JMenu codebreakerMenu = new JMenu("Codebreaker");
+		JMenu codemakerMenu = new JMenu("Codemaker");	
 		
-		player[0] = new JRadioButtonMenuItem("Human", true);
-		player[1] = new JRadioButtonMenuItem("Random");
-		player[2] = new JRadioButtonMenuItem("Smart");
+		codebreaker[0] = new JRadioButtonMenuItem("Human", true);
+		codebreaker[1] = new JRadioButtonMenuItem("Random");
+		codebreaker[2] = new JRadioButtonMenuItem("Smart");
+		codebreaker[3] = new JRadioButtonMenuItem("Networked");
 		
-		codebreakerMenu.add(player[0]);
-		codebreakerMenu.add(player[1]);
-		codebreakerMenu.add(player[2]);
+		codemaker[0] = new JRadioButtonMenuItem("Human", true);
+		codemaker[1] = new JRadioButtonMenuItem("Computer");
+		codemaker[2] = new JRadioButtonMenuItem("Networked");
+		
+		codebreakerMenu.add(codebreaker[0]);
+		codebreakerMenu.add(codebreaker[1]);
+		codebreakerMenu.add(codebreaker[2]);
+		codebreakerMenu.add(codebreaker[3]);
+		codemakerMenu.add(codemaker[0]);
+		codemakerMenu.add(codemaker[1]);
+		codemakerMenu.add(codemaker[2]);
+		
 		options.add(codebreakerMenu);
+		options.add(codemakerMenu);
 		options.add(setTimer);
 		options.add(log);
 		
@@ -124,6 +142,37 @@ public class BoardView extends JFrame {
 		
 		setJMenuBar(bar);
 	}
+	
+	/**
+	 * Places the computers guess of the board.
+	 * @param guess
+	 */
+	public void placeComputerGuess(ArrayList<PegColor> guess){
+		for(int i = 0; i < 4; i++){
+			rowsview.getGuessRows()[currentGuessRow][i].setIcon(new javax.swing.ImageIcon("icons/"+
+					guess.get(i).ordinal()+".png"));	
+		}
+
+		feedbackPanel.setVisible(true);
+		guessPanel.setVisible(false);
+		done.addActionListener(controller);
+		clear.addActionListener(controller);
+		instruction.setText("Codemaker's Turn");
+	}
+	
+	public void placeComputerFeedback(ArrayList<PegColor> feedback){
+		for(int i = 0; i < 4; i++){
+			rowsview.getFeedbackRows()[currentFeedbackRow][i].setIcon(new javax.swing.ImageIcon("icons/"+
+					feedback.get(i).ordinal()+".png"));	
+		}
+
+		feedbackPanel.setVisible(false);
+		guessPanel.setVisible(true);
+		done.addActionListener(controller);
+		clear.addActionListener(controller);
+		instruction.setText("Codebreaker's Turn");
+	}
+	
 	
 	/**
 	 * @return controller - instance of BoardController

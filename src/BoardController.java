@@ -33,22 +33,21 @@ public class BoardController implements ActionListener{
 	private int[] currentGuess = new int[4];
 	private int[] currentFeedback = new int [4];
 	private int[] solution = new int[4];
-	private int currentGuessRow = -1;
-	private int currentFeedbackRow = -1;
+	private int currentGuessRow;
+	private int currentFeedbackRow;
 	
 	private JButton undo;
 	private JButton done;
 	private JButton clear;
 	
 	private boolean settingSolution;
-	private boolean guessState;
-	private boolean computer;
+	private boolean guessing;
+	private boolean computerCB;
+	private boolean computerCM;
 	private boolean logging;
 	private boolean gameOver;
 	
 	private boolean buttonsOn = true;
-	
-	private OldMastermindGame game;
 	
 	private int selectedPeg = 8;
 	
@@ -57,6 +56,9 @@ public class BoardController implements ActionListener{
 	
 	private GameState currState;
 	private GameState nextState;
+	
+	private CodeBreakerFactory cbFactory;
+	private CodeMakerFactory cmFactory;
 	
 	/**
 	 * Creates a new BoardController and adds ActionListener's to appropriate items
@@ -76,15 +78,17 @@ public class BoardController implements ActionListener{
 	 */
 	public BoardController(OldMastermindGame _game, JButton[][] _guess, JButton[][] _feed, JToggleButton[] _pegs,
 			JButton[] _solution, JButton _eye, JButton _undo, JButton _done, JButton _clear,
-			JPanel _guessPanel, JPanel _feedbackPanel, JPanel _pegButtons, JLabel _instruction){
+			JPanel _guessPanel, JPanel _feedbackPanel, JPanel _pegButtons, JLabel _instruction,
+			int _curGuessRow, int _curFeedbackRow){
 		
 		guessRows = _guess;
 		feedbackRows = _feed;
 		guessPegs = _pegs;
 		solutionSet = _solution;
 		eye = _eye;
-		game = _game;
 		instruction = _instruction;
+		currentGuessRow = _curGuessRow;
+		currentFeedbackRow = _curFeedbackRow;
 		
 		eye.addActionListener(this);
 		eye.setActionCommand("e");
@@ -262,26 +266,27 @@ public class BoardController implements ActionListener{
 				}
 			}
 			
-			//only react if row is full
+			//only react if solution is full
 			if(full){
 				for(int i = 0; i < 4; i++){
 					solutionSet[i].setIcon(new javax.swing.ImageIcon("icons/gray3.png"));
 				}
 				settingSolution = false;
-				guessState = true;
 				currentGuessRow = 9;
 				currentFeedbackRow = 9;
 				
 				
-				if(computer){
-					guessState = false;
+				if(computerCB){
+					guessing = false;
 					askForComputerGuess();
 				}
-				else
+				else{
+					guessing = true;
 					instruction.setText("Codebreaker's Turn");
+				}
 			}
 		}
-		else if(guessState){	
+		else if(guessing){	
 			ArrayList<PegColor> guess = new ArrayList<PegColor>();
 			boolean full = false;	
 			
@@ -300,7 +305,7 @@ public class BoardController implements ActionListener{
 			if(full){
 				currState.makeMove(guess);
 				toggleGameState();
-				guessState = false;
+				guessing = false;
 				currentGuessRow -= 1;
 				resetCurrentGuess();
 				guessPanel.setVisible(false);
@@ -315,48 +320,27 @@ public class BoardController implements ActionListener{
 				feedback.add(PegColor.values()[currentFeedback[i]]);
 			}
 			
-			//int state = game.giveFeedback(feedback);
 			currState.makeMove(feedback);
 			toggleGameState();
-			guessState = true;
+			guessing = true;
 			
 			currentFeedbackRow -= 1;
 			resetCurrentFeedback();
 			feedbackPanel.setVisible(false);
 			guessPanel.setVisible(true);
-
-			
+		
 			if(looking){
 				closeEye();
 			}
 			
-			//checks for winning conditions
-			/*if(state == 1){
-				instruction.setText("Codemaker Wins!");
-				openEye();
-				turnButtonsOff();
-				guessState = false;
-				gameOver = true;
-				if(logging)
-					game.stopLogging();
-			}
-			else if(state == 2){
-				instruction.setText("Codebreaker Wins!");
-				openEye();
-				turnButtonsOff();
-				guessState = false;
-				gameOver = true;
-				if(logging)
-					game.stopLogging();
-			}*/
-			
-			if(computer){
+			if(computerCB){
 				askForComputerGuess();
 			}
 			else{
 				instruction.setText("Codebreaker's Turn");
 			}
 		}
+		
 		
 		//unselects current peg
 		for(int i = 0; i < 8; i++){
@@ -378,7 +362,7 @@ public class BoardController implements ActionListener{
 				resetSolution();
 			}
 		}
-		else if(guessState){
+		else if(guessing){
 			for(int i = 0; i < 4; i++){
 				guessRows[currentGuessRow][i].setIcon(new javax.swing.ImageIcon("icons/gray.png"));
 				resetCurrentGuess();
@@ -396,13 +380,13 @@ public class BoardController implements ActionListener{
 	 * Removes current pegs from the board and returns to the last finished guessing turn.
 	 */
 	public void undo(){
-		if(guessState && currentGuessRow <= 8){
+		if(guessing && currentGuessRow <= 8){
 			clear();
 			currentGuessRow += 1;			
-			guessState = false;
+			guessing = false;
 			currentFeedbackRow += 1;
 			clear();
-			guessState = true;
+			guessing = true;
 			clear();
 			currState.undoTurn();
 			toggleGameState();
@@ -410,7 +394,7 @@ public class BoardController implements ActionListener{
 		else if(currentGuessRow <= 8){
 			clear();
 			currentGuessRow += 1;
-			guessState = true;
+			guessing = true;
 			clear();
 			feedbackPanel.setVisible(false);
 			guessPanel.setVisible(true);
@@ -424,7 +408,7 @@ public class BoardController implements ActionListener{
 	 * checks whether to make solution visible or not
 	 */
 	public void eyeball(){
-		if(!looking && !guessState)
+		if(!looking && !guessing)
 			openEye();
 		else
 			closeEye();
@@ -493,7 +477,7 @@ public class BoardController implements ActionListener{
 		resetSolution();
 		instruction.setText("Set The Code:");
 		settingSolution = true;
-		guessState = false;
+		guessing = false;
 		gameOver = false;
 		closeEye();
 		looking = false;
@@ -501,40 +485,29 @@ public class BoardController implements ActionListener{
 		feedbackPanel.setVisible(false);
 		guessPanel.setVisible(true);
 		
-		//currState = new GuessState(this, false);
-		//nextState = new FeedbackState(this, false);
+		MastermindBoard board = new MastermindBoard();
+		cbFactory = new CodeBreakerFactory(board);
+		cmFactory = new CodeMakerFactory(board);
+		
+		CodeMaker cm = cmFactory.setCodeMaker(codeMaker);
+		CodeBreaker cb = cbFactory.setCodeBreaker(codeBreaker);
+		
+		ArrayList<MastermindCommand> history = new ArrayList<MastermindCommand>();
+		LoggingState logging = new NoLogState();
+		
+		currState = new GuessState(this, board, logging, history, cb);
+		nextState = new FeedbackState(this, board, logging, history, cm);
 		
 		if(!buttonsOn){
 			turnButtonsOn();
 		}
 		
-		if(computer){
+		if(computerCB){
 			undo.removeActionListener(this);
 		}
 	}
 	
-	/**
-	 * Places the computers guess of the board.
-	 * @param guess
-	 */
-	public void placeComputerGuess(ArrayList<PegColor> guess){
-		for(int i = 0; i < 4; i++){
-			currentGuess[i] = guess.get(i).ordinal();
-			guessRows[currentGuessRow][i].setIcon(new javax.swing.ImageIcon("icons/"+currentGuess[i]+".png"));	
-		}
-		
-		guessState = false;
-		feedbackPanel.setVisible(true);
-		guessPanel.setVisible(false);
-		done.addActionListener(this);
-		clear.addActionListener(this);
-		instruction.setText("Codemaker's Turn");
-	}
-	
-	public void placeComputerFeedback(ArrayList<PegColor> feedback){
-		
-	}
-	
+
 	/**
 	 * Used to retrieve the computers guess.  Uses a Timer to wait
 	 * a specified time.
@@ -553,11 +526,11 @@ public class BoardController implements ActionListener{
 	 * to moves made by the computer.
 	 */
 	public void setCodebreakerComputer(){
-		computer = true;
-		if(guessState){
+		computerCB = true;
+		if(guessing){
 			askForComputerGuess();
 		}
-		guessState = false;
+		guessing = false;
 		undo.removeActionListener(this);
 	}
 	
@@ -565,7 +538,7 @@ public class BoardController implements ActionListener{
 	 * Sets computer boolean to false.
 	 */
 	public void setCodebreakerHuman(){
-		computer = false;
+		computerCB = false;
 		if(!gameOver)
 			undo.addActionListener(this);
 	}
@@ -597,7 +570,7 @@ public class BoardController implements ActionListener{
 		done.addActionListener(this);
 		clear.addActionListener(this);
 		
-		if(!computer){
+		if(!computerCB){
 			undo.addActionListener(this);
 		}
 		
@@ -649,10 +622,20 @@ public class BoardController implements ActionListener{
 		
 		openEye();
 		turnButtonsOff();
-		guessState = false;
+		guessing = false;
 		gameOver = true;
-		if(logging)
-			game.stopLogging();
+	}
+	
+	
+	private int codeBreaker = 0;
+	private int codeMaker = 0;
+	
+	public void setCodeBreaker(int p){
+		codeBreaker = p;
+	}
+	
+	public void setCodeMaker(int p){
+		codeMaker = p;
 	}
 	
 	
@@ -664,8 +647,17 @@ public class BoardController implements ActionListener{
 	 */
 	class ComputerTimer extends TimerTask {
 	    public void run() {
-	      currState.makeMove(null); //notifies computer to make a guess
-	      currentGuessRow -= 1;
+	      
+	    	currState.makeMove(null);
+	      
+	    	if(guessing){
+	    		currentGuessRow -= 1;
+	    		guessing = false;
+	    	}
+	    	else{
+	    		currentFeedbackRow -= 1;
+	    	}
+	      
 	    }
 	  }
 
