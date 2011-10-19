@@ -12,9 +12,22 @@ import java.util.ArrayList;
 public class NoLogState extends LoggingState {
 	
 	/**
-	 * Initial message to be written out to the log.
+	 * Constructor-default
 	 */
-	private final String startMsg = "Key: Red=R, Yellow=Y, Green=G, Blue=B, White=W, Black=K, Blank=0";
+	public NoLogState()
+	{
+		// Do nothing
+	}
+	
+	/**
+	 * Constructor
+	 * 
+	 * @param newLog   a previously existing Logfile to be used
+	 */
+	public NoLogState( Logfile newLog )
+	{
+		myLog = newLog;
+	}
 	
 	/**
 	 * Create the logfile and open a new log
@@ -35,7 +48,7 @@ public class NoLogState extends LoggingState {
 			myLog.writeLog(history.get(i).getMessage());
 		}
 		
-		LoggingState newState = new LogState();
+		LoggingState newState = new LogState(myLog);
 		return newState;
 	}
 

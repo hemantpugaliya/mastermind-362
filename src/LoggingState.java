@@ -17,6 +17,11 @@ public abstract class LoggingState {
 	protected Logfile myLog;
 	
 	/**
+	 * Initial message to be written out to the log.
+	 */
+	protected final String startMsg = "Key: Red=R, Yellow=Y, Green=G, Blue=B, White=W, Black=K, Blank=0";
+	
+	/**
 	 * Starts or stops logging, depending on the current state and return new state
 	 */
 	public abstract LoggingState toggleLogging( String filename, ArrayList<MastermindCommand> history );

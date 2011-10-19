@@ -14,10 +14,25 @@ public class LogState extends LoggingState {
 	/**
 	 * Constructor-default
 	 */
-	public LogState()
+	public LogState(String filename)
 	{
-		
+		// Start logging when initially created
+		myLog = new Logfile();
+		myLog.openLog(filename);
+		myLog.writeLog(startMsg);
+				
 	}
+	
+	/**
+	 * Constructor
+	 * 
+	 * @param newLog   a previously existing Logfile to be used
+	 */
+	public LogState( Logfile newLog )
+	{
+		myLog = newLog; 
+	}
+	
 	/**
 	 * Stop logging and return the new logging state
 	 * 
@@ -30,7 +45,7 @@ public class LogState extends LoggingState {
 		myLog.closeLog();
 		myLog = null;
 		
-		LoggingState newState = new NoLogState();
+		LoggingState newState = new NoLogState(myLog);
 		return newState;
 	}
 
