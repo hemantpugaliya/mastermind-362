@@ -155,46 +155,40 @@ public class MenuListener implements ActionListener{
 	 */
 	public void newGame(){
 		controller.resetGame();
-		if(!logging)
-		{
-			//game.newGame(log.getModel().isSelected(), null, selectedCodebreaker);
-		}
-		else{
-			if(!newGameStarted)
-			{
-				//game.newGame(log.getModel().isSelected(), file.toString(), selectedCodebreaker);
-			}
-			else{
-				promptForFile();
-				if(fc.getSelectedFile() != null){
-					//game.newGame(log.getModel().isSelected(), file.toString(), selectedCodebreaker);
-				}
-			}
-		}
-		
-		
-		for(int i = 0; i < 4; i++){
-			codebreaker[i].setEnabled(false);
-		}
-		
-		for(int i = 0; i < 3; i++){
-			codemaker[i].setEnabled(false);
-		}
-		
+		disableCodebreaker();
+		disableCodemaker();
 		newGameStarted = true;
 		playing = true;
 	}
 	
 	public void endGame(){
+		enableCodebreaker();
+		enableCodemaker();
+		controller.endGame(0);
+	}
+	
+	public void disableCodebreaker(){
+		for(int i = 0; i < 4; i++){
+			codebreaker[i].setEnabled(false);
+		}
+	}
+	
+	public void disableCodemaker(){		
+		for(int i = 0; i < 3; i++){
+			codemaker[i].setEnabled(false);
+		}		
+	}
+	
+	public void enableCodebreaker(){
 		for(int i = 0; i < 4; i++){
 			codebreaker[i].setEnabled(true);
 		}
-		
+	}
+	
+	public void enableCodemaker(){
 		for(int i = 0; i < 3; i++){
 			codemaker[i].setEnabled(true);
 		}
-		
-		controller.endGame(0);
 	}
 	
 	/**
@@ -253,7 +247,7 @@ public class MenuListener implements ActionListener{
 			fc.showOpenDialog(menu);
 			try{
 				file = fc.getSelectedFile();
-				//game.startLogging(file.toString());
+				controller.startLogging(file.toString());
 				logging = true;
 			}catch(Exception e1){
 				log.getModel().setSelected(false);
@@ -261,7 +255,7 @@ public class MenuListener implements ActionListener{
 			}
 		}
 		else{
-			//game.stopLogging();
+			controller.stopLogging();
 			fc.setSelectedFile(null);
 			logging = false;
 		}

@@ -55,7 +55,7 @@ public class BoardController implements ActionListener, MMServerObservable {
 	private boolean computerCB;
 	private boolean computerCM;
 	private boolean logging;
-	private boolean gameOver;
+	private boolean gameOver = true;
 	
 	private boolean buttonsOn = true;
 	
@@ -69,6 +69,7 @@ public class BoardController implements ActionListener, MMServerObservable {
 	
 	private CodeBreakerFactory cbFactory;
 	private CodeMakerFactory cmFactory;
+	private LoggingState loggingState;
 	
 	private MMGameClient client;
 	
@@ -413,7 +414,6 @@ public class BoardController implements ActionListener, MMServerObservable {
 			guessing = true;
 			clear();
 			currState.undoTurn();
-			toggleGameState();
 		}
 		else if(view.getCurrentGuessRow() <= 8){
 			clear();
@@ -559,12 +559,9 @@ public class BoardController implements ActionListener, MMServerObservable {
 	    timer.schedule(new ComputerTimer(this), seconds * 1000);
 	  }
 	
-	private int count = 0;
 	public void toggleGameState(){
 		GameState temp;
-		System.out.println(count);
-		count++;
-		
+
 		temp = currState;
 		currState = nextState;
 		nextState = temp;
@@ -673,10 +670,12 @@ public class BoardController implements ActionListener, MMServerObservable {
 		CodeBreaker cb = cbFactory.setCodeBreaker(codeBreaker);
 		
 		ArrayList<MastermindCommand> history = new ArrayList<MastermindCommand>();
-		LoggingState logging = new NoLogState();
 		
-		currState = new GuessState(this, board, logging, history, cb, client, networkedCB );
-		nextState = new FeedbackState(this, board, logging, history, cm, client, networkedCM );
+		if(!logging)
+				loggingState = new NoLogState();
+				
+		currState = new GuessState(this, board, loggingState, history, cb, client, networkedCB );
+		nextState = new FeedbackState(this, board, loggingState, history, cm, client, networkedCM );
 		
 		if(!buttonsOn){
 			turnButtonsOn();
@@ -715,6 +714,20 @@ public class BoardController implements ActionListener, MMServerObservable {
 			guessing = true;
 			instruction.setText("Codebreaker's Turn");
 		}
+	}
+	
+	public void startLogging(String file){
+		if(!gameOver){
+			currState.startLogging(file);
+			nextState.startLogging(file);
+		}
+		else
+			loggingState = new LogState(file);
+	}
+	
+	public void stopLogging(){
+		currState.stopLogging();
+		nextState.stopLogging();
 	}
 	
 	/**
