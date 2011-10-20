@@ -223,11 +223,8 @@ public class BoardController implements ActionListener{
 		
 		char g = p.charAt(2);
 		int guess = Character.getNumericValue(g);
-		
-		System.out.println(row+ " "+guess+" "+view.getCurrentFeedbackRow());
-		
+			
 		if(row == view.getCurrentFeedbackRow()){
-			System.out.println("?");
 			int smallPeg = selectedPeg;
 			if(smallPeg > 5){
 				feedbackRows[row][guess].setIcon(new javax.swing.ImageIcon("icons/"+smallPeg+".png"));
@@ -545,9 +542,11 @@ public class BoardController implements ActionListener{
 	    timer.schedule(new ComputerTimer(this), seconds * 1000);
 	  }
 	
+	private int count = 0;
 	public void toggleGameState(){
-		System.out.println("meow");
 		GameState temp;
+		System.out.println(count);
+		count++;
 		
 		temp = currState;
 		currState = nextState;
@@ -711,11 +710,14 @@ public class BoardController implements ActionListener{
 	    	}
 	    	else{
 	    		toggleGameState();
-	    		view.setCurrentFeedbackRow(view.getCurrentGuessRow() - 1);
+	    		view.setCurrentFeedbackRow(view.getCurrentFeedbackRow() - 1);
+	    		guessing = true;
 	    	}
 	    	
-	    	done.addActionListener(bc);
-			clear.addActionListener(bc);
+	    	if(!gameOver){
+		    	done.addActionListener(bc);
+				clear.addActionListener(bc);
+	    	}
 	      
 	    }
 	  }
