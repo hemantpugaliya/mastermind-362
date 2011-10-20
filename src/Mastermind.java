@@ -34,7 +34,7 @@ public final class Mastermind {
 		int b = 0; // blacks
 		int w = 0; // whites
 		int t = 0; // total
-		for (int i=0; i<4; ++i) {if (guess[i] == guess[i]){++b;}}
+		for (int i=0; i<4; ++i) {if (guess[i] == solution[i]){++b;}}
 		int[] gcolors = new int[6];
 		int[] scolors = new int[6];
 		for (int i=0; i<4; ++i) {
