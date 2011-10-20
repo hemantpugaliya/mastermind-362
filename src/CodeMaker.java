@@ -9,7 +9,7 @@ import java.util.ArrayList;
  *
  */
 
-public abstract  class CodeMaker extends MastermindPlayer {
+public abstract  class CodeMaker {
 	
 	/**
 	 * feedback information comes from the UI
