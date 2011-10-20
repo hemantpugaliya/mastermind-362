@@ -682,7 +682,36 @@ public class BoardController implements ActionListener, MMServerObservable {
 		if(computerCB){
 			undo.removeActionListener(this);
 		}
+		
+		if(computerCM){
+			setComputerSolution(cm.getCode());
+		}
+		else{
+			settingSolution = true;
+		}
 
+	}
+	
+	public void setComputerSolution(PegColor[] sol){
+		for(int i = 0; i < 4; i++){
+			solution[i] = sol[i].ordinal();
+		}
+		
+		for(int i = 0; i < 4; i++){
+			solutionSet[i].setIcon(new javax.swing.ImageIcon("icons/gray3.png"));
+		}
+		settingSolution = false;
+		view.setCurrentGuessRow(9);
+		view.setCurrentFeedbackRow(9);
+			
+		if(computerCB){
+			guessing = true;
+			askForComputerGuess();
+		}
+		else{
+			guessing = true;
+			instruction.setText("Codebreaker's Turn");
+		}
 	}
 	
 	/**
