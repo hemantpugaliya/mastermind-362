@@ -95,6 +95,8 @@ public class BoardView extends JFrame {
 				guessPanel, feedbackPanel, pegsButtonsPanel, instruction, currentGuessRow, currentFeedbackRow);
 		menuListener = new MenuListener(newGame, exit, codebreaker, log, controller, setTimer, codemaker, endGame);
 		
+		controller.setMenu(menuListener);
+		
 		setLocationRelativeTo(null);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

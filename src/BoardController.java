@@ -582,6 +582,9 @@ public class BoardController implements ActionListener, MMServerObservable {
 		turnButtonsOff();
 		guessing = false;
 		gameOver = true;
+		
+		menu.enableCodebreaker();
+		menu.enableCodemaker();
 	}
 	
 	
@@ -728,6 +731,11 @@ public class BoardController implements ActionListener, MMServerObservable {
 	public void stopLogging(){
 		currState.stopLogging();
 		nextState.stopLogging();
+	}
+	
+	private MenuListener menu;
+	public void setMenu(MenuListener _menu){
+		menu = _menu;
 	}
 	
 	/**
