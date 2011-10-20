@@ -1,7 +1,10 @@
 import java.util.ArrayList;
 
+import client.MMGameClient;
+
 import transferObjects.gameplay.MMFeedback;
 import transferObjects.gameplay.MMGuess;
+import transferObjects.networking.exceptions.MMNetworkingException;
 
 
 /**
@@ -33,11 +36,12 @@ public class GuessCommand extends MastermindCommand {
 	 * 
 	 * @param move   a guess from the codebreaker
 	 */
-	public GuessCommand( MastermindBoard b, CodeBreaker player, ArrayList<PegColor> move )
+	public GuessCommand( MastermindBoard b, CodeBreaker player, MMGameClient _client, ArrayList<PegColor> move )
 	{
 		guess = move;
 		board = b;
 		breaker = player;
+		client = _client;
 	}
 	
 	/**
@@ -60,7 +64,14 @@ public class GuessCommand extends MastermindCommand {
 		if(networked)
 		{
 			MMGuess transfer = new GuessAdapter(guess);
-			//client.pushFeedback(transfer);
+			try
+			{
+				client.pushGuess(transfer);
+			}
+			catch (MMNetworkingException e)
+			{
+				// Assume network magic always works
+			}
 		}
 	}
 	

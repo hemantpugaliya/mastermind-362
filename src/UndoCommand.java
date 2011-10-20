@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+import transferObjects.networking.exceptions.MMNetworkingException;
+
+import client.MMGameClient;
+
 
 /**
  * UndoCommand
@@ -24,10 +28,11 @@ public class UndoCommand extends MastermindCommand {
 	 * 
 	 * @param move   the number of moves to undo
 	 */
-	public UndoCommand( MastermindBoard b, int move )
+	public UndoCommand( MastermindBoard b, MMGameClient _client, int move )
 	{
 		numUndo = move;
 		board = b;
+		client = _client;
 	}
 	/**
 	 * Apply the undo to the board
@@ -42,7 +47,14 @@ public class UndoCommand extends MastermindCommand {
 		// Push the move through the network
 		if(networked)
 		{
-			// client.pushUndo();
+			try
+			{
+				client.pushUndo();
+			}
+			catch( MMNetworkingException e)
+			{
+				// Assume networking magic always works
+			}
 		}
 	}
 	

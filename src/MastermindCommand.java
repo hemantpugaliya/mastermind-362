@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import client.MMGameClient;
+
 /**
  * MastermindCommand
  * 
@@ -15,6 +17,11 @@ public abstract class MastermindCommand {
 	 * An instance of the board
 	 */
 	protected MastermindBoard board;
+	
+	/**
+	 * An instance of the client for pushing networked moves
+	 */
+	protected MMGameClient client;
 	
 	/**
 	 * Execute the stored move and apply it to the state of the game

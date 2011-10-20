@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import client.MMGameClient;
+
 
 /**
  * GameState
@@ -28,6 +30,16 @@ public abstract class GameState {
      * A history of the moves made in the game thus far
      */
     protected ArrayList<MastermindCommand> gameHistory;
+    
+    /**
+     * Client used to push moves through the network
+     */
+    protected MMGameClient client;
+    
+    /**
+     * Indicates whether or not moves should be pushed through the network
+     */
+    protected boolean networked;
 	
 	/**
 	 * Constructor, store the reference to the BoardController and create undo command
@@ -35,12 +47,15 @@ public abstract class GameState {
 	 * @param bc   the BoardController
 	 * @param logOn   true if logging is currently enabled
 	 */
-	public GameState( BoardController bc, MastermindBoard b, LoggingState l, ArrayList<MastermindCommand> gH )
+	public GameState( BoardController bc, MastermindBoard b, LoggingState l, 
+			ArrayList<MastermindCommand> gH, MMGameClient c, boolean n )
 	{
 		myBC = bc;
 		board = b;
 		logging = l;
 		gameHistory = gH;
+		client = c;
+		networked = n;
 	}
 	
 	/**

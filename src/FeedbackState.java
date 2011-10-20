@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import client.MMGameClient;
+
 
 /**
  * FeedbackState
@@ -19,9 +21,9 @@ public class FeedbackState extends GameState
 	 * Constructor, pass up parameters and create feedback command
 	 */
 	public FeedbackState( BoardController bc, MastermindBoard board, LoggingState logging, 
-			ArrayList<MastermindCommand> history, CodeMaker player)
+			ArrayList<MastermindCommand> history, CodeMaker player, MMGameClient client, boolean networked)
 	{
-		super(bc, board, logging, history);
+		super(bc, board, logging, history, client, networked);
 		maker = player;
 	}
 	
@@ -31,8 +33,8 @@ public class FeedbackState extends GameState
 	public void makeMove( ArrayList<PegColor> move)
 	{
 		// Execute the move
-		MastermindCommand feedback = new FeedbackCommand(board, maker, move);
-		feedback.Execute();
+		MastermindCommand feedback = new FeedbackCommand(board, maker, client, move);
+		feedback.Execute(networked);
 		
 		// Log the move
 		//logging.writeMessage( feedback );
@@ -57,8 +59,8 @@ public class FeedbackState extends GameState
 	public void undoTurn() 
 	{
 		// Execute the undo
-		MastermindCommand undo = new UndoCommand(board, 0);
-		undo.Execute();
+		MastermindCommand undo = new UndoCommand(board, client, 0);
+		undo.Execute(networked);
 		
 		// Log the move
 		logging.writeMessage(undo);

@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import client.MMGameClient;
+
 
 /**
  * GuessState
@@ -19,9 +21,9 @@ public class GuessState extends GameState
 	 * Constructor, pass up parameters and create guess command
 	 */
 	public GuessState( BoardController bc, MastermindBoard board, LoggingState logging, 
-			ArrayList<MastermindCommand> history, CodeBreaker player)
+			ArrayList<MastermindCommand> history, CodeBreaker player, MMGameClient client, boolean networked)
 	{
-		super(bc, board, logging, history);
+		super(bc, board, logging, history, client, networked);
 		breaker = player;
 	}
 	
@@ -31,8 +33,8 @@ public class GuessState extends GameState
 	public void makeMove( ArrayList<PegColor> move)
 	{
 		// Execute the move
-		MastermindCommand guess = new GuessCommand(board, breaker, move);
-		guess.Execute();
+		MastermindCommand guess = new GuessCommand(board, breaker, client, move);
+		guess.Execute(networked);
 		
 		// Log the move
 		logging.writeMessage(guess);
@@ -48,8 +50,8 @@ public class GuessState extends GameState
 	public void undoTurn() 
 	{
 		// Execute the undo
-		MastermindCommand undo = new UndoCommand(board, 1);
-		undo.Execute();
+		MastermindCommand undo = new UndoCommand(board, client, 1);
+		undo.Execute(networked);
 		
 		// Log the move
 		logging.writeMessage(undo);

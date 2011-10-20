@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 
+import client.MMGameClient;
+
 import transferObjects.gameplay.MMFeedback;
+import transferObjects.networking.exceptions.MMNetworkingException;
 
 
 /**
@@ -32,11 +35,12 @@ public class FeedbackCommand extends MastermindCommand {
 	 * 
 	 * @param move   a set of feedback from the codemaker
 	 */
-	public FeedbackCommand( MastermindBoard b, CodeMaker player, ArrayList<PegColor> move )
+	public FeedbackCommand( MastermindBoard b, CodeMaker player, MMGameClient _client, ArrayList<PegColor> move )
 	{
 		feedback = move;
 		board = b;
 		maker = player;
+		client = _client;
 	}
 	
 	/**
@@ -59,7 +63,15 @@ public class FeedbackCommand extends MastermindCommand {
 		if(networked)
 		{
 			MMFeedback transfer = new FeedbackAdapter(feedback);
-			//client.pushFeedback(transfer);
+			
+			try
+			{
+				client.pushFeedback(transfer);
+			}
+			catch( MMNetworkingException e)
+			{
+				// Assume networking magic always works
+			}
 		}
 	}
 	

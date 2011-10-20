@@ -73,6 +73,11 @@ public class BoardController implements ActionListener, MMServerObservable {
 	private CodeMakerFactory cmFactory;
 	
 	private MMGameClient client;
+	
+	private boolean requestSent = true;
+	private boolean requestReceived = true;
+	private boolean networkedCM = false;
+	private boolean networkedCB = false;
 		
 	/**
 	 * Creates a new BoardController and adds ActionListener's to appropriate items
@@ -498,6 +503,13 @@ public class BoardController implements ActionListener, MMServerObservable {
 		resetCurrentGuess();
 		resetCurrentFeedback();
 		resetSolution();
+		
+		startNetworkedGame();
+		
+	}
+	
+	public void setupGame()
+	{
 		instruction.setText("Set The Code:");
 		settingSolution = true;
 		guessing = false;
@@ -511,8 +523,6 @@ public class BoardController implements ActionListener, MMServerObservable {
 		MastermindBoard board = new MastermindBoard();
 		board.registerObserver(view);
 		
-		startNetworkedGame();
-		
 		cbFactory = new CodeBreakerFactory(board);
 		cmFactory = new CodeMakerFactory(board);
 		
@@ -522,8 +532,8 @@ public class BoardController implements ActionListener, MMServerObservable {
 		ArrayList<MastermindCommand> history = new ArrayList<MastermindCommand>();
 		LoggingState logging = new NoLogState();
 		
-		currState = new GuessState(this, board, logging, history, cb);
-		nextState = new FeedbackState(this, board, logging, history, cm);
+		currState = new GuessState(this, board, logging, history, cb, client, networkedCB );
+		nextState = new FeedbackState(this, board, logging, history, cm, client, networkedCM );
 		
 		if(!buttonsOn){
 			turnButtonsOn();
@@ -696,12 +706,25 @@ public class BoardController implements ActionListener, MMServerObservable {
 	public void receiveConnectAcknowledgedNotifiction(
 			MMConnectAcknowledgedNotification arg0) {
 		// TODO Auto-generated method stub
+		requestSent = true;
+		
+		if( requestReceived )
+		{
+			// hide dialog, start game
+		}
 		
 	}
 
 	@Override
 	public void receiveConnectionRequest(MMConnectNotification arg0) {
 		// TODO Auto-generated method stub
+		
+		requestReceived = true;
+		
+		if( requestSent )
+		{
+			// hide dialog, start game
+		}
 		
 	}
 
@@ -764,10 +787,16 @@ public class BoardController implements ActionListener, MMServerObservable {
 	 */
 	private void startNetworkedGame()
 	{
+		// Show dialog
+		// TODO
+		
 		// If there is a networked player, request to connect
 		if( codeBreaker == 3 )
 		{
 			// Request to register as a codemaker
+			requestSent = requestReceived = false;
+			networkedCM = true;
+			
 			try
 			{
 				client.requestToConnectToRemoteGameAsCodemaker("foo");
@@ -781,6 +810,9 @@ public class BoardController implements ActionListener, MMServerObservable {
 		else if( codeMaker == 2)
 		{
 			// Request to register as a codebreaker
+			requestSent = requestReceived = false;
+			networkedCB = true;
+			
 			try
 			{
 				client.requestToConnectToRemoteGameAsCodebreaker("foo");
@@ -789,7 +821,12 @@ public class BoardController implements ActionListener, MMServerObservable {
 			{
 				// Assume networking magic always works
 			}
-					
+			
+		}
+		else
+		{
+			// No networked players, start regular game
+			setupGame();
 		}
 	}
 
