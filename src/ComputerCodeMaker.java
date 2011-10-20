@@ -58,10 +58,12 @@ public class ComputerCodeMaker extends CodeMaker {
 		PegColor[] guess = new PegColor[4];
 		for (int i=0; i<4; ++i) {
 			guess[i] = lastGuess.get(i).getColor();
+			System.out.println(this.code[i] + " " + guess[i]);
 		}
 		ArrayList<PegColor> toReturn = new ArrayList<PegColor>();
 		int[] score = new int[2];
-		score = Mastermind.getScore(guess, code);
+		score = Mastermind.getScore(guess, this.code);
+		System.out.println("black: " + score[0] + " white: " + score[1]);
 		for (int i=0; i<score[0]; ++i) {
 			toReturn.add(PegColor.FBLACK);
 		}
