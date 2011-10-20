@@ -70,7 +70,7 @@ public class BoardController implements ActionListener, MMServerObservable {
 	private CodeBreakerFactory cbFactory;
 	private CodeMakerFactory cmFactory;
 	private LoggingState loggingState;
-	
+	private String getIP = null;
 	private MMGameClient client;
 	
 	private boolean requestSent = false;
@@ -849,12 +849,13 @@ public class BoardController implements ActionListener, MMServerObservable {
 						if(arg0.getType() == MMConnectNotification.ConnectionRequestType.CODE_BREAKER)
 						{
 							// If other player requested to be code breaker, request to be code maker
-							client.requestToConnectToRemoteGameAsCodemaker("129.21.83.197");
+							getIP = new JOptionPane().showInputDialog("Please enter IP address?");
+							client.requestToConnectToRemoteGameAsCodemaker(getIP);
 						}
 						else if(arg0.getType() == MMConnectNotification.ConnectionRequestType.CODE_MAKER)
 						{
 							// If other player requested to be code maker, request to be code breaker
-							client.requestToConnectToRemoteGameAsCodebreaker("129.21.83.197");
+							client.requestToConnectToRemoteGameAsCodebreaker(getIP);
 						}
 					}
 					catch( MMNetworkingException e)
@@ -965,7 +966,8 @@ public class BoardController implements ActionListener, MMServerObservable {
 			
 			try
 			{
-				client.requestToConnectToRemoteGameAsCodemaker("129.21.83.197");
+				 getIP = new JOptionPane().showInputDialog("Please enter IP address?");
+				client.requestToConnectToRemoteGameAsCodemaker(getIP);
 			}
 			catch(MMNetworkingException e)
 			{
@@ -982,7 +984,7 @@ public class BoardController implements ActionListener, MMServerObservable {
 			
 			try
 			{
-				client.requestToConnectToRemoteGameAsCodebreaker("129.21.83.197");
+				client.requestToConnectToRemoteGameAsCodebreaker(getIP);
 			}
 			catch(MMNetworkingException e)
 			{
