@@ -37,7 +37,7 @@ public class FeedbackState extends GameState
 		feedback.Execute(networked);
 		
 		// Log the move
-		//logging.writeMessage( feedback );
+		logging.writeMessage( feedback );
 		
 		// Store the move in the history
 		gameHistory.add(feedback);

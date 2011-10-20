@@ -43,7 +43,7 @@ public class LogState extends LoggingState {
 	public LoggingState toggleLogging( String filename, ArrayList<MastermindCommand> history )
 	{	
 		myLog.closeLog();
-		myLog = null;
+		//myLog = null;
 		
 		LoggingState newState = new NoLogState(myLog);
 		return newState;

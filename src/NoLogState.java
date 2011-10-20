@@ -16,7 +16,7 @@ public class NoLogState extends LoggingState {
 	 */
 	public NoLogState()
 	{
-		// Do nothing
+		myLog = new Logfile();
 	}
 	
 	/**
