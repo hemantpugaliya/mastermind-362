@@ -442,8 +442,15 @@ public class BoardController implements ActionListener, MMServerObservable {
 	 * makes solution visible
 	 */
 	public void openEye(){
-		for(int i = 0; i < 4; i++){
-			solutionSet[i].setIcon(new javax.swing.ImageIcon("icons/"+solution[i]+".png"));
+		if(solution[0] == 8){
+			for(int i = 0; i < 4; i++){
+				solutionSet[i].setIcon(new javax.swing.ImageIcon("icons/gray.png"));
+			}
+		}
+		else{
+			for(int i = 0; i < 4; i++){
+				solutionSet[i].setIcon(new javax.swing.ImageIcon("icons/"+solution[i]+".png"));
+			}
 		}
 		looking = true;	
 	}
@@ -601,7 +608,7 @@ public class BoardController implements ActionListener, MMServerObservable {
 	private int codeBreaker = 0;
 	private int codeMaker = 0;
 	
-	public void setCodeBreaker(int p){
+	public void setCodeBreaker(int p){ 
 		codeBreaker = p;
 		if( p!= 0){
 			computerCB = true;
@@ -842,12 +849,12 @@ public class BoardController implements ActionListener, MMServerObservable {
 						if(arg0.getType() == MMConnectNotification.ConnectionRequestType.CODE_BREAKER)
 						{
 							// If other player requested to be code breaker, request to be code maker
-							client.requestToConnectToRemoteGameAsCodemaker("173.84.27.193");
+							client.requestToConnectToRemoteGameAsCodemaker("129.21.83.197");
 						}
 						else if(arg0.getType() == MMConnectNotification.ConnectionRequestType.CODE_MAKER)
 						{
 							// If other player requested to be code maker, request to be code breaker
-							client.requestToConnectToRemoteGameAsCodebreaker("173.84.27.193");
+							client.requestToConnectToRemoteGameAsCodebreaker("129.21.83.197");
 						}
 					}
 					catch( MMNetworkingException e)
@@ -958,7 +965,7 @@ public class BoardController implements ActionListener, MMServerObservable {
 			
 			try
 			{
-				client.requestToConnectToRemoteGameAsCodemaker("173.84.27.193");
+				client.requestToConnectToRemoteGameAsCodemaker("129.21.83.197");
 			}
 			catch(MMNetworkingException e)
 			{
@@ -975,7 +982,7 @@ public class BoardController implements ActionListener, MMServerObservable {
 			
 			try
 			{
-				client.requestToConnectToRemoteGameAsCodebreaker("173.84.27.193");
+				client.requestToConnectToRemoteGameAsCodebreaker("129.21.83.197");
 			}
 			catch(MMNetworkingException e)
 			{
