@@ -73,8 +73,8 @@ public class BoardController implements ActionListener, MMServerObservable {
 	
 	private MMGameClient client;
 	
-	private boolean requestSent = true;
-	private boolean requestReceived = true;
+	private boolean requestSent = false;
+	private boolean requestReceived = false;
 	private boolean networkedCM = false;
 	private boolean networkedCB = false;
 	
@@ -586,6 +586,8 @@ public class BoardController implements ActionListener, MMServerObservable {
 		guessing = false;
 		gameOver = true;
 		
+		requestSent = requestReceived = false;
+		
 		menu.enableCodebreaker();
 		menu.enableCodemaker();
 	}
@@ -807,34 +809,42 @@ public class BoardController implements ActionListener, MMServerObservable {
 		// Accept the request if a game is not currently happening
 		if(gameOver)
 		{
-			client.acceptConnectionRequest(arg0);
-		
-			requestReceived = true;
-		
 			if( requestSent )
 			{
+				client.acceptConnectionRequest(arg0);
+				requestReceived = true;
+				
 				setupGame();
 			}
 			else
 			{
-				// If we haven't sent a request yet, answer with one
+				// If we haven't sent a request yet, ask the user to start a networked game
+				int startChoice = new JOptionPane().showConfirmDialog(null, 
+						"Accept request for networked game?");
+				
+				// If they say yes, then accept request and start networked game
+				if(startChoice == 0)
+				{
+					client.acceptConnectionRequest(arg0);
+					requestReceived = true;
 			
-				try
-				{
-					if(arg0.getType() == MMConnectNotification.ConnectionRequestType.CODE_BREAKER)
+					try
 					{
-						// If other player requested to be code breaker, request to be code maker
-						client.requestToConnectToRemoteGameAsCodemaker(null);
+						if(arg0.getType() == MMConnectNotification.ConnectionRequestType.CODE_BREAKER)
+						{
+							// If other player requested to be code breaker, request to be code maker
+							client.requestToConnectToRemoteGameAsCodemaker(null);
+						}
+						else if(arg0.getType() == MMConnectNotification.ConnectionRequestType.CODE_MAKER)
+						{
+							// If other player requested to be code maker, request to be code breaker
+							client.requestToConnectToRemoteGameAsCodebreaker(null);
+						}
 					}
-					else if(arg0.getType() == MMConnectNotification.ConnectionRequestType.CODE_MAKER)
+					catch( MMNetworkingException e)
 					{
-						// If other player requested to be code maker, request to be code breaker
-						client.requestToConnectToRemoteGameAsCodebreaker(null);
+						// Assume that networking magic always works
 					}
-				}
-				catch( MMNetworkingException e)
-				{
-					// Assume that networking magic always works
 				}
 			}
 		}
@@ -920,11 +930,12 @@ public class BoardController implements ActionListener, MMServerObservable {
 	 */
 	private void startNetworkedGame()
 	{
+		receiveConnectionRequest(null);
+		
 		// If there is a networked player, request to connect
 		if( codeBreaker == 3 )
 		{
 			// Request to register as a codemaker
-			requestSent = requestReceived = false;
 			networkedCM = true;
 			
 			try
@@ -935,12 +946,13 @@ public class BoardController implements ActionListener, MMServerObservable {
 			{
 				// Assume networking magic always works
 			}
+			
+			instruction.setText("Waiting for connection...");
 		}
 					
 		else if( codeMaker == 2)
 		{
 			// Request to register as a codebreaker
-			requestSent = requestReceived = false;
 			networkedCB = true;
 			
 			try
@@ -952,6 +964,7 @@ public class BoardController implements ActionListener, MMServerObservable {
 				// Assume networking magic always works
 			}
 			
+			instruction.setText("Waiting for connection...");
 		}
 		else
 		{
