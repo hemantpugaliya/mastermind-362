@@ -153,8 +153,6 @@ public class BoardView extends JFrame {
 
 		feedbackPanel.setVisible(true);
 		guessPanel.setVisible(false);
-		done.addActionListener(controller);
-		clear.addActionListener(controller);
 		instruction.setText("Codemaker's Turn");
 	}
 	
@@ -166,8 +164,6 @@ public class BoardView extends JFrame {
 
 		feedbackPanel.setVisible(false);
 		guessPanel.setVisible(true);
-		done.addActionListener(controller);
-		clear.addActionListener(controller);
 		instruction.setText("Codebreaker's Turn");
 	}
 	

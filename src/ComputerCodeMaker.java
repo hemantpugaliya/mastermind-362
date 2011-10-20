@@ -52,7 +52,7 @@ public class ComputerCodeMaker extends CodeMaker {
 	 * and return the PegColors needed to represent that score.
 	 * @return four FeedbackPeg colors
 	 */
-	public ArrayList<PegColor> getMove() {
+	public ArrayList<PegColor> makeMove() {
 		PegRow row = myBoard.getFirstRowWithoutFeedback();
 		ArrayList<PuzzlePeg> lastGuess = row.getPuzzlePegs();
 		PegColor[] guess = new PegColor[4];
@@ -73,5 +73,8 @@ public class ComputerCodeMaker extends CodeMaker {
 		}
 		return toReturn;
 	}
-
+	
+	public PegColor[] getCode(){
+		return code;
+	}
 }

@@ -102,6 +102,10 @@ public class MenuListener implements ActionListener{
 			setCodebreaker(action);
 		}
 		
+		if(type == 'm'){
+			setCodemaker(action);
+		}
+		
 		if(type == 'l'){
 			promptForFile();
 		}
@@ -125,9 +129,7 @@ public class MenuListener implements ActionListener{
 		selectedCodebreaker = codebreakerNum;
 		controller.setCodeBreaker(selectedCodebreaker);
 		
-		if(selectedCodebreaker != 0)
-			controller.setCodebreakerComputer();
-		else
+		if(selectedCodebreaker == 0)
 			controller.setCodebreakerHuman();
 	}
 	
@@ -135,12 +137,7 @@ public class MenuListener implements ActionListener{
 		char _player = p.charAt(1);
 		int codemakerNum = Character.getNumericValue(_player);
 		selectedCodemaker = codemakerNum;
-		controller.setCodeMaker(selectedCodemaker);
-		
-		if(selectedCodemaker != 0)
-			controller.setCodebreakerComputer();
-		else
-			controller.setCodebreakerHuman();
+		controller.setCodeMaker(selectedCodemaker);		
 	}
 	
 	/**

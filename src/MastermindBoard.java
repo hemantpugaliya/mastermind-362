@@ -190,17 +190,8 @@ public class MastermindBoard {
 	 * @return the first row found
 	 */
 	public PegRow getFirstRowWithoutFeedback() {
-		for (PegRow pr: this.rows) {
-			ArrayList<FeedbackPeg> pegs = pr.getFeedbackPegs();
-			if ( pegs.get(0).getColor() == PegColor.BLANK
-					&& pegs.get(1).getColor() == PegColor.BLANK
-					&& pegs.get(2).getColor() == PegColor.BLANK
-					&& pegs.get(3).getColor() == PegColor.BLANK ) {
-				return pr;
-			}
-		}
-		// If all rows are full, return null.
-		return null;
+		
+		return rows.get(currRow);
 	}
 	
 	/**

@@ -17,4 +17,8 @@ public abstract  class CodeMaker extends MastermindPlayer {
 	public ArrayList<PegColor> makeMove(){
 		return null;
 	}
+	
+	public PegColor[] getCode(){
+		return null;
+	}
 }

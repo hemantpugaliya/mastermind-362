@@ -35,8 +35,6 @@ public class BoardController implements ActionListener{
 	private int[] currentGuess = new int[4];
 	private int[] currentFeedback = new int [4];
 	private int[] solution = new int[4];
-	private int currentGuessRow;
-	private int currentFeedbackRow;
 	
 	private JButton undo;
 	private JButton done;
@@ -91,8 +89,6 @@ public class BoardController implements ActionListener{
 		solutionSet = _solution;
 		eye = _eye;
 		instruction = _instruction;
-		currentGuessRow = _curGuessRow;
-		currentFeedbackRow = _curFeedbackRow;
 		
 		eye.addActionListener(this);
 		eye.setActionCommand("e");
@@ -319,6 +315,10 @@ public class BoardController implements ActionListener{
 				feedbackPanel.setVisible(true);
 				instruction.setText("Codemaker's Turn");
 			}
+			
+			if(computerCM){
+				askForComputerGuess();
+			}
 		}
 		else{
 			ArrayList<PegColor> feedback = new ArrayList<PegColor>();
@@ -343,7 +343,6 @@ public class BoardController implements ActionListener{
 				}
 				
 				if(computerCB){
-					System.out.println("gds");
 					askForComputerGuess();
 				}
 				else{
@@ -471,55 +470,6 @@ public class BoardController implements ActionListener{
 			solution[i] = 8;
 		}
 	}
-	
-	/**
-	 * Called when New Game is selected from menu.
-	 * Resets the UI board back to original state.
-	 */
-	public void resetGame(){
-		for(int i = 0; i < 10; i++){
-			for(int j = 0; j < 4; j++){
-				guessRows[i][j].setIcon(new javax.swing.ImageIcon("icons/gray.png"));
-				feedbackRows[i][j].setIcon(new javax.swing.ImageIcon("icons/gray2.png"));
-			}
-		}
-		resetCurrentGuess();
-		resetCurrentFeedback();
-		resetSolution();
-		instruction.setText("Set The Code:");
-		settingSolution = true;
-		guessing = false;
-		gameOver = false;
-		closeEye();
-		looking = false;
-		
-		feedbackPanel.setVisible(false);
-		guessPanel.setVisible(true);
-		
-		MastermindBoard board = new MastermindBoard();
-		board.registerObserver(view);
-		cbFactory = new CodeBreakerFactory(board);
-		cmFactory = new CodeMakerFactory(board);
-		
-		CodeMaker cm = cmFactory.setCodeMaker(codeMaker);
-		CodeBreaker cb = cbFactory.setCodeBreaker(codeBreaker);
-		
-		ArrayList<MastermindCommand> history = new ArrayList<MastermindCommand>();
-		LoggingState logging = new NoLogState();
-		
-		currState = new GuessState(this, board, logging, history, cb);
-		nextState = new FeedbackState(this, board, logging, history, cm);
-		
-		if(!buttonsOn){
-			turnButtonsOn();
-		}
-		
-		if(computerCB){
-			undo.removeActionListener(this);
-		}
-
-	}
-	
 
 	/**
 	 * Used to retrieve the computers guess.  Uses a Timer to wait
@@ -532,28 +482,6 @@ public class BoardController implements ActionListener{
 		turnButtonsOn();
 		done.removeActionListener(this);
 		clear.removeActionListener(this);
-	}
-	
-	/**
-	 * Sets computer boolean to true so the UI responds correctly
-	 * to moves made by the computer.
-	 */
-	public void setCodebreakerComputer(){
-		computerCB = true;
-		if(guessing){
-			askForComputerGuess();
-		}
-		guessing = false;
-		undo.removeActionListener(this);
-	}
-	
-	/**
-	 * Sets computer boolean to false.
-	 */
-	public void setCodebreakerHuman(){
-		computerCB = false;
-		if(!gameOver)
-			undo.addActionListener(this);
 	}
 	
 	/**
@@ -614,7 +542,7 @@ public class BoardController implements ActionListener{
 	 */
 	public void setTimer(int seconds) {
 	    timer = new Timer();
-	    timer.schedule(new ComputerTimer(), seconds * 1000);
+	    timer.schedule(new ComputerTimer(this), seconds * 1000);
 	  }
 	
 	public void toggleGameState(){
@@ -646,12 +574,120 @@ public class BoardController implements ActionListener{
 	
 	public void setCodeBreaker(int p){
 		codeBreaker = p;
+		if(p != 0){
+			computerCB = true;
+			undo.removeActionListener(this);
+		}
+		else{
+			computerCB = false;
+		}
 	}
 	
 	public void setCodeMaker(int p){
 		codeMaker = p;
+		if(p != 0){
+			computerCM = true;
+		}
+		else{
+			computerCM = false;
+		}
 	}
 	
+	/**
+	 * Sets computer boolean to true so the UI responds correctly
+	 * to moves made by the computer.
+	 */
+	public void setCodebreakerComputer(){
+		computerCB = true;
+		if(guessing){
+			askForComputerGuess();
+		}
+	}
+	
+	/**
+	 * Sets computer boolean to false.
+	 */
+	public void setCodebreakerHuman(){
+		computerCB = false;
+		if(!gameOver)
+			undo.addActionListener(this);
+	}
+	
+	/**
+	 * Called when New Game is selected from menu.
+	 * Resets the UI board back to original state.
+	 */
+	public void resetGame(){
+		for(int i = 0; i < 10; i++){
+			for(int j = 0; j < 4; j++){
+				guessRows[i][j].setIcon(new javax.swing.ImageIcon("icons/gray.png"));
+				feedbackRows[i][j].setIcon(new javax.swing.ImageIcon("icons/gray2.png"));
+			}
+		}
+		resetCurrentGuess();
+		resetCurrentFeedback();
+		resetSolution();
+		instruction.setText("Set The Code:");
+		guessing = false;
+		gameOver = false;
+		closeEye();
+		looking = false;
+		
+		feedbackPanel.setVisible(false);
+		guessPanel.setVisible(true);
+		
+		MastermindBoard board = new MastermindBoard();
+		board.registerObserver(view);
+		cbFactory = new CodeBreakerFactory(board);
+		cmFactory = new CodeMakerFactory(board);
+		
+		CodeMaker cm = cmFactory.setCodeMaker(codeMaker);
+		CodeBreaker cb = cbFactory.setCodeBreaker(codeBreaker);
+		
+		ArrayList<MastermindCommand> history = new ArrayList<MastermindCommand>();
+		LoggingState logging = new NoLogState();
+		
+		currState = new GuessState(this, board, logging, history, cb);
+		nextState = new FeedbackState(this, board, logging, history, cm);
+		
+		if(!buttonsOn){
+			turnButtonsOn();
+		}
+		
+		if(computerCB){
+			undo.removeActionListener(this);
+		}
+		
+		if(computerCM){
+			setComputerSolution(cm.getCode());
+		}
+		else{
+			settingSolution = true;
+		}
+
+	}
+	
+	public void setComputerSolution(PegColor[] sol){
+		for(int i = 0; i < 4; i++){
+			solution[i] = sol[i].ordinal();
+		}
+		
+		for(int i = 0; i < 4; i++){
+			solutionSet[i].setIcon(new javax.swing.ImageIcon("icons/gray3.png"));
+		}
+		settingSolution = false;
+		view.setCurrentGuessRow(9);
+		view.setCurrentFeedbackRow(9);
+			
+		if(computerCB){
+			guessing = true;
+			askForComputerGuess();
+		}
+		else{
+			guessing = true;
+			instruction.setText("Codebreaker's Turn");
+		}
+	}
 	
 	/**
 	 * Class that does the actual Timer threading magic.
@@ -660,8 +696,13 @@ public class BoardController implements ActionListener{
 	 *
 	 */
 	class ComputerTimer extends TimerTask {
-	    public void run() {
-	      
+	    BoardController bc;
+		
+		public ComputerTimer(BoardController controller){
+	    	bc = controller;
+	    }
+		
+		public void run() {      
 	    	currState.makeMove(null);
 	    	if(guessing){
 	    		view.setCurrentGuessRow(view.getCurrentGuessRow() - 1);
@@ -672,6 +713,9 @@ public class BoardController implements ActionListener{
 	    		toggleGameState();
 	    		view.setCurrentFeedbackRow(view.getCurrentGuessRow() - 1);
 	    	}
+	    	
+	    	done.addActionListener(bc);
+			clear.addActionListener(bc);
 	      
 	    }
 	  }
