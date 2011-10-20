@@ -77,9 +77,6 @@ public class BoardController implements ActionListener, MMServerObservable {
 	private boolean requestReceived = false;
 	private boolean networkedCM = false;
 	private boolean networkedCB = false;
-	
-	private JOptionPane connecting;
-	private JOptionPane disconnected;
 		
 	/**
 	 * Creates a new BoardController and adds ActionListener's to appropriate items
@@ -587,6 +584,14 @@ public class BoardController implements ActionListener, MMServerObservable {
 		gameOver = true;
 		
 		requestSent = requestReceived = false;
+		try
+		{
+			client.pushDisconnectNotification();
+		}
+		catch(MMNetworkingException e)
+		{
+			// Do nothing
+		}
 		
 		menu.enableCodebreaker();
 		menu.enableCodemaker();
@@ -789,6 +794,8 @@ public class BoardController implements ActionListener, MMServerObservable {
 	public void receiveConnectAcknowledgedNotifiction(
 			MMConnectAcknowledgedNotification arg0) {
 		
+		System.out.println("A");
+		
 		if(gameOver)
 		{
 			requestSent = true;
@@ -805,6 +812,8 @@ public class BoardController implements ActionListener, MMServerObservable {
 	 * Deal with requests coming in by accepting and launching a networked game, if appropriate
 	 */
 	public void receiveConnectionRequest(MMConnectNotification arg0) {
+		
+		System.out.println("B");
 		
 		// Accept the request if a game is not currently happening
 		if(gameOver)
@@ -833,17 +842,17 @@ public class BoardController implements ActionListener, MMServerObservable {
 						if(arg0.getType() == MMConnectNotification.ConnectionRequestType.CODE_BREAKER)
 						{
 							// If other player requested to be code breaker, request to be code maker
-							client.requestToConnectToRemoteGameAsCodemaker(null);
+							client.requestToConnectToRemoteGameAsCodemaker("173.84.27.193");
 						}
 						else if(arg0.getType() == MMConnectNotification.ConnectionRequestType.CODE_MAKER)
 						{
 							// If other player requested to be code maker, request to be code breaker
-							client.requestToConnectToRemoteGameAsCodebreaker(null);
+							client.requestToConnectToRemoteGameAsCodebreaker("173.84.27.193");
 						}
 					}
 					catch( MMNetworkingException e)
 					{
-						// Assume that networking magic always works
+						endNetworkGame();
 					}
 				}
 			}
@@ -855,8 +864,19 @@ public class BoardController implements ActionListener, MMServerObservable {
 	 */
 	public void receiveDisconnectNotification(MMDisconnectNotification arg0) {
 
+		System.out.println("C");
+		
 		if( !gameOver )
 		{
+			try
+			{
+				client.pushDisconnectAcknolwegdedNotification();
+			}
+			catch(MMNetworkingException e)
+			{
+				// Do nothing
+			}
+			
 			// Notify the user that the remote player disconnected
 			JOptionPane gameOver = new JOptionPane();
 			gameOver.showMessageDialog(null, "Remote player disconnected. Game over.");
@@ -930,8 +950,6 @@ public class BoardController implements ActionListener, MMServerObservable {
 	 */
 	private void startNetworkedGame()
 	{
-		receiveConnectionRequest(null);
-		
 		// If there is a networked player, request to connect
 		if( codeBreaker == 3 )
 		{
@@ -940,11 +958,11 @@ public class BoardController implements ActionListener, MMServerObservable {
 			
 			try
 			{
-				client.requestToConnectToRemoteGameAsCodemaker(null);
+				client.requestToConnectToRemoteGameAsCodemaker("173.84.27.193");
 			}
 			catch(MMNetworkingException e)
 			{
-				// Assume networking magic always works
+				endNetworkGame();
 			}
 			
 			instruction.setText("Waiting for connection...");
@@ -957,11 +975,11 @@ public class BoardController implements ActionListener, MMServerObservable {
 			
 			try
 			{
-				client.requestToConnectToRemoteGameAsCodebreaker(null);
+				client.requestToConnectToRemoteGameAsCodebreaker("173.84.27.193");
 			}
 			catch(MMNetworkingException e)
 			{
-				// Assume networking magic always works
+				endNetworkGame();
 			}
 			
 			instruction.setText("Waiting for connection...");
@@ -972,5 +990,17 @@ public class BoardController implements ActionListener, MMServerObservable {
 			setupGame();
 		}
 	}
-
+	
+	/**
+	 * Unexpectedly end a game due to a network timeout, disconnection, or other error
+	 */
+	private void endNetworkGame()
+	{
+		// Notify the user that the remote player died
+		JOptionPane gameOver = new JOptionPane();
+		gameOver.showMessageDialog(null, "Remote player disconnected. Game over.");
+		
+		// End the game with no winner
+		endGame(0);
+	}
 }
