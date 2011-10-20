@@ -725,7 +725,6 @@ public class BoardController implements ActionListener, MMServerObservable {
 	public void startLogging(String file){
 		if(!gameOver){
 			currState.startLogging(file);
-			nextState.startLogging(file);
 		}
 		else
 			loggingState = new LogState(file);
@@ -734,7 +733,6 @@ public class BoardController implements ActionListener, MMServerObservable {
 	public void stopLogging(){
 		if(!gameOver){
 			currState.stopLogging();
-			nextState.stopLogging();
 		}
 		else
 			loggingState = new NoLogState();

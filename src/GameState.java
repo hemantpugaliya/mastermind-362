@@ -24,7 +24,7 @@ public abstract class GameState {
 	 /**
      * Determines whether or not logging is enabled and handles it appropriately
      */
-    protected LoggingState logging;
+    protected static LoggingState logging;
     
     /**
      * A history of the moves made in the game thus far
