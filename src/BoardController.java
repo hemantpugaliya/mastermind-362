@@ -167,7 +167,7 @@ public class BoardController implements ActionListener{
 		}
 		
 		if(type == 'e'){
-			eyeball();
+			solutionHider();
 		}
 		
 		if(type == 'u'){
@@ -414,7 +414,7 @@ public class BoardController implements ActionListener{
 	/**
 	 * checks whether to make solution visible or not
 	 */
-	public void eyeball(){
+	public void solutionHider(){
 		if(!looking && !guessing)
 			openEye();
 		else
@@ -714,7 +714,10 @@ public class BoardController implements ActionListener{
 	    		guessing = true;
 	    	}
 	    	
-	    	if(!gameOver){
+	    	if(!gameOver && computerCB && computerCM){
+	    		askForComputerGuess();
+	    	}
+	    	else if(!gameOver){
 		    	done.addActionListener(bc);
 				clear.addActionListener(bc);
 	    	}
