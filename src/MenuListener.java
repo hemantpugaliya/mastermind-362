@@ -13,6 +13,7 @@ import javax.swing.*;
 public class MenuListener implements ActionListener{
 	
 	private JMenuItem newGame;
+	private JMenuItem endGame;
 	private JMenuItem exit;
 	private JMenuItem setTimer;
 	private JCheckBoxMenuItem log;
@@ -47,13 +48,18 @@ public class MenuListener implements ActionListener{
 	 * @param _timer
 	 */
 	public MenuListener(JMenuItem _newGame, JMenuItem _exit, JRadioButtonMenuItem[] _codebreaker,
-			JCheckBoxMenuItem _log, BoardController _control, JMenuItem _timer, JRadioButtonMenuItem[] _codemaker){
+			JCheckBoxMenuItem _log, BoardController _control, JMenuItem _timer, JRadioButtonMenuItem[] _codemaker,
+			JMenuItem _endGame){
 		
 		controller = _control;
 		
 		newGame = _newGame;
 		newGame.addActionListener(this);
 		newGame.setActionCommand("n");
+		
+		endGame = _endGame;
+		endGame.addActionListener(this);
+		endGame.setActionCommand("e");
 		
 		exit = _exit;
 		exit.addActionListener(this);
@@ -96,6 +102,10 @@ public class MenuListener implements ActionListener{
 		
 		if(type == 'n'){
 			newGame();
+		}
+		
+		if(type == 'e'){
+			endGame();
 		}
 		
 		if(type == 'b'){
@@ -162,8 +172,29 @@ public class MenuListener implements ActionListener{
 			}
 		}
 		
+		
+		for(int i = 0; i < 4; i++){
+			codebreaker[i].setEnabled(false);
+		}
+		
+		for(int i = 0; i < 3; i++){
+			codemaker[i].setEnabled(false);
+		}
+		
 		newGameStarted = true;
 		playing = true;
+	}
+	
+	public void endGame(){
+		for(int i = 0; i < 4; i++){
+			codebreaker[i].setEnabled(true);
+		}
+		
+		for(int i = 0; i < 3; i++){
+			codemaker[i].setEnabled(true);
+		}
+		
+		controller.endGame(0);
 	}
 	
 	/**

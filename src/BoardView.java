@@ -26,6 +26,7 @@ public class BoardView extends JFrame {
 	private JButton clear = new JButton("Clear");
 	
 	private JMenuItem newGame = new JMenuItem("New Game");
+	private JMenuItem endGame = new JMenuItem("End Game");
 	private JMenuItem setTimer = new JMenuItem("Set Timer");
 	private JMenuItem exit = new JMenuItem("Exit");
 	private JRadioButtonMenuItem[] codebreaker = new JRadioButtonMenuItem[4];
@@ -92,7 +93,7 @@ public class BoardView extends JFrame {
 		controller = new BoardController(this, rowsview.getGuessRows(), rowsview.getFeedbackRows(),
 				pegsview.getPegs(), rowsview.getSolution(), rowsview.getEye(), undo, done, clear,
 				guessPanel, feedbackPanel, pegsButtonsPanel, instruction, currentGuessRow, currentFeedbackRow);
-		menuListener = new MenuListener(newGame, exit, codebreaker, log, controller, setTimer, codemaker);
+		menuListener = new MenuListener(newGame, exit, codebreaker, log, controller, setTimer, codemaker, endGame);
 		
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -108,6 +109,7 @@ public class BoardView extends JFrame {
 		JMenu file = new JMenu("File");
 		bar.add(file);
 		file.add(newGame);
+		file.add(endGame);
 		file.add(exit);
 			
 		JMenu options = new JMenu("Options");

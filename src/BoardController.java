@@ -328,10 +328,10 @@ public class BoardController implements ActionListener, MMServerObservable {
 				guessPanel.setVisible(false);
 				feedbackPanel.setVisible(true);
 				instruction.setText("Codemaker's Turn");
-			}
-			
-			if(computerCM){
-				askForComputerGuess();
+				
+				if(computerCM){
+					askForComputerGuess();
+				}
 			}
 		}
 		else{
@@ -577,6 +577,9 @@ public class BoardController implements ActionListener, MMServerObservable {
 		else if(winner == 2){
 			instruction.setText("Codebreaker Wins!");
 		}
+		else if(winner == 0){
+			instruction.setText("Game Ended");
+		}
 		
 		openEye();
 		turnButtonsOff();
@@ -743,7 +746,11 @@ public class BoardController implements ActionListener, MMServerObservable {
 	    	
 	    	if(!gameOver && computerCB && computerCM){
 	    		askForComputerGuess();
-	    	}     
+	    	}
+	    	else if(!gameOver){
+	    		done.addActionListener(bc);
+                clear.addActionListener(bc);
+	    	}
 	    }
 	  }
 
