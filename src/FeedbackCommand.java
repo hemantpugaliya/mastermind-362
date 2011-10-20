@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import transferObjects.gameplay.MMFeedback;
+
 
 /**
  * FeedbackCommand
@@ -40,9 +42,9 @@ public class FeedbackCommand extends MastermindCommand {
 	/**
 	 * Execute the given move or get one from the current codemaker
 	 * 
-	 * @param move    null if using a computer codemaker
+	 * @param networked   if true, push move to MMClient in addition to the board
 	 */
-	public void Execute()
+	public void Execute(boolean networked)
 	{
 		// If the guess is null, we are using a computer codemaker
 		if( feedback == null )
@@ -52,6 +54,13 @@ public class FeedbackCommand extends MastermindCommand {
 				
 		// Notify the board
 		board.newFeedback(feedback);
+		
+		// Push the move through the network
+		if(networked)
+		{
+			MMFeedback transfer = new FeedbackAdapter(feedback);
+			//client.pushFeedback(transfer);
+		}
 	}
 	
 	/**

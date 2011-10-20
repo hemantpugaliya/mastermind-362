@@ -29,6 +29,7 @@ public class MastermindBoard {
 	 * The solution entered by the codemaker
 	 */
 	private ArrayList<PuzzlePeg> solution;
+	
 	/**
 	 * Holds the mementos for the rows as moves are made
 	 */
@@ -123,7 +124,7 @@ public class MastermindBoard {
 	 * @param solutionSet
 	 */
 	public void newSolution(ArrayList< PegColor > solutionSet){
-		ArrayList< PuzzlePeg > solution = new ArrayList< PuzzlePeg >();
+		solution = new ArrayList< PuzzlePeg >();
 		
 		for( int i = 0; i < NUMPEGS; i++ )
 		{

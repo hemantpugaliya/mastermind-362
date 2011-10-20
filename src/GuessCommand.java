@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+import transferObjects.gameplay.MMFeedback;
+import transferObjects.gameplay.MMGuess;
+
 
 /**
  * GuessCommand
@@ -40,9 +43,9 @@ public class GuessCommand extends MastermindCommand {
 	/**
 	 * Execute the given move or get one from the current codebreaker
 	 * 
-	 * @param move    null if using a computer codebreaker
+	 * @param networked   if true, push move to MMClient in addition to the board
 	 */
-	public void Execute()
+	public void Execute(boolean networked)
 	{
 		// If the guess is null, we are using a computer codebreaker
 		if( guess == null )
@@ -52,6 +55,13 @@ public class GuessCommand extends MastermindCommand {
 				
 		// Notify the board
 		board.newGuess(guess);
+		
+		// Push the move through the network
+		if(networked)
+		{
+			MMGuess transfer = new GuessAdapter(guess);
+			//client.pushFeedback(transfer);
+		}
 	}
 	
 	/**
@@ -72,5 +82,5 @@ public class GuessCommand extends MastermindCommand {
 		
 		return logMsg;
 	}
-	
+		
 }

@@ -31,11 +31,19 @@ public class UndoCommand extends MastermindCommand {
 	}
 	/**
 	 * Apply the undo to the board
+	 * 
+	 * @param networked   if true, push move to MMClient in addition to the board
 	 */
-	public void Execute()
+	public void Execute(boolean networked)
 	{
 		// Notify the board
 		board.undoMove(numUndo);
+		
+		// Push the move through the network
+		if(networked)
+		{
+			// client.pushUndo();
+		}
 	}
 	
 	/**

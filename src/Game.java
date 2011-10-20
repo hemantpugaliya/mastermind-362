@@ -1,3 +1,6 @@
+import server.MMGameServer;
+import client.MMGameClient;
+
 
 /**
  * Game
@@ -14,10 +17,21 @@ public class Game {
 	 * @param args   ignored
 	 */
 	public static void main(String[] args){
-				
+		
 		// Create the view
 		BoardView view = new BoardView();
 		view.create();
+		
+		BoardController controller = view.getController();
+		
+		// Set up for networked games
+		MMGameClient client = new MMGameClient();
+		MMGameServer server = new MMGameServer(client);
+		
+		server.registerListener(controller);
+		controller.setNetworkClient(client);
+		
+		
 		
 	}
 	

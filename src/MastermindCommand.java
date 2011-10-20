@@ -18,8 +18,10 @@ public abstract class MastermindCommand {
 	
 	/**
 	 * Execute the stored move and apply it to the state of the game
+	 * 
+	 * @param networked   if true, push move to MMClient in addition to the board
 	 */
-	public abstract void Execute();
+	public abstract void Execute(boolean networked);
 	
 	/**
 	 * Return a representation of the most recent move made
