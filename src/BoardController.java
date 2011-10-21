@@ -801,7 +801,8 @@ public class BoardController implements ActionListener, MMServerObservable {
 	public void receiveConnectAcknowledgedNotifiction(
 			MMConnectAcknowledgedNotification arg0) {
 		
-		System.out.println("A");
+		int acceptRequest = new JOptionPane().showConfirmDialog(null, 
+		"Connection Acknowledged?");
 		
 		if(gameOver)
 		{
@@ -820,7 +821,8 @@ public class BoardController implements ActionListener, MMServerObservable {
 	 */
 	public void receiveConnectionRequest(MMConnectNotification arg0) {
 		
-		System.out.println("B");
+		new JOptionPane().showConfirmDialog(null, 
+		"Do you want to accept the request?");
 		
 		// Accept the request if a game is not currently happening
 		if(gameOver)
